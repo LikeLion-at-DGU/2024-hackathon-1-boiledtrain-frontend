@@ -2,7 +2,7 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
-import MainHome2 from './pages/MainHome2';
+import MainHome1 from './pages/MainHome1';
 import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter([
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { path: "/", element: <MainHome2 /> },
+      { path: "/main", element: <MainHome1 /> },
     ],
     errorElement: <NotFound />,
   },
