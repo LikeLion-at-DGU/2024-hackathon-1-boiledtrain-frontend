@@ -1,3 +1,7 @@
+body{
+  background-color: aliceblue;
+}
+
 #root{
   display:flex;
   background-color: #00ABFC;
