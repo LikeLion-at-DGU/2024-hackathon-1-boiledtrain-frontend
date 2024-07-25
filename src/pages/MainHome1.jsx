@@ -6,12 +6,12 @@ import Main from "../components/intro2/Main"
 
 const MainHome1=()=>{
     return(
-        <>
+        <div style={{backgroundColor:'rgba(0, 171, 252, 1)'}}>
             <TopBar/>
             <Head/>
             <Subwayai/>
             <Main/>
-        </>
+        </div>
     )
 }
 
