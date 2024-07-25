@@ -5,7 +5,8 @@ import "../../styles/font.css"
 export const TopBarContainer =styled.div`
     display:flex;
     justify-content:space-between;
-    margin:23px 24px 0px 37px;
+    padding-top:23px;
+    margin:0px 24px 0px 37px;
 `
 export const Img = styled.img`
     width:56px;
