@@ -1,15 +1,17 @@
 import React from 'react';
-import Search from '../components/Mypage/Search';
 import Station from '../components/Main/Station';
 import Menu from '../components/Main/Menu';
+import BottomBar from '../components/Common/BottomBar';
+import TopBar2 from '../components/Common/TopBar2';
 import '../App.css';
 
 const Test = () => {
   return (
     <div>
-      <Search />
+      <TopBar2 />
       <Menu />
       <Station />
+      <BottomBar />
     </div>
   );
 }
