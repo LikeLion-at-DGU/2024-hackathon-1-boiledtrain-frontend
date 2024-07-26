@@ -10,7 +10,12 @@ import BottomBar from "../components/Common/BottomBar";
 const PageContainer = styled.div`
   position: relative;
   height: 873px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
 `;
+
 const MapContainer = styled.div`
   position: relative;
   display: flex;
@@ -18,16 +23,17 @@ const MapContainer = styled.div`
   align-items: center;
   width: 430px;
   height: 646px;
-  margin: 0 auto;
+  overflow: hidden;
 `;
+
 const MapImage = styled.img`
-  max-width: 430px;
   max-height: 646px;
-  width: 430px;
-  height: 646px;
+  width: auto;
+  height: auto;
   object-fit: cover;
-  filter: blur(3px);
+  /* filter: blur(3px); */
 `;
+
 const StyledBottomBar = styled.div`
   position: absolute;
   bottom: 0;
@@ -37,7 +43,7 @@ const StyledBottomBar = styled.div`
 `;
 
 function GoalTravel1() {
-  const [scale, setScale] = useState(1);
+  const [scale, setScale] = useState(1.0);
 
   return (
     <PageContainer>
@@ -46,8 +52,8 @@ function GoalTravel1() {
       <Search />
       <MapContainer>
         <TransformWrapper
-          initialScale={scale} // 계산된 확대 비율 설정
-          initialPositionX={0}
+          initialScale={scale}
+          initialPositionX={-110}
           initialPositionY={0}
         >
           <TransformComponent>
