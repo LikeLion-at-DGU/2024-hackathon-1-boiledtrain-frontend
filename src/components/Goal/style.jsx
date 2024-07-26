@@ -4,7 +4,6 @@ import '../../styles/font.css';
 export const SearchContainer = styled.div`
   width: 313px;
   height: 40px;
-  margin-left:45px;
   margin-bottom:37px;
   flex-shrink: 0;
   border-radius: 20px;
@@ -34,7 +33,6 @@ export const DropdownButton = styled.div`
   font-weight: 600;
   line-height: 24.2px;
 `;
-//색깔 조정 필요
 export const DropdownMenu = styled.ul`
   position: absolute;
   top: 100%;
