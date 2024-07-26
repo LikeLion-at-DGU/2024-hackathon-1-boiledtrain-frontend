@@ -3,6 +3,7 @@ import Papa from 'papaparse';
 import styled from 'styled-components';
 import mapImage from '../assets/images/map2.jpg'; // 지하철 노선도 이미지 경로
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import API from "../api";
 
 const Station = styled.div`
   position: absolute;
@@ -41,7 +42,19 @@ function TrainMap() {
   const [stations, setStations] = useState([]);
   const [selectedStation, setSelectedStation] = useState(null);
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
-
+  const [example, setExample] = useState([]);
+  const fetchData = async () => {
+    try {
+      const response = await API.get(`/map/search_places_random/`);
+      console.log('Response:', response);
+      setExample(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  useEffect(()=>{
+    fetchData();
+  },[]);
   useEffect(() => {
     Papa.parse('/newtrain.csv', {
       header: true,
