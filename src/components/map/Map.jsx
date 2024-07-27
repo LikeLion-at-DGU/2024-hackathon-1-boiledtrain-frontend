@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Mapcontainer } from "./styled";
 import API from "../../api";
-import imageUrl from "../../assets/images/pointer.png"; // 이미지 URL import
+import imageUrl from "../../assets/images/pointer.png"; 
 
 const Map = () => {
     const mapRef = useRef(null);
     const [map, setMap] = useState(null);
     const [autocomplete, setAutocomplete] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
-    const [infoWindow, setInfoWindow] = useState(null); // InfoWindow 상태 추가
-    const [currentMarker, setCurrentMarker] = useState(null); // 현재 마커 상태 추가
+    const [infoWindow, setInfoWindow] = useState(null); 
+    const [currentMarker, setCurrentMarker] = useState(null); 
 
     useEffect(() => {
         const apiKey = import.meta.env.VITE_GOOGLEMAP_API_KEY;
@@ -44,7 +44,7 @@ const Map = () => {
                     new google.maps.LatLng(38.5, 129.0)
                 );
 
-                // 찾는 범위 한국으로 제한
+                // 찾는 범위 현재 지도 위치로 제한
                 newMap.addListener("dragend", () => {
                     if (!bounds.contains(newMap.getCenter())) {
                         newMap.panToBounds(bounds);
@@ -54,6 +54,7 @@ const Map = () => {
                 setMap(newMap);
 
                 const autocompleteInput = document.getElementById("autocomplete");
+                // 한국에서 있는 장소 중에 자동완성
                 const newAutocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
                     bounds: bounds,
                     strictBounds: true,
@@ -62,25 +63,29 @@ const Map = () => {
                 newAutocomplete.bindTo("bounds", newMap);
                 setAutocomplete(newAutocomplete);
 
-                // Initialize InfoWindow
                 setInfoWindow(new google.maps.InfoWindow());
 
-                // Add click event listener to the map
+                // 지도에 클릭 이벤트 생성
                 newMap.addListener("click", (event) => {
-                    const latLng = event.latLng;
+                    const latLng = event.latLng; // 좌표 저장
                     const service = new google.maps.places.PlacesService(newMap);
+                    console.log("Clicked location:", latLng);
+                    currentMarker.setMap(null);
+                    console.log("Current marker before removal:", currentMarker);
+                    
+                    if (currentMarker) {
+                        currentMarker.setMap(null);
+                    }
 
-                    // Perform a nearby search to check if there are any places at the clicked location
+                    // 선택 장소에 반경 50미터에 있는 장소 검색
                     service.nearbySearch({
                         location: latLng,
                         radius: 50, // Define the search radius (in meters)
                     }, (results, status) => {
                         console.log(results);
-                        if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
+                        if ((status === google.maps.places.PlacesServiceStatus.OK) && (results.length > 0)) {
                             // Remove previous marker if any
-                            if (currentMarker) {
-                                currentMarker.setMap(null);
-                            }
+                            
 
                             // Create a new marker with a custom icon
                             const marker = new google.maps.Marker({

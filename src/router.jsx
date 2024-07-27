@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import Course from './pages/Course';
 import Map from "./components/map/Map"
 import Train from "./pages/train"
+import Kakaologin from './components/Common/Kakaologin';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: "/course" , element: <Course/>},
       { path:"/map",element:<Map/>},
       { path:"/train",element:<Train/>},
+      { path:"/kakao",element:<Kakaologin/>},
     ],
     errorElement: <NotFound />,
   },
