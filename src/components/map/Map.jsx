@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Mapcontainer } from "./styled";
+import { Mapcontainer, MapContent, PlaceAddButton, Placeaddr, PlaceContent, Placeother, PlaceTitle } from "./styled";
 import API from "../../api";
 import imageUrl from "../../assets/images/pointer.png"; 
+import { SearchInput,SearchButton, SearchContainer, InfoText, SearchText } from "../Course/styled";
+import SearchImg from "../../assets/images/search.svg"
 
 const Map = () => {
     const mapRef = useRef(null);
@@ -70,12 +72,10 @@ const Map = () => {
                     const latLng = event.latLng; // 좌표 저장
                     const service = new google.maps.places.PlacesService(newMap);
                     console.log("Clicked location:", latLng);
-                    currentMarker.setMap(null);
+                    
                     console.log("Current marker before removal:", currentMarker);
                     
-                    if (currentMarker) {
-                        currentMarker.setMap(null);
-                    }
+                    
 
                     // 선택 장소에 반경 50미터에 있는 장소 검색
                     service.nearbySearch({
@@ -85,7 +85,9 @@ const Map = () => {
                         console.log(results);
                         if ((status === google.maps.places.PlacesServiceStatus.OK) && (results.length > 0)) {
                             // Remove previous marker if any
-                            
+                            if (currentMarker) {
+                                currentMarker.setMap(null);
+                            }
 
                             // Create a new marker with a custom icon
                             const marker = new google.maps.Marker({
@@ -93,6 +95,7 @@ const Map = () => {
                                 map: newMap,
                                 icon: imageUrl,
                             });
+                            
 
                             // Set content for the InfoWindow
                             infoWindow.setContent(`
@@ -217,7 +220,7 @@ const Map = () => {
     }, [autocomplete, map, infoWindow, currentMarker]);
 
     const handleAddClick = async () => {
-        console.log(selectedPlace);
+        console.log('선택된 장송',selectedPlace);
         if (selectedPlace) {
             try {
                 const response = await API.post("/user/choose_and_add_place/", {
@@ -238,9 +241,23 @@ const Map = () => {
 
     return (
         <>
-            <input id="autocomplete" type="text" placeholder="Search for a place" style={{ width: "100%", padding: "10px" }} />
-            <Mapcontainer id="map" ref={mapRef}></Mapcontainer>
-            <button onClick={handleAddClick}>추가하기</button>
+            
+            <SearchContainer>
+                <SearchText>원하는 장소명을 검색해 등록하세요.</SearchText>
+                <SearchInput id='autocomplete' type='text' placeholder="   검색"></SearchInput>
+                <SearchButton><img src={SearchImg}/></SearchButton>
+            </SearchContainer>
+            <Mapcontainer>
+                <MapContent id="map" ref={mapRef}/>
+                <PlaceContent>
+                    <PlaceTitle>장소 이름</PlaceTitle>
+                    <Placeaddr>주소</Placeaddr>
+                    <Placeother>영업시간</Placeother>
+                    <Placeother>카테고리</Placeother>
+                </PlaceContent>
+                <PlaceAddButton onClick={handleAddClick}>추가하기</PlaceAddButton>
+            </Mapcontainer>
+            <hr></hr>
         </>
     );
 };
