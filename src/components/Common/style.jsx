@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 
-// 페이지의 맨 아래에 위치시키지만 스크롤 시 함께 이동하게 하는 스타일
 export const Head = styled.div`
   display: flex;
   flex-direction: row;
@@ -9,9 +8,6 @@ export const Head = styled.div`
   background: #00ABFC;
   justify-content: space-evenly;
   align-items: center;
-  /* position: fixed;
-  bottom: 0; 
-  z-index: 1000; */
 `;
 
 export const Home = styled.div`

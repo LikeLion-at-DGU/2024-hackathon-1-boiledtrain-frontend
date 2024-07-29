@@ -1,3 +1,4 @@
+//컴포넌트들 모아서 test해본 페이지
 import React from 'react';
 import Station from '../components/Main/Station';
 import Menu from '../components/Main/Menu';

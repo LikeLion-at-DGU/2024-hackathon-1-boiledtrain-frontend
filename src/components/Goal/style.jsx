@@ -36,8 +36,8 @@ export const DropdownButton = styled.div`
 export const DropdownMenu = styled.ul`
   position: absolute;
   top: 100%;
-  left: 10%;
-  width: 275px;
+  left: 6%;
+  width: 300px;
   background: #D4F2FF;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: 0;
@@ -54,12 +54,12 @@ export const DropdownItem = styled.li`
   display:flex;
   flex-direction:column;
   align-items:flex-start;
-  white-space: pre-line; /* 줄바꿈을 가능하게 함 */
+  white-space: pre-line; 
   &:hover {
     background: #d3d3d3;
   }
   &:not(:last-child) {
-    border-bottom: 1px solid #8C8C8C; /* 요소 사이에 선 추가 */
+    border-bottom: 1px solid #8C8C8C; 
   }
 `;
 
@@ -75,7 +75,7 @@ font-family: 'Pretendard';
 font-size: 12px;
 font-style: normal;
 font-weight: 600;
-line-height: 20px; /* 201.667% */
+line-height: 20px;
 `;
 
 export const SecondaryText = styled.div`
@@ -93,7 +93,7 @@ export const PlaceholderText = styled.div`
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
-  line-height: 24.2px; /* 161.333% */
+  line-height: 24.2px;
 `;
 
 export const MainMent = styled.div`
@@ -102,6 +102,66 @@ export const MainMent = styled.div`
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
-  line-height: 24.2px; /* 134.444% */
+  line-height: 24.2px;
   height:36px;
+`;
+
+export const MainMent2 = styled.div`
+  padding-top:47px;
+  padding-bottom:10px;
+  color: #000;
+  font-family: 'Pretendard';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24.2px;
+  height:36px;
+`;
+
+export const MainMent3 = styled.div`
+  padding-bottom:75px;
+  color: #000;
+  font-family: 'Pretendard';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24.2px;
+  height:36px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:11px;
+`;
+
+export const Ment3Image = styled.img`
+  width: 199px;
+  height: 38px;
+  flex-shrink: 0;
+`;
+
+export const Button = styled.button`
+  width:70px;
+  height:20px;
+  background-color: #00ABFC;
+  color: white;
+  border: none; 
+  border-radius: 3px;
+  color: #FFFFFF;
+  text-align: center;
+  font-family: 'Pretendard';
+  font-size: 11px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #008BCE;
+    transform: scale(1.05); 
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+  }
+`;
+
+export const MentButton = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:10px;
 `;

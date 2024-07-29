@@ -20,8 +20,9 @@ export const Frame = styled.div`
   display:flex;
   flex-direction:row;
   align-items: center;
-  height: 100vh; 
+  /* height: 100vh;  */
   width: 430px;
+  padding-top:45px;
 `;
 
 export const Board = styled.div`
