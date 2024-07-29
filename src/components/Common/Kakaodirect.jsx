@@ -1,44 +1,37 @@
-// src/components/KakaoRedirectHandler.js
+// src/components/Common/KakaoCallback.js
 import React, { useEffect } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import { useHistory } from 'react-router-dom';
-import API from '../../api';
+import { useNavigate } from 'react-router-dom';
 
-const Kakaodircet = () => {
-    const history = useHistory();
-
+const KakaoCallback = () => {
+    const navigate = useNavigate();
+    const ss = document.querySelector(pre);
+    console.log(ss)
     useEffect(() => {
-        const getKakaoToken = async () => {
-            const params = new URLSearchParams(window.location.search);
-            const code = params.get('code');
-
-            if (code) {
+        const extractAccessToken = () => {
+            const preElement = document.querySelector('pre');
+            console.log(preElement)
+            if (preElement) {
                 try {
-                    const response = await axios.post('https://kauth.kakao.com/oauth/token', {
-                        grant_type: 'authorization_code',
-                        client_id: 'YOUR_CLIENT_ID',
-                        redirect_uri: '/main', // 실제 리다이렉트 URI
-                        code,
-                    });
-                    const { access_token } = response.data;
-
-                    // access_token을 쿠키에 저장
-                    Cookies.set('kakaoToken', access_token, { expires: 7 });
-                    API.defaults.headers.Authorization = `Bearer ${access_token}`;
-
-                    // 로그인 후 메인 페이지로 리다이렉션
-                    history.push('/main');
+                    const data = JSON.parse(preElement.textContent);
+                    const accessToken = data.access;
+                    console.log('Access Token:', accessToken);
+                    // 액세스 토큰을 사용하여 상태를 업데이트하거나 로컬 스토리지에 저장
+                    localStorage.setItem('accessToken', accessToken);
+                    navigate('/main'); // 로그인 후 메인 화면으로 이동
                 } catch (error) {
-                    console.error('토큰 받기 실패', error);
+                    console.error('Error parsing JSON:', error);
                 }
             }
         };
 
-        getKakaoToken();
-    }, [history]);
+        extractAccessToken();
+    }, [navigate]);
 
-    return <div>로그인 중...</div>;
+    return (
+        <div>
+            로그인 처리 중...
+        </div>
+    );
 };
 
-export default Kakaodircet;
+export default KakaoCallback;

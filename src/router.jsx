@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import Course from './pages/Course';
 import Train from "./pages/train"
 import Kakaologin from './components/Common/Kakaologin';
+import KakaoCallback from './components/Common/KakaoCallback'
 import CourseMake from './pages/CourseMake';
 
 const router = createBrowserRouter([
@@ -19,6 +20,8 @@ const router = createBrowserRouter([
       { path:"/coursemake",element:<CourseMake/>},
       { path:"/train",element:<Train/>},
       { path:"/kakao",element:<Kakaologin/>},
+      { path:"/kakao/login", element:<KakaoCallback/>},
+      
     ],
     errorElement: <NotFound />,
   },
