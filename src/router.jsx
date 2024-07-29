@@ -5,9 +5,9 @@ import App from './App';
 import MainHome1 from './pages/MainHome1';
 import NotFound from './pages/NotFound';
 import Course from './pages/Course';
-import Map from "./components/map/Map"
 import Train from "./pages/train"
 import Kakaologin from './components/Common/Kakaologin';
+import CourseMake from './pages/CourseMake';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/main", element: <MainHome1 /> },
       { path: "/course" , element: <Course/>},
-      { path:"/map",element:<Map/>},
+      { path:"/coursemake",element:<CourseMake/>},
       { path:"/train",element:<Train/>},
       { path:"/kakao",element:<Kakaologin/>},
     ],
