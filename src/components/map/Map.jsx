@@ -70,7 +70,6 @@ const Map = () => {
                     const latLng = event.latLng; // 좌표 저장
                     const service = new google.maps.places.PlacesService(newMap);
                     console.log("Clicked location:", latLng);
-                    currentMarker.setMap(null);
                     console.log("Current marker before removal:", currentMarker);
                     
                     if (currentMarker) {
