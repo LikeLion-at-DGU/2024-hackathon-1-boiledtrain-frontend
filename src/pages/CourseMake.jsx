@@ -7,11 +7,7 @@ const CourseMake=()=>{
     return(
         <>
             <Map/>
-            <PlaceAddContainer>
-                <AddedPlace/>
-
-            </PlaceAddContainer>
-            <hr/>
+            <PlaceAddContainer/>
             <CourseContainer>
                 <Coursename/>
             </CourseContainer>

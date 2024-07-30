@@ -1,9 +1,10 @@
-// src/api.js
+// src/index.js
 import axios from 'axios';
+import {getToken} from "../utils/auth";
 
 // Axios 인스턴스 생성
 export const API = axios.create({
-    baseURL: 'http://3.36.243.22/'
+    baseURL: 'http://3.36.243.22:8000/'
     // baseURL:'https://0de0-210-94-220-228.ngrok-free.app'
 });
 
@@ -11,7 +12,8 @@ export const API = axios.create({
 const apiCall = async (url, method = 'get', data = {}, token = null) => {
     try {
         const headers = {};
-        const token = getToken();
+        token = getToken();
+        console.log('token',token);
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
         }
@@ -27,6 +29,7 @@ const apiCall = async (url, method = 'get', data = {}, token = null) => {
             config.data = data;
         }
         const response = await API(config);
+        console.log(response)
         return response;
     } catch (error) {
         console.error('API call error:', error);

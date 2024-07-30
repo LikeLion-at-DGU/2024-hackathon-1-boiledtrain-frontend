@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Mapcontainer, MapContent, PlaceAddButton, Placeaddr, PlaceContent, Placeother, PlaceTitle } from "./styled";
-import API from "../../api";
-import apiCall from "../../api";
+import { Mapcontainer, MapContent, PlaceAddButton, PlaceAddContainer, Placeaddr, PlaceContent, Placeother, PlaceTitle } from "./styled";
+
 import imageUrl from "../../assets/images/pointer.png"; 
 import { SearchInput, SearchButton, SearchContainer, SearchText } from "../Course/styled";
 import SearchImg from "../../assets/images/search.svg";
+import AddedPlace from "./AddedPlace";
+import Warning from "../Common/Warning";
 
 
 const Map = () => {
@@ -13,6 +14,9 @@ const Map = () => {
     const [autocomplete, setAutocomplete] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [infoWindow, setInfoWindow] = useState(null);
+    const [addedPlaces, setAddedPlaces] = useState([]); // 추가된 장소 목록 관리
+    const [showWarning, setShowWarning] = useState(false);
+
     const currentMarkerRef = useRef(null); // useRef로 currentMarker 관리
 
     useEffect(() => {
@@ -144,35 +148,72 @@ const Map = () => {
     };
 
     const handleAddClick = async () => {
+        if (addedPlaces.length >= 7) { // 최대 7개 장소 추가 가능
+            setShowWarning(true);
+            return;
+        }
         if (selectedPlace) {
-            try {
-                const token = localStorage.getItem('authToken');
-                console.log(token);
-                const response = await apiCall("/user/choose_and_add_place/",'get', {
-                    subway_station: "군자역",
-                    place_id: selectedPlace.place_id,
-                    // 필요한 경우 다른 정보를 추가
-                },token);
-                console.log('API response:', response);
-                // 추가 성공 후 처리
-            } catch (error) {
-                console.error('Error sending data to API:', error);
-                // 오류 처리
-            }
+            // 추가된 장소를 addedPlaces 상태에 추가
+            setAddedPlaces([...addedPlaces, {
+                name: selectedPlace.name,
+                address: selectedPlace.formatted_address,
+                category: selectedPlace.types.length > 0 ? selectedPlace.types[0] : '카테고리 정보가 없습니다.',
+            }]);
+            setSelectedPlace(null); // 선택된 장소 초기화
         } else {
             console.error('No place selected');
         }
+        // if (selectedPlace) {
+        //     try {
+        //         const token = localStorage.getItem('access_token');
+        //         const response = await apiCall("/user/choose_and_add_place/", 'post', {
+        //             subway_station: "군자역",
+        //             place_id: selectedPlace.place_id,
+        //         }, token);
+
+        //         console.log('API response:', response);
+
+        //         if (response.data.true) {
+        //             // 새로운 장소를 추가
+        //             setAddedPlaces([...addedPlaces, {
+        //                 name: selectedPlace.name,
+        //                 address: selectedPlace.formatted_address,
+        //                 category: selectedPlace.types.length > 0 ? selectedPlace.types[0] : '카테고리 정보가 없습니다.',
+        //             }]);
+        //             setSelectedPlace(null); // 선택된 장소 초기화
+        //         } else if (response.data.false) {
+        //             alert("두 지점은 도보로 20분 이상의 거리입니다."); // 실패 시 알림
+        //         }
+        //     } catch (error) {
+        //         console.error('Error sending data to API:', error);
+        //         if (error.response) {
+        //             if (error.response.status === 401) {
+        //                 alert('인증 오류: 로그인 상태를 확인하세요.');
+        //             } else {
+        //                 alert(`오류 발생: ${error.response.status}`);
+        //             }
+        //         } else {
+        //             alert('네트워크 오류: 서버에 연결할 수 없습니다.');
+        //         }
+        //     }
+        // } else {
+        //     console.error('No place selected');
+        // }
+    };
+    const handleWarningClose = () => {
+        setShowWarning(false);
     };
 
     return (
-        <>
+        <div style={{position:"relative"}}>  
+            {showWarning && <Warning message="코스는 7개까지 등록할 수 있어요!" onClose={handleWarningClose} />}
             <SearchContainer>
                 <SearchText>원하는 장소명을 검색해 등록하세요.</SearchText>
-                <SearchInput id='autocomplete' type='text' placeholder="검색"></SearchInput>
-                <SearchButton><img src={SearchImg}/></SearchButton>
+                <SearchInput id='autocomplete' type='text' placeholder="검색" />
+                <SearchButton><img src={SearchImg} alt="Search" /></SearchButton>
             </SearchContainer>
             <Mapcontainer>
-                <MapContent id="map" ref={mapRef}/>
+                <MapContent id="map" ref={mapRef} />
                 <PlaceContent>
                     <PlaceTitle>장소이름 : {selectedPlace ? selectedPlace.name : '선택된 장소가 없습니다.'}</PlaceTitle>
                     <Placeaddr>주소 : {selectedPlace ? selectedPlace.formatted_address : '주소 정보가 없습니다.'}</Placeaddr>
@@ -180,8 +221,19 @@ const Map = () => {
                 </PlaceContent>
                 <PlaceAddButton onClick={handleAddClick}>추가하기</PlaceAddButton>
             </Mapcontainer>
-            <hr></hr>
-        </>
+            <hr/>
+            <PlaceAddContainer>
+            {addedPlaces.map((place, index) => (
+                <AddedPlace 
+                    key={index}
+                    placeName={place.name}
+                    placeAddress={place.address}
+                    placeCategory={place.category}
+                />
+            ))}
+            </PlaceAddContainer>
+            <hr />
+        </div>
     );
 };
 
