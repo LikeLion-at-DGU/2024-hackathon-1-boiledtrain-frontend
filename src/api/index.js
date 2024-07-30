@@ -3,8 +3,8 @@ import axios from 'axios';
 
 // Axios 인스턴스 생성
 export const API = axios.create({
-    // baseURL: 'http://3.36.243.22/'
-    baseURL:'https://0de0-210-94-220-228.ngrok-free.app'
+    baseURL: 'http://3.36.243.22/'
+    // baseURL:'https://0de0-210-94-220-228.ngrok-free.app'
 });
 
 // API 호출 함수

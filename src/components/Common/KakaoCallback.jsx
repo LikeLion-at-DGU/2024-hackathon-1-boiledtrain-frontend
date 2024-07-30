@@ -10,7 +10,7 @@ const KakaoCallback = () => {
 
     const Kakaocallback2 = async () => {
         try {
-            const response = await fetch('https://0de0-210-94-220-228.ngrok-free.app/accounts/kakao/login/callback/', {
+            const response = await fetch('http://3.36.243.22:8000/accounts/kakao/login/callback/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
