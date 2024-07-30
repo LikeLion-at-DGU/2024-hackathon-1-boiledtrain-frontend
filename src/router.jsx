@@ -9,6 +9,7 @@ import Train from "./pages/train"
 import Kakaologin from './components/Common/Kakaologin';
 import KakaoCallback from './components/Common/KakaoCallback'
 import CourseMake from './pages/CourseMake';
+import ProtectedRoute from './components/Common/ProtectRoute';
 
 const router = createBrowserRouter([
   {
@@ -16,15 +17,14 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/main", element: <MainHome1 /> },
-      { path: "/course" , element: <Course/>},
-      { path:"/coursemake",element:<CourseMake/>},
-      { path:"/train",element:<Train/>},
-      { path:"/kakao",element:<Kakaologin/>},
-      { path:"/kakao/login", element:<KakaoCallback/>},
-      
+      { path: "/course", element: <ProtectedRoute element={<Course />} /> },
+      { path: "/coursemake", element: <ProtectedRoute element={<CourseMake />} /> },
+      { path: "/train", element: <ProtectedRoute element={<Train />} /> },
+      { path: "/kakao", element: <Kakaologin /> },
+      { path: "/kakao/login", element: <KakaoCallback /> },
     ],
     errorElement: <NotFound />,
   },
 ]);
-
+ 
 export default router;
