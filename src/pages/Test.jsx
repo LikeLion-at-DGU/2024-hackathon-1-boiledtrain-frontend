@@ -2,6 +2,7 @@
 import React from 'react';
 import Station from '../components/Main/Station';
 import Menu from '../components/Main/Menu';
+import StartMenu from '../components/Main/StartMenu';
 import BottomBar from '../components/Common/BottomBar';
 import TopBar2 from '../components/Common/TopBar2';
 import '../App.css';
@@ -10,6 +11,7 @@ const Test = () => {
   return (
     <div>
       <TopBar2 />
+      <StartMenu />
       <Menu />
       <Station />
       <BottomBar />

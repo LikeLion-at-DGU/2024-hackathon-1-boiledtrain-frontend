@@ -48,3 +48,27 @@ export const Topimage = styled.img`
   margin-left: 11px;
   margin-top: 9px;
 `;
+
+export const Ment = styled.div`
+  display: flex;
+  color: #00ABFC;
+  text-align: center;
+  padding-top:9px;
+  width: 100px;
+  height: 28px;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: 'Pretendard';
+  font-size: 18.7px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const TopSelect = styled.img`
+  padding-top:10px;
+  padding-left:240px;
+  width: 24px;
+  height: 24px;
+`;

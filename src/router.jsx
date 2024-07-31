@@ -12,6 +12,9 @@ import Test from "./pages/Test"
 import OnlyRandom from "./pages/OnlyRandom"
 import GoalTravel1 from "./pages/GoalTravel1"
 import TestPage from "./pages/TestPage"
+import DiaryMain from "./pages/DiaryMain"
+import DiaryWrite from "./pages/DiaryWrite"
+import DiaryDetail from "./pages/DiaryDetail"
 
 const router = createBrowserRouter([
   {
@@ -27,6 +30,9 @@ const router = createBrowserRouter([
       { path:"/random",element:<OnlyRandom/>},
       { path:"/goaltravel",element:<GoalTravel1/>},
       { path:"/testpage",element:<TestPage/>},
+      { path:"/diarymain",element:<DiaryMain/>},
+      { path:"/diarywrite",element:<DiaryWrite/>},
+      { path:"/diarydetail",element:<DiaryDetail/>},
     ],
     errorElement: <NotFound />,
   },

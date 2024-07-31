@@ -8,7 +8,6 @@ const options = [
   { value: '카페', label: '카페 투어\n유명 분위기 좋은 카페를 메인으로 코스를 삶아드려요.' },
   { value: '맛집', label: '맛집 방문\n추천 맛집을 메인으로 코스를 삶아드려요.' },
   { value: '서점', label: '서점 방문\n여유롭게 책을 읽을 서점을 메인으로 코스를 삶아드려요.' },
-  { value: '쇼핑몰', label: '쇼핑몰 방문\n여러 즐길거리가 있는 쇼핑몰을 메인으로 코스를 삶아드려요.' },
   { value: '베이커리', label: '빵집 방문\n고소한 냄새가 풍기는 빵집을 메인으로 코스를 삶아드려요.' },
 ];
 
@@ -17,15 +16,16 @@ function Search({ onCategorySelect }) {
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
+  
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    onCategorySelect(option.value);
+    onCategorySelect(option.value); // 선택된 카테고리 value를 부모에게 전달
     setIsOpen(false);
   };
 
   return (
     <S.SearchContainer>
-      <S.DropdownButton onClick={toggleDropdown}>
+      <S.DropdownButton onClick={toggleDropdown} aria-haspopup="true" aria-expanded={isOpen}>
         {selectedOption.value ? (
           selectedOption.label.split('\n')[0]
         ) : (

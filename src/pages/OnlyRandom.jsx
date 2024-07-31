@@ -99,7 +99,7 @@ function OnlyRandom() {
   const fetchData = async () => {
     try {
       const response = await API.get(`/map/search_places_random/`);
-      const { subway_station, places } = response.data.results;
+      const { subway_station, places } = response.data;
 
       console.log('Fetched subway station:', subway_station);
 
