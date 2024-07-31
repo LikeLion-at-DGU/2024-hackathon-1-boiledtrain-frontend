@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Mapcontainer, MapContent, PlaceAddButton, PlaceAddContainer, Placeaddr, PlaceContent, Placeother, PlaceTitle } from "./styled";
-
-import imageUrl from "../../assets/images/pointer.png"; 
+import apiCall from "../../api";
+import imageUrl from "../../assets/images/pointer.png";
 import { SearchInput, SearchButton, SearchContainer, SearchText } from "../Course/styled";
 import SearchImg from "../../assets/images/search.svg";
 import AddedPlace from "./AddedPlace";
 import Warning from "../Common/Warning";
-
 
 const Map = () => {
     const mapRef = useRef(null);
@@ -14,10 +13,11 @@ const Map = () => {
     const [autocomplete, setAutocomplete] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [infoWindow, setInfoWindow] = useState(null);
-    const [addedPlaces, setAddedPlaces] = useState([]); // 추가된 장소 목록 관리
+    const [addedPlaces, setAddedPlaces] = useState([]);
     const [showWarning, setShowWarning] = useState(false);
+    const [warningMessage, setWarningMessage] = useState("");
 
-    const currentMarkerRef = useRef(null); // useRef로 currentMarker 관리
+    const currentMarkerRef = useRef(null);
 
     useEffect(() => {
         const apiKey = import.meta.env.VITE_GOOGLEMAP_API_KEY;
@@ -46,13 +46,11 @@ const Map = () => {
                     zoom: 10,
                 });
 
-                // 초기 위치 표시
                 const bounds = new google.maps.LatLngBounds(
                     new google.maps.LatLng(37.0, 126.0),
                     new google.maps.LatLng(38.5, 129.0)
                 );
 
-                // 찾는 범위 현재 지도 위치로 제한
                 newMap.addListener("dragend", () => {
                     if (!bounds.contains(newMap.getCenter())) {
                         newMap.panToBounds(bounds);
@@ -62,7 +60,6 @@ const Map = () => {
                 setMap(newMap);
 
                 const autocompleteInput = document.getElementById("autocomplete");
-                // 한국에서 있는 장소 중에 자동완성
                 const newAutocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
                     bounds: bounds,
                     strictBounds: true,
@@ -95,14 +92,11 @@ const Map = () => {
                     setSelectedPlace(place);
                     createMarker(place.geometry.location, place);
                 } else {
-                    // geometry가 없는 경우 텍스트 검색 사용
                     const service = new google.maps.places.PlacesService(map);
                     service.textSearch({ query: place.name }, (results, status) => {
                         if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
                             map.setCenter(results[0].geometry.location);
                             map.setZoom(15);
-
-                            // 마커 생성 함수 호출
                             setSelectedPlace(results[0]);
                             createMarker(results[0].geometry.location, results[0]);
                         }
@@ -114,23 +108,19 @@ const Map = () => {
 
     const deleteMarker = () => {
         if (currentMarkerRef.current) {
-            currentMarkerRef.current.setMap(null); // 지도에서 마커 제거
-            currentMarkerRef.current = null; // 마커 참조 초기화
+            currentMarkerRef.current.setMap(null);
+            currentMarkerRef.current = null;
         }
     };
 
     const createMarker = (location, place) => {
-        deleteMarker(); // 기존 마커 삭제
-        // 마커 생성
+        deleteMarker();
         const marker = new google.maps.Marker({
             position: location,
             map: map,
             icon: imageUrl,
         });
 
-        console.log("Marker created:", marker); // 마커 생성 확인
-
-        // InfoWindow 내용 설정
         infoWindow.setContent(`
             <div>
                 <strong>${place.name}</strong><br>
@@ -138,75 +128,77 @@ const Map = () => {
             </div>
         `);
 
-        // 마커 클릭 리스너 추가
         marker.addListener("click", () => {
             infoWindow.open(map, marker);
         });
 
-        // 마커 저장
         currentMarkerRef.current = marker;
     };
 
     const handleAddClick = async () => {
-        if (addedPlaces.length >= 7) { // 최대 7개 장소 추가 가능
+        if (addedPlaces.length >= 7) {
+            setWarningMessage("코스는 7개까지 등록할 수 있어요!");
             setShowWarning(true);
             return;
         }
+        
         if (selectedPlace) {
-            // 추가된 장소를 addedPlaces 상태에 추가
-            setAddedPlaces([...addedPlaces, {
-                name: selectedPlace.name,
-                address: selectedPlace.formatted_address,
-                category: selectedPlace.types.length > 0 ? selectedPlace.types[0] : '카테고리 정보가 없습니다.',
-            }]);
-            setSelectedPlace(null); // 선택된 장소 초기화
+            console.log("Selected Place:", selectedPlace);
+            try {
+                const token = localStorage.getItem('access_token');
+                const response = await apiCall("/user/choose_and_add_place/", 'post', {
+                    subway_station: "군자역",
+                    place: selectedPlace.place_id,
+                }, token);
+
+                console.log('API response:', response);
+                if (response.data.true) {
+                    setAddedPlaces(prevPlaces => [
+                        ...prevPlaces,
+                        {
+                            name: selectedPlace.name,
+                            address: selectedPlace.formatted_address,
+                            category: selectedPlace.types.length > 0 ? selectedPlace.types[0] : '카테고리 정보가 없습니다.',
+                        }
+                    ]);
+                    setSelectedPlace(null);
+                } else if (response.data.false) {
+                    setWarningMessage("두 지점은 도보로 20분 이상의 거리입니다.");
+                    setShowWarning(true);
+                }
+            } catch (error) {
+                console.error('Error sending data to API:', error);
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        alert('인증 오류: 로그인 상태를 확인하세요.');
+                    } else {
+                        alert(`오류 발생: ${error.response.status}`);
+                    }
+                } else {
+                    alert('네트워크 오류: 서버에 연결할 수 없습니다.');
+                }
+            }
         } else {
             console.error('No place selected');
         }
-        // if (selectedPlace) {
-        //     try {
-        //         const token = localStorage.getItem('access_token');
-        //         const response = await apiCall("/user/choose_and_add_place/", 'post', {
-        //             subway_station: "군자역",
-        //             place_id: selectedPlace.place_id,
-        //         }, token);
-
-        //         console.log('API response:', response);
-
-        //         if (response.data.true) {
-        //             // 새로운 장소를 추가
-        //             setAddedPlaces([...addedPlaces, {
-        //                 name: selectedPlace.name,
-        //                 address: selectedPlace.formatted_address,
-        //                 category: selectedPlace.types.length > 0 ? selectedPlace.types[0] : '카테고리 정보가 없습니다.',
-        //             }]);
-        //             setSelectedPlace(null); // 선택된 장소 초기화
-        //         } else if (response.data.false) {
-        //             alert("두 지점은 도보로 20분 이상의 거리입니다."); // 실패 시 알림
-        //         }
-        //     } catch (error) {
-        //         console.error('Error sending data to API:', error);
-        //         if (error.response) {
-        //             if (error.response.status === 401) {
-        //                 alert('인증 오류: 로그인 상태를 확인하세요.');
-        //             } else {
-        //                 alert(`오류 발생: ${error.response.status}`);
-        //             }
-        //         } else {
-        //             alert('네트워크 오류: 서버에 연결할 수 없습니다.');
-        //         }
-        //     }
-        // } else {
-        //     console.error('No place selected');
-        // }
     };
+
+    const handleDeletePlace = (placeName) => {
+        setAddedPlaces(prevPlaces => prevPlaces.filter(place => place.name !== placeName));
+    };
+
     const handleWarningClose = () => {
         setShowWarning(false);
+        setWarningMessage("");
     };
 
+    useEffect(() => {
+        console.log("Updated Added Places:", addedPlaces);
+    }, [addedPlaces]);
+
     return (
-        <div style={{position:"relative"}}>  
-            {showWarning && <Warning message="코스는 7개까지 등록할 수 있어요!" onClose={handleWarningClose} />}
+        <div style={{ position: "relative" }}>
+            {showWarning && <Warning message={warningMessage} onClose={handleWarningClose} />}
             <SearchContainer>
                 <SearchText>원하는 장소명을 검색해 등록하세요.</SearchText>
                 <SearchInput id='autocomplete' type='text' placeholder="검색" />
@@ -221,16 +213,18 @@ const Map = () => {
                 </PlaceContent>
                 <PlaceAddButton onClick={handleAddClick}>추가하기</PlaceAddButton>
             </Mapcontainer>
-            <hr/>
             <PlaceAddContainer>
-            {addedPlaces.map((place, index) => (
-                <AddedPlace 
-                    key={index}
-                    placeName={place.name}
-                    placeAddress={place.address}
-                    placeCategory={place.category}
-                />
-            ))}
+                <hr />
+                {addedPlaces.map((place, index) => (
+                    <AddedPlace
+                        key={index}
+                        placeName={place.name}
+                        placeAddress={place.address}
+                        placeCategory={place.category}
+                        order={index + 1}
+                        onDelete={() => handleDeletePlace(place.name)}
+                    />
+                ))}
             </PlaceAddContainer>
             <hr />
         </div>

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import mapImage from '../assets/images/map2.jpg'; // 지하철 노선도 이미지 경로
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import API from "../api";
+import apiCall from '../api';
 
 const Station = styled.div`
   position: absolute;

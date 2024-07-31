@@ -95,6 +95,24 @@ export const PlaceAddedImg = styled.img`
     margin: 0px 12px;
 `
 
+export const PlaceOrder = styled.div`
+    width: 23px;
+    height: 23px;
+    border-radius: 100%;
+    background-color: #00ABFC;
+    color: #FFF;
+    position: absolute;
+    right:11px;
+    top:9px;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 24.2px;
+
+`
+
 export const PlaceAddedContentContainer = styled.div`
     color: #000;
     font-family: Pretendard;
