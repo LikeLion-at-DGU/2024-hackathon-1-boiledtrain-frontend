@@ -1,3 +1,4 @@
+// 디자인 변경되서 안쓰는 jsx
 import React from 'react';
 import IntroBack from '../components/Intro/IntroBack';
 import IntroButton from '../components/Intro/IntroButton';

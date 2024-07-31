@@ -1,4 +1,5 @@
 // 봄 축제 사이트 NotFound.jsx 코드보고 따옴
+// 에러 날 때 사이트
 import React from "react";
 import styled from "styled-components";
 

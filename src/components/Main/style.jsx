@@ -20,8 +20,9 @@ export const Frame = styled.div`
   display:flex;
   flex-direction:row;
   align-items: center;
-  height: 100vh; 
+  /* height: 100vh;  */
   width: 430px;
+  padding-top:45px;
 `;
 
 export const Board = styled.div`
@@ -63,6 +64,7 @@ export const text = styled.div`
   font-weight: 590;
   line-height: 24.2px;
 `;
+
 export const text2 = styled.div`
   color: #8E8E8E;
   font-family: "SF Pro";
@@ -70,6 +72,19 @@ export const text2 = styled.div`
   font-style: normal;
   font-weight: 590;
   line-height: 24.2px;
+`;
+export const newtext = styled.div`
+  color: #000;
+  font-family: "SF Pro";
+  width:250px;
+  font-size: 18.7px;
+  font-style: normal;
+  font-weight: 590;
+  line-height: 24.2px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:flex-start;
 `;
 export const myprofile = styled.button`
   align-items: center;
@@ -86,6 +101,30 @@ export const myprofile = styled.button`
   font-weight: 590;
   line-height: 24.2px;
   justify-content: center;
+  border: none;
+  outline: none;
+  cursor: pointer; 
+  &:active {
+    background: #004494;
+    transform: scale(0.98);
+  }
+`;
+export const newmyprofile = styled.button`
+  align-items: center;
+  display:flex;
+  width: 170px;
+  height: 35px;
+  flex-shrink: 0;
+  border-radius: 17.5px;
+  background: var(--Colors-Blue, #007AFF);
+  color: #FFF;
+  font-family: "SF Pro";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 590;
+  line-height: 24.2px;
+  justify-content: center;
+  text-align: left;
   border: none;
   outline: none;
   cursor: pointer; 
@@ -116,6 +155,11 @@ export const logout = styled.button`
     background: #004494;
     transform: scale(0.98);
   }
+`;
+export const Newbox = styled.div`
+  display:flex;
+  flex-direction:row;
+  padding-left:30px;
 `;
 export const box = styled.div`
   display:flex;
@@ -157,11 +201,18 @@ height: 133px;
 
 export const Shape = styled.div`
 display:flex;
-flex-firection:row;
+flex-direction:row;
 height: 90px;
 align-items: center;
 gap:12px;
 `;
+export const NewShape = styled.div`
+display:flex;
+flex-direction:row;
+height: 90px;
+gap:12px;
+`;
+
 
 export const Shape1 = styled.button`
 display:flex;
