@@ -1,7 +1,8 @@
+//지하철 노선도에 점 찍히는거. 안쓰는 코드
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import styled from 'styled-components';
-import mapImage from '../assets/images/map2.jpg'; // 지하철 노선도 이미지 경로
+import mapImage from '../assets/images/map2.jpg'; 
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import API from "../api";
 import apiCall from '../api';
@@ -19,11 +20,11 @@ const Station = styled.div`
 
 const MapContainer = styled.div`
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 430px; /* Fixed width */
+  width: 430px; 
   height: auto;
 `;
 
@@ -32,6 +33,7 @@ const MapImage = styled.img`
   max-height: 100%;
   width: auto; 
   height: auto;
+  overflow: hidden;
 `;
 
 const StationInfo = styled.div`
@@ -44,34 +46,41 @@ function TrainMap() {
   const [selectedStation, setSelectedStation] = useState(null);
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
   const [example, setExample] = useState([]);
+  
   const fetchData = async () => {
     try {
       const response = await API.get(`/map/search_places_random/`);
       console.log('Response:', response);
+  
+      const data = response.data; 
+      console.log('Extracted data:', data);
+  
       setExample(data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+
   useEffect(()=>{
     fetchData();
   },[]);
+
   useEffect(() => {
     Papa.parse('/newtrain.csv', {
       header: true,
       download: true,
       complete: (results) => {
-        console.log('Parsed CSV data:', results.data);
+        // console.log('Parsed CSV data:', results.data);
         setStations(results.data);
       },
       error: (error) => {
-        console.error('Error fetching CSV file:', error);
+        // console.error('Error fetching CSV file:', error);
       }
     });
   }, []);
 
   useEffect(() => {
-    // Calculate the dimensions of the image after it's loaded
+    
     const img = new Image();
     img.src = mapImage;
     img.onload = () => {
@@ -100,9 +109,8 @@ function TrainMap() {
                   const x = parseFloat(station['X좌표']);
                   const y = parseFloat(station['Y좌표']);
                   
-                  // Adjust the coordinates based on the image scaling
-                  const scaleX = imageDimensions.width / 430; // Assuming 430px is the image's displayed width
-                  const scaleY = imageDimensions.height / (window.innerHeight * 0.7); // Adjust the height scaling as needed
+                  const scaleX = imageDimensions.width / 430;
+                  const scaleY = imageDimensions.height / (window.innerHeight * 0.7); 
 
                   return (
                     <Station
@@ -117,8 +125,8 @@ function TrainMap() {
                 })}
               </TransformComponent>
               <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 2 }}>
-                <button onClick={() => zoomIn()}>Zoom In</button>
-                <button onClick={() => zoomOut()}>Zoom Out</button>
+                {/* <button onClick={() => zoomIn()}>Zoom In</button>
+                <button onClick={() => zoomOut()}>Zoom Out</button> */}
                 <button onClick={() => resetTransform()}>Reset</button>
               </div>
             </>
