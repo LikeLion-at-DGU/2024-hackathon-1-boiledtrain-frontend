@@ -10,6 +10,14 @@ import Kakaologin from './components/Common/Kakaologin';
 import KakaoCallback from './components/Common/KakaoCallback'
 import CourseMake from './pages/CourseMake';
 import ProtectedRoute from './components/Common/ProtectRoute';
+import TrainSearch from "./pages/TrainSearch"
+import Test from "./pages/Test"
+import OnlyRandom from "./pages/OnlyRandom"
+import GoalTravel1 from "./pages/GoalTravel1"
+import TestPage from "./pages/TestPage"
+import DiaryMain from "./pages/DiaryMain"
+import DiaryWrite from "./pages/DiaryWrite"
+import DiaryDetail from "./pages/DiaryDetail"
 
 const router = createBrowserRouter([
   {
@@ -22,6 +30,16 @@ const router = createBrowserRouter([
       { path: "/train", element: <ProtectedRoute element={<Train />} /> },
       { path: "/kakao", element: <Kakaologin /> },
       { path: "/kakao/login", element: <KakaoCallback /> },
+      { path:"/map",element:<Map/>},
+      { path:"/train",element:<Train/>},
+      { path:"/trainsearch",element:<TrainSearch/>},
+      { path:"/test",element:<Test/>},
+      { path:"/random",element:<OnlyRandom/>},
+      { path:"/goaltravel",element:<GoalTravel1/>},
+      { path:"/testpage",element:<TestPage/>},
+      { path:"/diarymain",element:<DiaryMain/>},
+      { path:"/diarywrite",element:<DiaryWrite/>},
+      { path:"/diarydetail",element:<DiaryDetail/>},
     ],
     errorElement: <NotFound />,
   },
