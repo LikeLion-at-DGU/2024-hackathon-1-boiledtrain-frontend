@@ -1,11 +1,40 @@
+// src/index.js
 import axios from 'axios';
+import {getToken} from "../utils/auth";
 
+// Axios 인스턴스 생성
 export const API = axios.create({
-    baseURL: 'http://3.36.243.22:8000',
-    //원래는 https://3.36.243.22 이었음
-    headers: {
-        // "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyMDExNDYwLCJpYXQiOjE3MjE5ODYyNjAsImp0aSI6IjJlOTQ5Zjk3ZDA5YTQ0NGZhYzljNDU3N2ZiZmFjYjgzIiwidXNlcl9pZCI6M30.d30JRT6ntHcFnzy8XRniy4kQBKkzeCIta2oEFLxi0iM",
-    }
+    baseURL: 'http://3.36.243.22:8000/'
+    // baseURL:'https://0de0-210-94-220-228.ngrok-free.app'
 });
 
-export default API;
+// API 호출 함수
+const apiCall = async (url, method = 'get', data = {}, token = null) => {
+    try {
+        const headers = {};
+        token = getToken();
+        console.log('token',token);
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        const config = {
+            url,
+            method,
+            headers,
+        };
+
+        if (method.toLowerCase() === 'get') {
+            config.params = data;
+        } else {
+            config.data = data;
+        }
+        const response = await API(config);
+        console.log(response)
+        return response;
+    } catch (error) {
+        console.error('API call error:', error);
+        throw error;
+    }
+};
+
+export default apiCall;

@@ -5,8 +5,11 @@ import App from './App';
 import MainHome1 from './pages/MainHome1';
 import NotFound from './pages/NotFound';
 import Course from './pages/Course';
-import Map from "./components/map/Map"
 import Train from "./pages/train"
+import Kakaologin from './components/Common/Kakaologin';
+import KakaoCallback from './components/Common/KakaoCallback'
+import CourseMake from './pages/CourseMake';
+import ProtectedRoute from './components/Common/ProtectRoute';
 import TrainSearch from "./pages/TrainSearch"
 import Test from "./pages/Test"
 import OnlyRandom from "./pages/OnlyRandom"
@@ -22,7 +25,11 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/main", element: <MainHome1 /> },
-      { path: "/course" , element: <Course/>},
+      { path: "/course", element: <ProtectedRoute element={<Course />} /> },
+      { path: "/coursemake", element: <ProtectedRoute element={<CourseMake />} /> },
+      { path: "/train", element: <ProtectedRoute element={<Train />} /> },
+      { path: "/kakao", element: <Kakaologin /> },
+      { path: "/kakao/login", element: <KakaoCallback /> },
       { path:"/map",element:<Map/>},
       { path:"/train",element:<Train/>},
       { path:"/trainsearch",element:<TrainSearch/>},
@@ -37,5 +44,5 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
   },
 ]);
-
+ 
 export default router;

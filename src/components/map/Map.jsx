@@ -1,15 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Mapcontainer } from "./styled";
-import API from "../../api";
-import imageUrl from "../../assets/images/pointer.png"; // 이미지 URL import
+import { Mapcontainer, MapContent, PlaceAddButton, PlaceAddContainer, Placeaddr, PlaceContent, Placeother, PlaceTitle } from "./styled";
+import apiCall from "../../api";
+import imageUrl from "../../assets/images/pointer.png";
+import { SearchInput, SearchButton, SearchContainer, SearchText } from "../Course/styled";
+import SearchImg from "../../assets/images/search.svg";
+import AddedPlace from "./AddedPlace";
+import Warning from "../Common/Warning";
 
 const Map = () => {
     const mapRef = useRef(null);
     const [map, setMap] = useState(null);
     const [autocomplete, setAutocomplete] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
-    const [infoWindow, setInfoWindow] = useState(null); // InfoWindow 상태 추가
-    const [currentMarker, setCurrentMarker] = useState(null); // 현재 마커 상태 추가
+    const [infoWindow, setInfoWindow] = useState(null);
+    const [addedPlaces, setAddedPlaces] = useState([]);
+    const [showWarning, setShowWarning] = useState(false);
+    const [warningMessage, setWarningMessage] = useState("");
+
+    const currentMarkerRef = useRef(null);
 
     useEffect(() => {
         const apiKey = import.meta.env.VITE_GOOGLEMAP_API_KEY;
@@ -38,13 +46,11 @@ const Map = () => {
                     zoom: 10,
                 });
 
-                // 초기 위치 표시
                 const bounds = new google.maps.LatLngBounds(
                     new google.maps.LatLng(37.0, 126.0),
                     new google.maps.LatLng(38.5, 129.0)
                 );
 
-                // 찾는 범위 한국으로 제한
                 newMap.addListener("dragend", () => {
                     if (!bounds.contains(newMap.getCenter())) {
                         newMap.panToBounds(bounds);
@@ -61,58 +67,7 @@ const Map = () => {
                 });
                 newAutocomplete.bindTo("bounds", newMap);
                 setAutocomplete(newAutocomplete);
-
-                // Initialize InfoWindow
                 setInfoWindow(new google.maps.InfoWindow());
-
-                // Add click event listener to the map
-                newMap.addListener("click", (event) => {
-                    const latLng = event.latLng;
-                    const service = new google.maps.places.PlacesService(newMap);
-
-                    // Perform a nearby search to check if there are any places at the clicked location
-                    service.nearbySearch({
-                        location: latLng,
-                        radius: 50, // Define the search radius (in meters)
-                    }, (results, status) => {
-                        console.log(results);
-                        if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
-                            // Remove previous marker if any
-                            if (currentMarker) {
-                                currentMarker.setMap(null);
-                            }
-
-                            // Create a new marker with a custom icon
-                            const marker = new google.maps.Marker({
-                                position: latLng,
-                                map: newMap,
-                                icon: imageUrl,
-                            });
-
-                            // Set content for the InfoWindow
-                            infoWindow.setContent(`
-                                <div style="text-align: center;">
-                                    <img src="${imageUrl}" alt="Place" style="width: 200px; height: auto; border-radius: 10px; margin-bottom: 10px;" />
-                                    <div>
-                                        <strong>${results[0].name}</strong><br>
-                                        ${results[0].vicinity}
-                                    </div>
-                                </div>
-                            `);
-
-                            // Add a click listener to the marker to show the InfoWindow
-                            marker.addListener("click", () => {
-                                infoWindow.open(newMap, marker);
-                            });
-
-                            // Save the marker and place info
-                            setCurrentMarker(marker);
-                            setSelectedPlace({ ...results[0], marker });
-                        } else {
-                            console.log("No places found at this location.");
-                        }
-                    });
-                });
             }
         };
 
@@ -134,109 +89,145 @@ const Map = () => {
                 if (place.geometry) {
                     map.setCenter(place.geometry.location);
                     map.setZoom(15);
-
-                    // Remove previous marker if any
-                    if (currentMarker) {
-                        currentMarker.setMap(null);
-                    }
-
-                    // Create a new marker with a custom icon
-                    const marker = new google.maps.Marker({
-                        position: place.geometry.location,
-                        map: map,
-                        icon: imageUrl,
-                    });
-
-                    // Set content for the InfoWindow
-                    infoWindow.setContent(`
-                        <div style="text-align: center;">
-                            <img src="${imageUrl}" alt="${place.name}" style="width: 200px; height: auto; border-radius: 10px; margin-bottom: 10px;" />
-                            <div>
-                                <strong>${place.name}</strong><br>
-                                ${place.formatted_address}
-                            </div>
-                        </div>
-                    `);
-
-                    // Add a click listener to the marker to show the InfoWindow
-                    marker.addListener("click", () => {
-                        infoWindow.open(map, marker);
-                    });
-
-                    // Save the marker and place info
-                    setCurrentMarker(marker);
-                    setSelectedPlace({ ...place, marker });
+                    setSelectedPlace(place);
+                    createMarker(place.geometry.location, place);
                 } else {
-                    // If no geometry, zoom to the predicted place location
                     const service = new google.maps.places.PlacesService(map);
                     service.textSearch({ query: place.name }, (results, status) => {
                         if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
                             map.setCenter(results[0].geometry.location);
                             map.setZoom(15);
-
-                            // Remove previous marker if any
-                            if (currentMarker) {
-                                currentMarker.setMap(null);
-                            }
-
-                            // Create a new marker with a custom icon
-                            const marker = new google.maps.Marker({
-                                position: results[0].geometry.location,
-                                map: map,
-                                icon: imageUrl,
-                            });
-
-                            // Set content for the InfoWindow
-                            infoWindow.setContent(`
-                                <div style="text-align: center;">
-                                    <div>
-                                        <strong>${results[0].name}</strong><br>
-                                        ${results[0].formatted_address}
-                                    </div>
-                                </div>
-                            `);
-
-                            // Add a click listener to the marker to show the InfoWindow
-                            marker.addListener("click", () => {
-                                infoWindow.open(map, marker);
-                            });
-
-                            // Save the marker and place info
-                            setCurrentMarker(marker);
-                            setSelectedPlace({ ...results[0], marker });
+                            setSelectedPlace(results[0]);
+                            createMarker(results[0].geometry.location, results[0]);
                         }
                     });
                 }
             });
         }
-    }, [autocomplete, map, infoWindow, currentMarker]);
+    }, [autocomplete, map, infoWindow]);
+
+    const deleteMarker = () => {
+        if (currentMarkerRef.current) {
+            currentMarkerRef.current.setMap(null);
+            currentMarkerRef.current = null;
+        }
+    };
+
+    const createMarker = (location, place) => {
+        deleteMarker();
+        const marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            icon: imageUrl,
+        });
+
+        infoWindow.setContent(`
+            <div>
+                <strong>${place.name}</strong><br>
+                ${place.formatted_address}
+            </div>
+        `);
+
+        marker.addListener("click", () => {
+            infoWindow.open(map, marker);
+        });
+
+        currentMarkerRef.current = marker;
+    };
 
     const handleAddClick = async () => {
-        console.log(selectedPlace);
+        if (addedPlaces.length >= 7) {
+            setWarningMessage("코스는 7개까지 등록할 수 있어요!");
+            setShowWarning(true);
+            return;
+        }
+        
         if (selectedPlace) {
+            console.log("Selected Place:", selectedPlace);
             try {
-                const response = await API.post("/user/choose_and_add_place/", {
+                const token = localStorage.getItem('access_token');
+                const response = await apiCall("/user/choose_and_add_place/", 'post', {
                     subway_station: "군자역",
-                    place: selectedPlace.formatted_address || selectedPlace.name,
-                    // 필요한 경우 다른 정보를 추가
-                });
+                    place: selectedPlace.place_id,
+                }, token);
+
                 console.log('API response:', response);
-                // 추가 성공 후 처리
+                if (response.data.true) {
+                    setAddedPlaces(prevPlaces => [
+                        ...prevPlaces,
+                        {
+                            name: selectedPlace.name,
+                            address: selectedPlace.formatted_address,
+                            category: selectedPlace.types.length > 0 ? selectedPlace.types[0] : '카테고리 정보가 없습니다.',
+                        }
+                    ]);
+                    setSelectedPlace(null);
+                } else if (response.data.false) {
+                    setWarningMessage("두 지점은 도보로 20분 이상의 거리입니다.");
+                    setShowWarning(true);
+                }
             } catch (error) {
                 console.error('Error sending data to API:', error);
-                // 오류 처리
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        alert('인증 오류: 로그인 상태를 확인하세요.');
+                    } else {
+                        alert(`오류 발생: ${error.response.status}`);
+                    }
+                } else {
+                    alert('네트워크 오류: 서버에 연결할 수 없습니다.');
+                }
             }
         } else {
             console.error('No place selected');
         }
     };
 
+    const handleDeletePlace = (placeName) => {
+        setAddedPlaces(prevPlaces => prevPlaces.filter(place => place.name !== placeName));
+    };
+
+    const handleWarningClose = () => {
+        setShowWarning(false);
+        setWarningMessage("");
+    };
+
+    useEffect(() => {
+        console.log("Updated Added Places:", addedPlaces);
+    }, [addedPlaces]);
+
     return (
-        <>
-            <input id="autocomplete" type="text" placeholder="Search for a place" style={{ width: "100%", padding: "10px" }} />
-            <Mapcontainer id="map" ref={mapRef}></Mapcontainer>
-            <button onClick={handleAddClick}>추가하기</button>
-        </>
+        <div style={{ position: "relative" }}>
+            {showWarning && <Warning message={warningMessage} onClose={handleWarningClose} />}
+            <SearchContainer>
+                <SearchText>원하는 장소명을 검색해 등록하세요.</SearchText>
+                <SearchInput id='autocomplete' type='text' placeholder="검색" />
+                <SearchButton><img src={SearchImg} alt="Search" /></SearchButton>
+            </SearchContainer>
+            <Mapcontainer>
+                <MapContent id="map" ref={mapRef} />
+                <PlaceContent>
+                    <PlaceTitle>장소이름 : {selectedPlace ? selectedPlace.name : '선택된 장소가 없습니다.'}</PlaceTitle>
+                    <Placeaddr>주소 : {selectedPlace ? selectedPlace.formatted_address : '주소 정보가 없습니다.'}</Placeaddr>
+                    <Placeother>카테고리 : {selectedPlace && selectedPlace.types.length > 0 ? selectedPlace.types[0] : '카테고리 정보가 없습니다.'}</Placeother>
+                </PlaceContent>
+                <PlaceAddButton onClick={handleAddClick}>추가하기</PlaceAddButton>
+            </Mapcontainer>
+            <PlaceAddContainer>
+                <hr />
+                {addedPlaces.map((place, index) => (
+                    <AddedPlace
+                        key={index}
+                        placeName={place.name}
+                        placeAddress={place.address}
+                        placeCategory={place.category}
+                        order={index + 1}
+                        onDelete={() => handleDeletePlace(place.name)}
+                    />
+                ))}
+            </PlaceAddContainer>
+            <hr />
+        </div>
     );
 };
 
