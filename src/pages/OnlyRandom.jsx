@@ -8,7 +8,8 @@ import TopBar2 from "../components/Common/TopBar2";
 import Ment2 from "../components/Goal/Ment2";
 import BottomBar from "../components/Common/BottomBar";
 import Station from "../components/Main/Station";
-import API from "../api";
+import DetailModal from "../components/Modal/DetailModal";
+import apiCall from "../api";
 
 const PageContainer = styled.div`
   position: relative;
@@ -57,22 +58,29 @@ const Point = styled.div`
 
 const StationInfoModal = styled.div`
   position: absolute;
-  border: 2px solid #ccc;
-  padding: 0px 10px 30px 10px;
+  border: 1px solid #ccc;
+  padding: 0px 0px 24px 0px;
   z-index: 10;
-  left: 20px;
-  top: 20px;
+  left: 33px;
+  top: 300px;
   border-radius: 13px;
   background: rgba(255, 255, 255, 0.95);
   box-shadow: 2px 5px 5.1px 2px rgba(0, 0, 0, 0.25);
-  width: 250px;
+  width: 364px;
   height: auto;
   flex-shrink: 0;
   color: #000;
   text-align: center;
   font-family: 'Pretendard';
-  font-size: 20px;
+  font-size: 16px;
   line-height: 24.2px;
+  display:flex;
+  flex-direction:column;
+`;
+
+const StationInfoModalDetail = styled.div`
+  display:flex;
+  flex-direction:row;
 `;
 
 const StationName = styled.h2`
@@ -89,20 +97,46 @@ const StationName = styled.h2`
   transform: translateX(-50%);
 `;
 
+const Detail = styled.div`
+color: #00ABFC;
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding-top:20px;
+align-items:center;
+font-family: 'Pretendard';
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 24.2px; /* 172.857% */
+cursor: pointer; /* Pointer로 커서 변경 */
+`;
+const UnderBar = styled.div`
+width: 74px;
+height: 1px;
+flex-shrink: 0;
+background: #00ABFC;
+`;
+
 function OnlyRandom() {
   const [scale, setScale] = useState(1.0);
   const [stations, setStations] = useState([]);
   const [subwayStation, setSubwayStation] = useState(null);
   const [coordinates, setCoordinates] = useState({ x: null, y: null });
   const [nearbyPlaces, setNearbyPlaces] = useState([]);
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   const fetchData = async () => {
     try {
-      const response = await API.get(`/map/search_places_random/`);
+      // apiCall을 사용하여 데이터 요청
+      const response = await apiCall('/map/search_places_random/', 'get');
+  
       const { subway_station, places } = response.data;
-
+  
       console.log('Fetched subway station:', subway_station);
-
+      console.log('Fetched nearby places:', places);
+  
       if (subway_station && subway_station !== subwayStation) {
         setSubwayStation(subway_station);
         setNearbyPlaces(places);
@@ -113,6 +147,7 @@ function OnlyRandom() {
       console.error('Error fetching data:', error);
     }
   };
+  
 
   useEffect(() => {
     if (!subwayStation) {
@@ -164,6 +199,27 @@ function OnlyRandom() {
 
   const pointPosition = coordinates.x && coordinates.y ? getPointPosition(coordinates.x, coordinates.y) : null;
 
+  const getPhotoUrl = (photoReference) => {
+    const apiKey = import.meta.env.VITE_GOOGLEMAP_API_KEY;
+    if (!apiKey) {
+      console.error('Google Maps API key is missing');
+      return '';
+    }
+    return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${apiKey}`;
+  };
+
+  const handleDetailClick = (place) => {
+    const placeDetails = {
+        name: place.nearby_place.name,
+        rating: place.nearby_place.rating || '주소 정보가 없습니다.',
+        photoUrl: getPhotoUrl(place.nearby_place.photo_reference),
+        subwayStation: subwayStation, // 지하철역 이름 추가
+    };
+    setSelectedPlace(placeDetails);
+    setDetailModalOpen(true);
+};
+
+
   return (
     <PageContainer>
       <TopBar2 />
@@ -193,18 +249,40 @@ function OnlyRandom() {
         </TransformWrapper>
         {subwayStation && (
           <StationInfoModal>
-            <h4>{subwayStation}역</h4>
-            {nearbyPlaces.map((place, index) => (
-              <div key={index}>
-                <strong>{place.category} :</strong> {place.nearby_place.name} {/* nearby_place.name으로 접근 */}
-              </div>
-            ))}
+            <h4>{subwayStation}역 코스</h4>
+            <StationInfoModalDetail>
+              {nearbyPlaces.map((place, index) => (
+                <div key={index}>
+                {place.nearby_place.photo_reference ? (
+                <img 
+                    src={getPhotoUrl(place.nearby_place.photo_reference)} 
+                    alt={place.nearby_place.name} 
+                    style={{ width: '118px', height: '76px' }}
+                />
+            ) : (
+                <img 
+                    src={pointerImage} 
+                    alt="기본 이미지" 
+                    style={{ width: '118px', height: '76px' }} 
+                />
+            )}
+                  <strong>{place.category} <br/></strong> {place.nearby_place.name}
+                </div>
+              ))}
+            </StationInfoModalDetail>
+            <Detail onClick={() => handleDetailClick(nearbyPlaces[0])}>자세히 보기<UnderBar /></Detail>
           </StationInfoModal>
         )}
       </MapContainer>
       <StyledBottomBar>
         <BottomBar />
       </StyledBottomBar>
+
+      <DetailModal
+        isOpen={detailModalOpen}
+        onClose={() => setDetailModalOpen(false)}
+        placeDetails={selectedPlace}
+      />
     </PageContainer>
   );
 }
