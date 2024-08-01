@@ -8,7 +8,6 @@ import Course from './pages/Course';
 import Train from "./pages/train"
 import Kakaologin from './components/Common/Kakaologin';
 import KakaoCallback from './components/Common/KakaoCallback'
-import CourseMake from './components/map/CourseMake';
 import ProtectedRoute from './components/Common/ProtectRoute';
 import TrainSearch from "./pages/TrainSearch"
 import Test from "./pages/Test"
