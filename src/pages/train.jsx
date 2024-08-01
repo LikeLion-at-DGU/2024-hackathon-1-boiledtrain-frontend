@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import mapImage from '../assets/images/map2.jpg'; 
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import API from "../api";
+import apiCall from '../api';
 
 const Station = styled.div`
   position: absolute;

@@ -49,6 +49,47 @@ export const Topimage = styled.img`
   margin-top: 9px;
 `;
 
+export const WarningContainer = styled.div`
+    position:absolute;
+    top:50%;
+    right:10%;
+    z-index: 10;
+    width: 346px;
+    height: 184px;
+    border-radius: 22px;
+    background: #FFF;
+    box-shadow: 3px 5px 6.6px 0px rgba(0, 0, 0, 0.25);
+`
+
+export const errorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap:9px;
+  justify-content:center;
+  align-items: center;
+  width:346px;
+  height:117px;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24.2px;
+`
+export const Button = styled.button`
+  width:346px;
+  height:67px;
+  border-radius: 0px 0px 22px 22px;
+  border :0;
+  border-top : 2px solid #D9D9D9;;
+  background-color: inherit;
+  color: #00ABFC;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24.2px;
+`
 export const Ment = styled.div`
   display: flex;
   color: #00ABFC;

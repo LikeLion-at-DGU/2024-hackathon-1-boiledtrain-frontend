@@ -6,6 +6,6 @@ body{
   display:flex;
   background-color: #FFFFFF;
   width:430px;
-  height: 873px;
+  min-height: 873px;
   margin: 0 auto;
 }

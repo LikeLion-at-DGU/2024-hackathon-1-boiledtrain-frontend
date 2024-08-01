@@ -57,6 +57,7 @@ export const SearchInput = styled.input`
     background: #E7E7E7;
     border:0;
     margin: 16px 0px 0px 0px;
+    padding:0px 5px 0px 20px;
 `
 
 export const SearchButton = styled.button`
