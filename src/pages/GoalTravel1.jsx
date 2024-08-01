@@ -9,6 +9,7 @@ import Search from "../components/Goal/Search";
 import Ment from "../components/Goal/Ment";
 import Ment3 from "../components/Goal/Ment3";
 import BottomBar from "../components/Common/BottomBar";
+import DetailModalGoal from "../components/Modal/DetailModalGoal";
 import apiCall from "../api";
 
 const PageContainer = styled.div`
@@ -58,33 +59,63 @@ const Point = styled.div`
 
 const StationInfoModal = styled.div`
   position: absolute;
-  border: 2px solid #ccc;
-  padding: 0px 10px 30px 10px;
+  border: 1px solid #ccc;
+  padding: 0px 0px 24px 0px;
   z-index: 10;
-  left: 20px;
-  top: 20px;
+  left: 33px;
+  top: 300px;
   border-radius: 13px;
   background: rgba(255, 255, 255, 0.95);
   box-shadow: 2px 5px 5.1px 2px rgba(0, 0, 0, 0.25);
-  width: 270px;
+  width: 364px;
   height: auto;
   flex-shrink: 0;
   color: #000;
   text-align: center;
   font-family: 'Pretendard';
-  font-size: 20px;
+  font-size: 16px;
   line-height: 24.2px;
+  display:flex;
+  flex-direction:column;
+`;
+
+const StationInfoModalDetail = styled.div`
+  display:flex;
+  flex-direction:row;
+`;
+
+const Detail = styled.div`
+color: #00ABFC;
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding-top:20px;
+align-items:center;
+font-family: 'Pretendard';
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 24.2px;
+cursor: pointer; 
+`;
+const UnderBar = styled.div`
+width: 74px;
+height: 1px;
+flex-shrink: 0;
+background: #00ABFC;
 `;
 
 function GoalTravel() {
   const [stations, setStations] = useState([]);
   const [subwayStations, setSubwayStations] = useState([]);
   const [coordinatesList, setCoordinatesList] = useState([]); 
-  const [nearbyPlaces, setNearbyPlaces] = useState([]);
-  const [additionalPlaces, setAdditionalPlaces] = useState([]); // 추가 장소 상태
+  const [places, setPlaces] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [scale, setScale] = useState(1.0);
   const [selectedStation, setSelectedStation] = useState(null);
   const [hasPointer, setHasPointer] = useState(false);
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [selectedPlace, setSelectedPlace] = useState([]);
 
   const fetchStations = async () => {
     const response = await fetch('/newtrain.csv');
@@ -132,23 +163,20 @@ function GoalTravel() {
       return;
     }
 
+    setSelectedCategory(category);
+
     try {
       const response = await apiCall('/map/search_places_category/', 'post', { category });
       
       if (response.data && Array.isArray(response.data.places)) {
-        const places = response.data.places;
+        const fetchedPlaces = response.data.places;
 
-        const subwayStations = places.map(place => place.subway_station);
-        const nearbyPlaces = places;
-        const additionalPlaces = places.flatMap(place => place.additional_places || []); // 추가 장소 처리
-
+        const subwayStations = fetchedPlaces.map(place => place.subway_station);
         setSubwayStations(subwayStations);
-        setNearbyPlaces(nearbyPlaces); 
-        setAdditionalPlaces(additionalPlaces); // 추가 장소 상태 업데이트
+        setPlaces(fetchedPlaces); 
 
         console.log('Fetched subway stations:', subwayStations);
-        console.log('Fetched places:', nearbyPlaces);
-        console.log('Fetched additional places:', additionalPlaces);
+        console.log('Fetched places:', fetchedPlaces);
       } else {
         console.error('Invalid response structure:', response.data);
       }
@@ -163,6 +191,11 @@ function GoalTravel() {
     const transformedX = (x / 2700) * mapWidth;
     const transformedY = (y / 4100) * mapHeight;
     return { left: transformedX, top: transformedY };
+  };
+
+  const handleDetailClick = () => {
+    setSelectedPlace(places.filter(place => place.subway_station === selectedStation));
+    setDetailModalOpen(true);
   };
 
   return (
@@ -199,8 +232,9 @@ function GoalTravel() {
         </TransformWrapper>
         {selectedStation && (
           <StationInfoModal>
-            <h4>{selectedStation}역</h4>
-            {nearbyPlaces
+            <h4>{selectedStation}역 {selectedCategory} 투어 코스</h4>
+            <StationInfoModalDetail>
+            {places
               .filter(place => place.subway_station === selectedStation)
               .map((place, index) => (
                 <div key={index}>
@@ -217,19 +251,19 @@ function GoalTravel() {
                       style={{ width: '118px', height: '76px' }} 
                     />
                   )}
-                  <strong>당신의 역:</strong> {place.nearby_place.name}(평점: {place.nearby_place.rating})
+                  <strong>{selectedCategory}<br/></strong> {place.nearby_place.name}
                 </div>
               ))}
-            {/* 추가 장소 출력 */}
-            {additionalPlaces
+            {places
               .filter(place => place.subway_station === selectedStation)
+              .flatMap(place => place.additional_places || [])
               .map((place, index) => (
                 <div key={index}>
                   {place.photo_reference ? (
                     <img 
                       src={getPhotoUrl(place.photo_reference)} 
                       alt={place.name} 
-                      style={{ width: '118px', height: '76px' }}
+                      style={{ width: '118px', height: '76px', paddingRight:'2px' }}
                     />
                   ) : (
                     <img 
@@ -238,15 +272,26 @@ function GoalTravel() {
                       style={{ width: '118px', height: '76px' }} 
                     />
                   )}
-                  <strong>추가 장소:</strong> {place.name}(평점: {place.rating})
+                  <strong>{place.category}<br/></strong> {place.name}
                 </div>
               ))}
+              </StationInfoModalDetail>
+              <Detail onClick={handleDetailClick} >자세히 보기<UnderBar /></Detail>
           </StationInfoModal>
         )}
       </MapContainer>
       <StyledBottomBar>
         <BottomBar />
       </StyledBottomBar>
+
+      <DetailModalGoal
+          isOpen={detailModalOpen}
+          onClose={() => setDetailModalOpen(false)}
+          places={selectedPlace}
+          getPhotoUrl={getPhotoUrl}
+          subwayStation={selectedStation} 
+      />
+
     </PageContainer>
   );
 }

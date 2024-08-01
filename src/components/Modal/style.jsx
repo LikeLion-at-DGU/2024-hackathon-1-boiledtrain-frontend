@@ -1,6 +1,5 @@
 import styled, { keyframes } from 'styled-components';
 
-// 아래에서 위로 슬라이드 애니메이션
 const slideUp = keyframes`
   0% {
     transform: translateY(100%);
@@ -24,7 +23,7 @@ export const ModalTotal = styled.div`
   display:flex;
   flex-direction:column;
   align-items:center;
-  animation: ${slideUp} 1s ease-out forwards; /* 애니메이션 추가 */
+  animation: ${slideUp} 1s ease-out forwards; 
 `;
 
 
@@ -42,7 +41,6 @@ export const HeadMent = styled.div`
   font-weight: 600;
   line-height: 24.2px;
   padding-top:10px;
-  margin-bottom:10px;
 `;
 
 export const Head = styled.div`
@@ -50,16 +48,17 @@ export const Head = styled.div`
   flex-direction:column;
   align-items:center;
   justify-content:center;
+  margin-top:10px;
   width: 430px;
   height: 65px;
   padding: 30px 137px 0px 138px;
+  margin-bottom:10px;
 `;
 
 export const Body = styled.div`
   display:flex;
   flex-direction:column;
   padding-left:20px;
-  padding-top:10px;
 `;
 
 export const PlaceContainer = styled.div`
@@ -79,7 +78,7 @@ export const Box = styled.div`
   display: flex;
   flex-direction: column;
   width: 380px;
-  height: 125px;
+  height: 120px;
 `;
 
 export const Btn = styled.div`
@@ -149,4 +148,17 @@ font-size: 12px;
 font-style: normal;
 font-weight: 400;
 line-height: 24.2px;
+`;
+
+export const CloseButton = styled.button`
+    position:absolute;
+    transform: translate(110px, -70px);
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #000; 
+    cursor: pointer;
+    &:hover {
+        color: #ff0000; 
+    }
 `;
