@@ -9,7 +9,7 @@ import Search from "../components/Goal/Search";
 import Ment from "../components/Goal/Ment";
 import Ment3 from "../components/Goal/Ment3";
 import BottomBar from "../components/Common/BottomBar";
-import API from "../api";
+import apiCall from "../api";
 
 const PageContainer = styled.div`
   position: relative;
@@ -81,6 +81,7 @@ function GoalTravel() {
   const [subwayStations, setSubwayStations] = useState([]);
   const [coordinatesList, setCoordinatesList] = useState([]); 
   const [nearbyPlaces, setNearbyPlaces] = useState([]);
+  const [additionalPlaces, setAdditionalPlaces] = useState([]); // 추가 장소 상태
   const [scale, setScale] = useState(1.0);
   const [selectedStation, setSelectedStation] = useState(null);
   const [hasPointer, setHasPointer] = useState(false);
@@ -116,23 +117,43 @@ function GoalTravel() {
     return station ? { x: parseFloat(station.X좌표), y: parseFloat(station.Y좌표) } : null;
   };
 
+  const getPhotoUrl = (photoReference) => {
+    const apiKey = import.meta.env.VITE_GOOGLEMAP_API_KEY;
+    if (!apiKey) {
+      console.error('Google Maps API key is missing');
+      return '';
+    }
+    return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${apiKey}`;
+  };
+
   const handleCategorySelect = async (category) => {
-    if (category) {
-      try {
-        const response = await API.post(`/map/search_places_category/`, { category });
+    if (!category) {
+      console.error('Category is not provided');
+      return;
+    }
+
+    try {
+      const response = await apiCall('/map/search_places_category/', 'post', { category });
+      
+      if (response.data && Array.isArray(response.data.places)) {
         const places = response.data.places;
 
         const subwayStations = places.map(place => place.subway_station);
         const nearbyPlaces = places;
+        const additionalPlaces = places.flatMap(place => place.additional_places || []); // 추가 장소 처리
 
         setSubwayStations(subwayStations);
         setNearbyPlaces(nearbyPlaces); 
+        setAdditionalPlaces(additionalPlaces); // 추가 장소 상태 업데이트
 
         console.log('Fetched subway stations:', subwayStations);
         console.log('Fetched places:', nearbyPlaces);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+        console.log('Fetched additional places:', additionalPlaces);
+      } else {
+        console.error('Invalid response structure:', response.data);
       }
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
   };
 
@@ -183,15 +204,41 @@ function GoalTravel() {
               .filter(place => place.subway_station === selectedStation)
               .map((place, index) => (
                 <div key={index}>
+                  {place.nearby_place.photo_reference ? (
+                    <img 
+                      src={getPhotoUrl(place.nearby_place.photo_reference)} 
+                      alt={place.nearby_place.name} 
+                      style={{ width: '118px', height: '76px' }}
+                    />
+                  ) : (
+                    <img 
+                      src={pointerImage} 
+                      alt="기본 이미지" 
+                      style={{ width: '118px', height: '76px' }} 
+                    />
+                  )}
                   <strong>당신의 역:</strong> {place.nearby_place.name}(평점: {place.nearby_place.rating})
-                  <div>
-                    {place.additional_places.map((additionalPlace, idx) => (
-                      <div key={idx}>
-                        <strong>{additionalPlace.category} :</strong> {additionalPlace.name} 
-                        <span> (평점: {additionalPlace.rating})</span>
-                      </div>
-                    ))}
-                  </div>
+                </div>
+              ))}
+            {/* 추가 장소 출력 */}
+            {additionalPlaces
+              .filter(place => place.subway_station === selectedStation)
+              .map((place, index) => (
+                <div key={index}>
+                  {place.photo_reference ? (
+                    <img 
+                      src={getPhotoUrl(place.photo_reference)} 
+                      alt={place.name} 
+                      style={{ width: '118px', height: '76px' }}
+                    />
+                  ) : (
+                    <img 
+                      src={pointerImage} 
+                      alt="기본 이미지" 
+                      style={{ width: '118px', height: '76px' }} 
+                    />
+                  )}
+                  <strong>추가 장소:</strong> {place.name}(평점: {place.rating})
                 </div>
               ))}
           </StationInfoModal>
