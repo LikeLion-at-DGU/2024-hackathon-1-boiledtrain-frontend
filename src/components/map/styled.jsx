@@ -1,5 +1,20 @@
 import styled from "styled-components";
 
+
+export const Backcontainer = styled.div`
+    display: flex;
+    width: 430px;
+    height: 28px;
+`
+export const BackButton = styled.button`
+    display: flex;
+    width: 28px;
+    height: 28px;
+    margin-left: 11px;
+    background-color: inherit;
+    border: 0;
+`
+
 // 지도 화면 추가
 export const Mapcontainer = styled.div`
     width:100%;

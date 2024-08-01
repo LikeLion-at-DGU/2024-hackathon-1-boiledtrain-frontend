@@ -3,10 +3,9 @@ import subwayInfo from '../../../subwayinfo.json';
 import * as S from "./style";
 import sea from '../../assets/images/search.png';
 
-function Header() {
+function Header({ setSelectedStation }) {
   const [keyword, setKeyword] = useState("");
   const [keyItems, setKeyItems] = useState([]);
-  const [selectedStation, setSelectedStation] = useState("");
 
   const onChangeData = (e) => {
     setKeyword(e.currentTarget.value);
@@ -42,7 +41,7 @@ function Header() {
   };
 
   return (
-    <S.SearchContainer>
+    <>
       <S.Search 
         value={keyword} 
         onChange={onChangeData} 
@@ -51,7 +50,7 @@ function Header() {
       />
       {/* <S.Searchicon src={sea} alt="icon" onClick={handleIconClick} /> */}
 
-      {keyItems.length > 0 && keyword && !selectedStation && (
+      {keyItems.length > 0 && keyword && (
         <S.AutoSearchContainer>
           <S.AutoSearchWrap>
             {keyItems.map((item) => (
@@ -70,12 +69,7 @@ function Header() {
           </S.AutoSearchWrap>
         </S.AutoSearchContainer>
       )}
-      {selectedStation && (
-        <S.SelectedStation>
-          선택된 역 : {selectedStation}
-        </S.SelectedStation>
-      )}
-    </S.SearchContainer>
+      </>
   );
 }
 

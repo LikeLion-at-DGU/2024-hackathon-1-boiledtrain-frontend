@@ -4,13 +4,12 @@ export const SearchContainer = styled.div`
   width: 330px;
   height: 80px;
   flex-shrink: 0;
-  margin-left: 50px;
   display: flex;
   flex-direction: column;
 `;
 
 export const Search = styled.input`
-  border: 0;
+  /* border: 0;
   height: 40px;
   border-radius: 10px;
   background: #E7E7E7;
@@ -19,10 +18,16 @@ export const Search = styled.input`
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
-  line-height: 24.2px;
+  line-height: 24.2px; */
+  width: 330px;
+    height: 40px;
+    border-radius: 10px;
+    background: #E7E7E7;
+    border:0;
+    margin: 16px 0px 0px 0px;
+    padding:0px 5px 0px 20px;
   
   &::placeholder {
-    color: #8C8C8C;
     font-family: 'Pretendard';
   }
   

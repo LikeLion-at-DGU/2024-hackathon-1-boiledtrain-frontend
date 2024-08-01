@@ -7,13 +7,12 @@ import SearchImg from "../../assets/images/search.svg";
 import AddedPlace from "./AddedPlace";
 import Warning from "../Common/Warning";
 
-const Map = () => {
+const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
     const mapRef = useRef(null);
     const [map, setMap] = useState(null);
     const [autocomplete, setAutocomplete] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [infoWindow, setInfoWindow] = useState(null);
-    const [addedPlaces, setAddedPlaces] = useState([]);
     const [showWarning, setShowWarning] = useState(false);
     const [warningMessage, setWarningMessage] = useState("");
 
@@ -147,7 +146,7 @@ const Map = () => {
             try {
                 const token = localStorage.getItem('access_token');
                 const response = await apiCall("/user/choose_and_add_place/", 'post', {
-                    subway_station: "군자역",
+                    subway_station: selectedStation,
                     place: selectedPlace.place_id,
                 }, token);
 
