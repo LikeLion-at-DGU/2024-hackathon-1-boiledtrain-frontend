@@ -9,7 +9,7 @@ import Ment2 from "../components/Goal/Ment2";
 import BottomBar from "../components/Common/BottomBar";
 import Station from "../components/Main/Station";
 import DetailModal from "../components/Modal/DetailModal";
-import API from "../api";
+import apiCall from "../api";
 
 const PageContainer = styled.div`
   position: relative;
@@ -129,12 +129,14 @@ function OnlyRandom() {
 
   const fetchData = async () => {
     try {
-      const response = await API.get(`/map/search_places_random/`);
+      // apiCall을 사용하여 데이터 요청
+      const response = await apiCall('/map/search_places_random/', 'get');
+  
       const { subway_station, places } = response.data;
-
+  
       console.log('Fetched subway station:', subway_station);
       console.log('Fetched nearby places:', places);
-
+  
       if (subway_station && subway_station !== subwayStation) {
         setSubwayStation(subway_station);
         setNearbyPlaces(places);
@@ -145,6 +147,7 @@ function OnlyRandom() {
       console.error('Error fetching data:', error);
     }
   };
+  
 
   useEffect(() => {
     if (!subwayStation) {
@@ -207,13 +210,15 @@ function OnlyRandom() {
 
   const handleDetailClick = (place) => {
     const placeDetails = {
-      name: place.nearby_place.name,
-      address: place.nearby_place.address || '주소 정보가 없습니다.',
-      photoUrl: getPhotoUrl(place.nearby_place.photo_reference)
+        name: place.nearby_place.name,
+        rating: place.nearby_place.rating || '주소 정보가 없습니다.',
+        photoUrl: getPhotoUrl(place.nearby_place.photo_reference),
+        subwayStation: subwayStation, // 지하철역 이름 추가
     };
     setSelectedPlace(placeDetails);
     setDetailModalOpen(true);
-  };
+};
+
 
   return (
     <PageContainer>
@@ -248,13 +253,19 @@ function OnlyRandom() {
             <StationInfoModalDetail>
               {nearbyPlaces.map((place, index) => (
                 <div key={index}>
-                  {place.nearby_place.photo_reference && (
-                    <img 
-                      src={getPhotoUrl(place.nearby_place.photo_reference)} 
-                      alt={place.nearby_place.name} 
-                      style={{width: '118px', height: '76px' }}
-                    />
-                  )}
+                {place.nearby_place.photo_reference ? (
+                <img 
+                    src={getPhotoUrl(place.nearby_place.photo_reference)} 
+                    alt={place.nearby_place.name} 
+                    style={{ width: '118px', height: '76px' }}
+                />
+            ) : (
+                <img 
+                    src={pointerImage} 
+                    alt="기본 이미지" 
+                    style={{ width: '118px', height: '76px' }} 
+                />
+            )}
                   <strong>{place.category} <br/></strong> {place.nearby_place.name}
                 </div>
               ))}
