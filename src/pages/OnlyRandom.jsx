@@ -11,6 +11,7 @@ import Station from "../components/Main/Station";
 import DetailModal from "../components/Modal/DetailModal";
 import apiCall from "../api";
 
+
 const PageContainer = styled.div`
   position: relative;
   height: 873px;

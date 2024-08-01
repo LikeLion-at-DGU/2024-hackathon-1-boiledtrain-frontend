@@ -62,16 +62,20 @@ export const Describ = styled.div`
     font-size: 10px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24.2px; /* 242% */
+    line-height: 24.2px;
+    white-space: nowrap;
 `
 
 
-// 좋아요/다운로드
+// 좋아요
 export const Plus = styled.div`
     width: 55px;
-    height: 47px;
+    height: 80px;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top:18px;
 `
-
 export const P = styled.div`
     color: #000;
     text-align: right;
@@ -79,7 +83,17 @@ export const P = styled.div`
     font-size: 10px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24.2px; /* 242% */
+    line-height: 18px;
+`
+
+export const time = styled.div`
+    color: #8C8C8C;
+    font-family: Pretendard;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    white-space: nowrap;
 `
 
 export const Button = styled.button`
