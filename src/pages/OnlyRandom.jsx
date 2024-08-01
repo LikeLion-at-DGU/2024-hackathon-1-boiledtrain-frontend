@@ -10,6 +10,7 @@ import BottomBar from "../components/Common/BottomBar";
 import Station from "../components/Main/Station";
 import API from "../api";
 
+
 const PageContainer = styled.div`
   position: relative;
   height: 873px;
