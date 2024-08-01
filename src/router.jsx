@@ -29,6 +29,8 @@ const router = createBrowserRouter([
       { path: "/train", element: <ProtectedRoute element={<Train />} /> },
       { path: "/kakao", element: <Kakaologin /> },
       { path: "/kakao/login", element: <KakaoCallback /> },
+      { path: "/course" , element: <Course/>},
+      { path:"/train",element:<Train/>},
       { path:"/trainsearch",element:<TrainSearch/>},
       { path:"/test",element:<Test/>},
       { path:"/random",element:<OnlyRandom/>},
