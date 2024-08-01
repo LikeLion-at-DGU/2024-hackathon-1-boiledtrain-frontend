@@ -108,8 +108,8 @@ font-family: 'Pretendard';
 font-size: 14px;
 font-style: normal;
 font-weight: 600;
-line-height: 24.2px; /* 172.857% */
-cursor: pointer; /* Pointer로 커서 변경 */
+line-height: 24.2px;
+cursor: pointer; 
 `;
 const UnderBar = styled.div`
 width: 74px;
@@ -129,7 +129,6 @@ function OnlyRandom() {
 
   const fetchData = async () => {
     try {
-      // apiCall을 사용하여 데이터 요청
       const response = await apiCall('/map/search_places_random/', 'get');
   
       const { subway_station, places } = response.data;
@@ -208,17 +207,10 @@ function OnlyRandom() {
     return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${apiKey}`;
   };
 
-  const handleDetailClick = (place) => {
-    const placeDetails = {
-        name: place.nearby_place.name,
-        rating: place.nearby_place.rating || '주소 정보가 없습니다.',
-        photoUrl: getPhotoUrl(place.nearby_place.photo_reference),
-        subwayStation: subwayStation, // 지하철역 이름 추가
-    };
-    setSelectedPlace(placeDetails);
+  const handleDetailClick = () => {
+    setSelectedPlace(nearbyPlaces);
     setDetailModalOpen(true);
-};
-
+}
 
   return (
     <PageContainer>
@@ -270,7 +262,7 @@ function OnlyRandom() {
                 </div>
               ))}
             </StationInfoModalDetail>
-            <Detail onClick={() => handleDetailClick(nearbyPlaces[0])}>자세히 보기<UnderBar /></Detail>
+            <Detail onClick={handleDetailClick}>자세히 보기<UnderBar /></Detail>
           </StationInfoModal>
         )}
       </MapContainer>
@@ -279,10 +271,14 @@ function OnlyRandom() {
       </StyledBottomBar>
 
       <DetailModal
-        isOpen={detailModalOpen}
-        onClose={() => setDetailModalOpen(false)}
-        placeDetails={selectedPlace}
+          isOpen={detailModalOpen}
+          onClose={() => setDetailModalOpen(false)}
+          placeDetails={selectedPlace}
+          getPhotoUrl={getPhotoUrl}
+          subwayStation={subwayStation}
       />
+
+
     </PageContainer>
   );
 }
