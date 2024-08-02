@@ -233,6 +233,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                 {addedPlaces.map((place, index) => (
                     <AddedPlace
                         key={index}
+                        placeid={place.place_id}
                         placeName={place.name}
                         placeAddress={place.address}
                         placeCategory={place.category}

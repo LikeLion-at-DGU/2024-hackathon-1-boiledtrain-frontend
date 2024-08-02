@@ -40,7 +40,7 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => {
             }, token);
 
             console.log("등록 성공: ", response);
-            onRegisterSuccess(); // 등록 성공 시 onRegisterSuccess 호출
+            onRegisterSuccess();
         } catch (error) {
             console.error("등록 실패", error);
             alert("코스 등록 중 오류가 발생했습니다.");

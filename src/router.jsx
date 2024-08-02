@@ -19,13 +19,14 @@ import DiaryWrite from "./pages/DiaryWrite"
 import DiaryDetail from "./pages/DiaryDetail"
 import CourseDetail from './components/coursetrain/CourseDetail';
 import Loginpage from './pages/Loginpage';
-
+import Mypage from './pages/Mypage';
 const router = createBrowserRouter([
   {
     path: "/", 
     element: <App />,
     children: [
-      { path: "/main", element: <MainHome1 /> },
+      { path: "/", element: <MainHome1 /> },
+      { path:"/mypage",element:<Mypage/>},
       { path: "/course", element: <ProtectedRoute element={<Course />} /> },
       { path: "/train", element: <ProtectedRoute element={<Train />} /> },
       { path: "/login", element: <Loginpage /> },

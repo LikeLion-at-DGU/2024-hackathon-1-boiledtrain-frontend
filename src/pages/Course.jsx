@@ -12,7 +12,7 @@ import BottomBar from "../components/Common/BottomBar";
 import styled from "styled-components";
 
 const StyledBottomBar = styled.div`
-    position: fixed;
+    position: absolute;
     bottom: 0px;
     width: 430px;
     height: 77px;

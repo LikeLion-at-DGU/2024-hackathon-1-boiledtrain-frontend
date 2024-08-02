@@ -12,22 +12,22 @@ import { Link } from 'react-router-dom';
 function BottomBar() {
   return (
     <S.Head>
-      <Link to="/train" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
       <S.Home>
       <S.Allimage src={home} alt="home" />홈
       </S.Home>
       </Link>
-      <Link to="/train" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Link to="/diarymain" style={{ textDecoration: 'none', color: 'inherit' }}>
       <S.Home>
       <S.Allimage src={diary} alt="diary" />삶은 일기
       </S.Home>
       </Link>
-      <Link to="/train" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Link to="/course" style={{ textDecoration: 'none', color: 'inherit' }}>
       <S.Home>
       <S.Allimage src={course} alt="course" />삶은 코스
       </S.Home>
       </Link>
-      <Link to="/train" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Link to="/maypage" style={{ textDecoration: 'none', color: 'inherit' }}>
       <S.Home>
       <S.Allimage src={mypage} alt="mypage" />My Page
       </S.Home>
