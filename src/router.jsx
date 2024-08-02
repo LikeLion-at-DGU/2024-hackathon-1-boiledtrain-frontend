@@ -17,6 +17,7 @@ import TestPage from "./pages/TestPage"
 import DiaryMain from "./pages/DiaryMain"
 import DiaryWrite from "./pages/DiaryWrite"
 import DiaryDetail from "./pages/DiaryDetail"
+import CourseDetail from './components/coursetrain/CourseDetail';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
       { path: "/kakao", element: <Kakaologin /> },
       { path: "/kakao/login", element: <KakaoCallback /> },
       { path: "/course" , element: <Course/>},
+      { path: "/coursedetail",element:<CourseDetail/>},
       { path:"/train",element:<Train/>},
       { path:"/trainsearch",element:<TrainSearch/>},
       { path:"/test",element:<Test/>},
