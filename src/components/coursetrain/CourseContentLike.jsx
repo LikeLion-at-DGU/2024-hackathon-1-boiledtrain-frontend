@@ -5,7 +5,7 @@ import train from "../../assets/images/ticket.jpg";
 import apiCall from "../../api";
 import EmptyCourse from "../Common/EmptyCourse";
 
-const CourseContent = () => {
+const CourseContentLike = () => {
     const [data, setData] = useState([]);
 
     const fetchData = async () => {
@@ -75,4 +75,4 @@ const CourseContent = () => {
     );
 };
 
-export default CourseContent;
+export default CourseContentLike;

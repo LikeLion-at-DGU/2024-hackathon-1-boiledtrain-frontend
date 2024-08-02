@@ -7,17 +7,26 @@ const Select= ({selected,selected2,onSelect2})=>{
             <S.SelectContainer>
                 {selected===1 ? 
                 <>
-                <S.SelectButton 
-                onClick={()=>onSelect2(1)}
-                style={{color : selected2===1 ? '#00ABFC':'#AFAFAF', marginLeft:'291px'}}
-                >• 인기순</S.SelectButton>
-                <S.SelectButton
-                onClick={()=>onSelect2(2)}
-                style={{color : selected2===2 ? '#00ABFC':'#AFAFAF'}}
-                >• 최신순</S.SelectButton>
+                    <S.SelectButton 
+                    onClick={()=>onSelect2(1)}
+                    style={{color : selected2===1 ? '#00ABFC':'#AFAFAF', marginLeft:'291px'}}
+                    >• 인기순</S.SelectButton>
+                    <S.SelectButton
+                    onClick={()=>onSelect2(2)}
+                    style={{color : selected2===2 ? '#00ABFC':'#AFAFAF'}}
+                    >• 최신순</S.SelectButton>
                 </>
                 :
-                <></>}
+                <>
+                    <S.SelectButton 
+                    onClick={()=>onSelect2(1)}
+                    style={{color : selected2===1 ? '#00ABFC':'#AFAFAF', marginLeft:'291px'}}
+                    >• 좋아요</S.SelectButton>
+                    <S.SelectButton
+                    onClick={()=>onSelect2(2)}
+                    style={{color : selected2===2 ? '#00ABFC':'#AFAFAF'}}
+                    >• 내 코스</S.SelectButton>
+                </>}
             </S.SelectContainer>
         </>
     )

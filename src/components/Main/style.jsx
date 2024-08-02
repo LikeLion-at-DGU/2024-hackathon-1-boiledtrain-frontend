@@ -17,25 +17,29 @@ export const Bar = styled.div`
 `;
 
 export const Frame = styled.div`
-  display:flex;
-  flex-direction:row;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  /* height: 100vh;  */
   width: 430px;
-  padding-top:45px;
+  padding-top: 45px;
 `;
 
 export const Board = styled.div`
-  display:flex;
+  display: flex;
   margin-left: auto;
-  flex-direction:column;
+  flex-direction: column;
   width: 270px;
   height: 480px;
   flex-shrink: 0;
   border-radius: 21px;
   background: #FFF;
   box-shadow: -7px 13px 18.8px 0px rgba(0, 0, 0, 0.30);
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 10;
 `;
+
 export const ClosedBox = styled.div`
   display: flex;
   height: 32px;
@@ -44,11 +48,13 @@ export const ClosedBox = styled.div`
   align-items: center;
   flex-shrink: 0;
 `;
+
 export const Closed = styled.img`
   width: 18.037px;
   height: 18.075px;
   flex-shrink: 0;
 `;
+
 export const Face = styled.img`
   width: 49px;
   height: 49px;
@@ -56,6 +62,7 @@ export const Face = styled.img`
   flex-shrink: 0;
   margin-top: -22px;
 `;
+
 export const text = styled.div`
   color: #000;
   font-family: "SF Pro";
@@ -73,22 +80,24 @@ export const text2 = styled.div`
   font-weight: 590;
   line-height: 24.2px;
 `;
+
 export const newtext = styled.div`
   color: #000;
   font-family: "SF Pro";
-  width:250px;
+  width: 250px;
   font-size: 18.7px;
   font-style: normal;
   font-weight: 590;
   line-height: 24.2px;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  justify-content:flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 `;
+
 export const myprofile = styled.button`
   align-items: center;
-  display:flex;
+  display: flex;
   width: 126px;
   height: 35px;
   flex-shrink: 0;
@@ -109,9 +118,10 @@ export const myprofile = styled.button`
     transform: scale(0.98);
   }
 `;
+
 export const newmyprofile = styled.button`
   align-items: center;
-  display:flex;
+  display: flex;
   width: 170px;
   height: 35px;
   flex-shrink: 0;
@@ -133,9 +143,10 @@ export const newmyprofile = styled.button`
     transform: scale(0.98);
   }
 `;
+
 export const logout = styled.button`
   align-items: center;
-  display:flex;
+  display: flex;
   width: 92px;
   height: 35px;
   flex-shrink: 0;
@@ -156,16 +167,19 @@ export const logout = styled.button`
     transform: scale(0.98);
   }
 `;
+
 export const Newbox = styled.div`
-  display:flex;
-  flex-direction:row;
-  padding-left:30px;
+  display: flex;
+  flex-direction: row;
+  padding-left: 30px;
 `;
+
 export const box = styled.div`
-  display:flex;
-  flex-direction:row;
-  gap:7px;
+  display: flex;
+  flex-direction: row;
+  gap: 7px;
 `;
+
 export const line = styled.div`
   width: 228px;
   height: 2px;
@@ -173,11 +187,13 @@ export const line = styled.div`
   background: #D9D9D9;
   margin-top: 6px;
 `;
+
 export const Ticket = styled.img`
   width: 35px;
   height: 35px;
   flex-shrink: 0;
 `;
+
 export const AllText = styled.div`
   color: #000;
   font-family: "SF Pro";
@@ -186,6 +202,7 @@ export const AllText = styled.div`
   font-weight: 590;
   line-height: 24.2px;
 `;
+
 export const Route = styled.img`
   width: 35px;
   height: 35px;
@@ -193,73 +210,73 @@ export const Route = styled.img`
 `;
 
 export const Box1 = styled.div`
-display:flex;
-flex-direction:column;
-width: 270px;
-height: 133px;
+  display: flex;
+  flex-direction: column;
+  width: 270px;
+  height: 133px;
 `;
 
 export const Shape = styled.div`
-display:flex;
-flex-direction:row;
-height: 90px;
-align-items: center;
-gap:12px;
-`;
-export const NewShape = styled.div`
-display:flex;
-flex-direction:row;
-height: 90px;
-gap:12px;
+  display: flex;
+  flex-direction: row;
+  height: 90px;
+  align-items: center;
+  gap: 12px;
 `;
 
+export const NewShape = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 90px;
+  gap: 12px;
+`;
 
 export const Shape1 = styled.button`
-display:flex;
-flex-firection:row;
-height: 35px;
-align-items: center;
-gap:12px;
-border: none;
-outline: none;
-cursor: pointer;
-background-color:#FFFFFF;
-&:active {
+  display: flex;
+  flex-direction: row;
+  height: 35px;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: #FFFFFF;
+  &:active {
     background: #FFFFFF;
     transform: scale(0.98);
-}
+  }
 `;
+
 export const Shape2 = styled.button`
-display:flex;
-flex-firection:row;
-height: 35px;
-align-items: center;
-gap:12px;
-border: none;
-outline: none;
-cursor: pointer;
-background-color:#FFFFFF;
-&:active {
+  display: flex;
+  flex-direction: row;
+  height: 35px;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: #FFFFFF;
+  &:active {
     background: #FFFFFF;
     transform: scale(0.98);
-}
+  }
 `;
 
 export const AllShape = styled.div`
-display:flex;
-flex-direction:column;
-padding-top:14px;
-gap:14px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 14px;
+  gap: 14px;
 `;
 
-
 export const name = styled.div`
-display:flex;
-flex-direction:column;
-align-items: flex-start;
-justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 `;
 
 export const middle = styled.div`
-padding-left:21px;
+  padding-left: 21px;
 `;

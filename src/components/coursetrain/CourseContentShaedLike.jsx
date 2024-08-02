@@ -5,13 +5,13 @@ import train from "../../assets/images/ticket.jpg";
 import apiCall from "../../api";
 import EmptyCourse from "../Common/EmptyCourse";
 
-const CourseContent = () => {
+const CourseContentShaedLike = () => {
     const [data, setData] = useState([]);
 
     const fetchData = async () => {
         try {
             const token = localStorage.getItem('access_token');
-            const response = await apiCall("/user/course", "get", { headers: { Authorization: `Bearer ${token}` } });
+            const response = await apiCall("/user/course/20/created_order", "get", { headers: { Authorization: `Bearer ${token}` } });
             setData(response.data);
         } catch (error) {
             console.log("error 발생: ", error);
@@ -75,4 +75,4 @@ const CourseContent = () => {
     );
 };
 
-export default CourseContent;
+export default CourseContentShaedLike;

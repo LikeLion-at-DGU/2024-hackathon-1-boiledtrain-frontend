@@ -99,4 +99,5 @@ export const time = styled.div`
 export const Button = styled.button`
     border:0;
     background-color: inherit;
+    display:flex;
 `
