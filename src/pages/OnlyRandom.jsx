@@ -250,7 +250,7 @@ function OnlyRandom() {
                 <img 
                     src={getPhotoUrl(place.nearby_place.photo_reference)} 
                     alt={place.nearby_place.name} 
-                    style={{ width: '118px', height: '76px' }}
+                    style={{ width: '118px', height: '76px', paddingRight:'2.5px' }}
                 />
             ) : (
                 <img 

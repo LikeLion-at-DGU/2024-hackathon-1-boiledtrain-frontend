@@ -263,7 +263,7 @@ function GoalTravel() {
                     <img 
                       src={getPhotoUrl(place.photo_reference)} 
                       alt={place.name} 
-                      style={{ width: '118px', height: '76px', paddingRight:'2px' }}
+                      style={{ width: '118px', height: '76px', paddingRight:'1.5px' }}
                     />
                   ) : (
                     <img 
