@@ -1,49 +1,57 @@
 import React from "react";
 import * as S from "./style";
-import closed from "../../assets/images/closed.png"; 
+import closed from "../../assets/images/closed.png";
 import face from "../../assets/images/tr.jpg";
 import ticket from "../../assets/images/ticket.jpg";
 import route from "../../assets/images/route.jpg";
 
-function Menu() {
-  return (
-    <S.Board>
-      <S.ClosedBox>
-      <S.Closed src={closed} alt="closed" />
-      </S.ClosedBox>
+function Menu({ onClose }) {
+    const handleLogout = async () => {
+        try {
+            localStorage.removeItem('access_token'); // 로그아웃 처리
+            onClose(); // 사이드바 닫기
+        } catch (error) {
+            console.error("로그아웃 오류 발생: ", error);
+        }
+    };
 
-      <S.middle>
-        <S.Box1>
-          <S.Shape>
-          <S.Face src={face} alt="face" />
-          <S.name>
-          <S.text>@@@님,<br/>반가워요!</S.text>
-          <S.text2>아이디</S.text2>
-          </S.name>
-          </S.Shape>
-          <S.box>
-          <S.myprofile>내 정보 보기</S.myprofile>
-          <S.logout>로그아웃</S.logout>
-          </S.box>
-        </S.Box1>
+    return (
+        <S.Board>
+            <S.ClosedBox>
+                <S.Closed src={closed} alt="closed" onClick={onClose} />
+            </S.ClosedBox>
 
-          <S.line></S.line>
-        <S.AllShape>
-          <S.Shape1>
-          <S.Ticket src={ticket} alt="ticket" />
-          <S.AllText>Boiled Diary</S.AllText>
-          </S.Shape1>
-          
-          <S.Shape2>
-          <S.Route src={route} alt="route" />
-          <S.AllText>Boiled Course</S.AllText>
-          </S.Shape2>
-        </S.AllShape>
+            <S.middle>
+                <S.Box1>
+                    <S.Shape>
+                        <S.Face src={face} alt="face" />
+                        <S.name>
+                            <S.text>@@@님,<br />반가워요!</S.text>
+                            <S.text2>아이디</S.text2>
+                        </S.name>
+                    </S.Shape>
+                    <S.box>
+                        <S.myprofile>내 정보 보기</S.myprofile>
+                        <S.logout onClick={handleLogout}>로그아웃</S.logout>
+                    </S.box>
+                </S.Box1>
 
-      </S.middle>
+                <S.line></S.line>
+                <S.AllShape>
+                    <S.Shape1>
+                        <S.Ticket src={ticket} alt="ticket" />
+                        <S.AllText>Boiled Diary</S.AllText>
+                    </S.Shape1>
 
-    </S.Board>
-  );
+                    <S.Shape2>
+                        <S.Route src={route} alt="route" />
+                        <S.AllText>Boiled Course</S.AllText>
+                    </S.Shape2>
+                </S.AllShape>
+
+            </S.middle>
+        </S.Board>
+    );
 }
 
 export default Menu;

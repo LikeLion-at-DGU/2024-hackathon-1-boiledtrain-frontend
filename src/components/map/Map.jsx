@@ -224,7 +224,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                         onDelete={() => handleDeletePlace(place.name)}
                     />
                 ))}
-            </PlaceAddContainer>
+             </PlaceAddContainer>
             <hr />
         </div>
     );

@@ -3,12 +3,14 @@ import Head from "../components/Course/Head";
 import Search from "../components/Course/Search";
 import Select from "../components/Course/Select";
 import CourseContent from "../components/coursetrain/CourseContent";
-import CourseMake from "../components/map/CourseMake"
+import CourseContentLike from "../components/coursetrain/CourseContentLike";
+import CourseContentSharedFast from "../components/coursetrain/CourseContentSharedFast";
+import CourseContentSharedLike from "../components/coursetrain/CourseContentShaedLike";
 
 const Course = () => {
     const [selected, setSelected] = useState(1);
     const [selected2, setSelected2] = useState(1);
-    const [isCourseMakeVisible, setIsCourseMakeVisible] = useState(false); // 상태 추가
+    const [isCourseMakeVisible, setIsCourseMakeVisible] = useState(false);
 
     const handleAddCourseClick = () => {
         setIsCourseMakeVisible(true);
@@ -42,7 +44,14 @@ const Course = () => {
                         selected2={selected2} 
                         onSelect2={setSelected2} 
                     />
-                    <CourseContent />
+                    {selected === 1 && selected2 === 1 && <CourseContentSharedLike />}
+                    {/* 전체 코스 인기순 */}
+                    {selected === 1 && selected2 === 2 && <CourseContentSharedFast />}
+                    {/* 전체 코스 최신순 */}
+                    {selected === 2 && selected2 === 1 && <CourseContentLike />}
+                    {/* 내 코스 좋아요 누른거 */}
+                    {selected === 2 && selected2 === 2 && <CourseContent />}
+                    {/* 내 코스 내가 만든거  */}
                 </>
             )}
             {isCourseMakeVisible && (
