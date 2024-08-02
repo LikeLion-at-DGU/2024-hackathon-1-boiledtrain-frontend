@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const RandomMap = ({ placeIds, onClose }) => {
+const RandomMapGoal = ({ placeIds }) => {
   const [map, setMap] = useState(null);
   const [infoWindow, setInfoWindow] = useState(null);
 
@@ -77,11 +77,7 @@ const RandomMap = ({ placeIds, onClose }) => {
     loadMap();
   }, [placeIds]);
 
-  return (
-    <div>
-      <div id="map" style={{ width: '450px', height: '510px' }} />
-    </div>
-  );
+  return <div id="map" style={{ width: '450px', height: '510px' }} />;
 };
 
-export default RandomMap;
+export default RandomMapGoal;
