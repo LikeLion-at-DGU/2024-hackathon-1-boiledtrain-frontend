@@ -71,6 +71,18 @@ export const triptext = styled.div`
     left: 33px;
 `
 
+export const triptext2 = styled.div`
+    color: #000;
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    position: absolute;
+    top:  600px;
+    left: 33px;
+`
+
 export const emptytext = styled.div`
     color: #00ABFC;
     font-feature-settings: 'liga' off, 'clig' off;
@@ -83,7 +95,7 @@ export const emptytext = styled.div`
 //내 코스 출력
 export const tripContainer2 = styled.div`
     width: 430px;
-    height: 250px;
+    height: 200px;
     margin-top: 17px;
     display: flex;
     gap: 12px;

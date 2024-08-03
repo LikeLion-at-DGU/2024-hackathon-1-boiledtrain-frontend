@@ -9,8 +9,8 @@ const WarningChoose = ({ message, onClose, onLogin }) => {
                 <img src={error} alt="Error" />
                 {message}
             </S.errorContainer>
-            <S.Button onClick={onClose}>뒤로가기</S.Button>
-            <S.Button onClick={onLogin}>로그인하기</S.Button>
+            <S.chooseButton onClick={onClose}>뒤로가기</S.chooseButton>
+            <S.chooseButton2 onClick={onLogin}>로그인하기</S.chooseButton2>
         </S.WarningContainer>
     );
 };
