@@ -18,7 +18,7 @@ const Zzimtrip=()=>{
 
     useEffect(() => {
         fetchData();
-    }, [fetchData]);
+    }, []);
     const containerRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
     const [startX, setStartX] = useState(0);

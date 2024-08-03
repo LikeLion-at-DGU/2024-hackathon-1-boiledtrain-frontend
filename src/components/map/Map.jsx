@@ -15,6 +15,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
     const [infoWindow, setInfoWindow] = useState(null);
     const [showWarning, setShowWarning] = useState(false);
     const [warningMessage, setWarningMessage] = useState("");
+    const [placePhotos, setPlacePhotos] = useState([]);
 
     const currentMarkerRef = useRef(null);
 
@@ -90,6 +91,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                     map.setZoom(15);
                     setSelectedPlace(place);
                     createMarker(place.geometry.location, place);
+                    fetchPlaceDetails(place.place_id);
                 } else {
                     const service = new google.maps.places.PlacesService(map);
                     service.textSearch({ query: place.name }, (results, status) => {
@@ -98,13 +100,23 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                             map.setZoom(15);
                             setSelectedPlace(results[0]);
                             createMarker(results[0].geometry.location, results[0]);
+                            fetchPlaceDetails(results[0].place_id);
                         }
                     });
                 }
             });
         }
     }, [autocomplete, map, infoWindow]);
-
+    const fetchPlaceDetails = (placeId) => {
+        const service = new google.maps.places.PlacesService(map);
+        service.getDetails({ placeId }, (place, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK && place.photos) {
+                setPlacePhotos(place.photos.map(photo => photo.getUrl()));
+            } else {
+                setPlacePhotos([]);
+            }
+        });
+    };
     const deleteMarker = () => {
         if (currentMarkerRef.current) {
             currentMarkerRef.current.setMap(null);
@@ -158,6 +170,8 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                             name: selectedPlace.name,
                             address: selectedPlace.formatted_address,
                             category: selectedPlace.types.length > 0 ? selectedPlace.types[0] : '카테고리 정보가 없습니다.',
+                            id : selectedPlace.place_id,
+                            photoUrl: placePhotos[0] || '',
                         }
                     ]);
                     setSelectedPlace(null);
@@ -237,6 +251,8 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                         placeName={place.name}
                         placeAddress={place.address}
                         placeCategory={place.category}
+                        placeImg={place.reference}
+                        photoUrl={place.photoUrl}
                         order={index + 1}
                         onDelete={() => handleDeletePlace(place.name)}
                         onEdit={() => handleEditPlace(place.name)} // 수정하기 버튼 클릭 시 호출
