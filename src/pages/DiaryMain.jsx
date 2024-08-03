@@ -20,7 +20,7 @@ const DiaryMain = () => {
   const fetchData = async () => {
     try {
       const token = getToken();
-      const response = await apiCall('/user/diary', 'get', null, token);
+      const response = await apiCall('/api/user/diary', 'get', null, token);
       console.log(response.data);
       setData(response.data);
     } catch (error) {

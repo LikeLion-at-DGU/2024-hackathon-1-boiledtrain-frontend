@@ -26,7 +26,7 @@ const Loginpage = () => {
     };
 
     const redirectToKakaoLogin = async () => {
-        const kakaoAuthUrl = 'http://3.36.243.22/accounts/kakao/login/';
+        const kakaoAuthUrl = 'http://3.36.243.22/api/accounts/kakao/login/';
         window.location.href = kakaoAuthUrl;
     };
 

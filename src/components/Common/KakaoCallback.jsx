@@ -11,7 +11,7 @@ const KakaoCallback = () => {
         useEffect(()=>{
             const fetchtoken = async () => {
                 try {
-                    const response = await fetch('http://3.36.243.22:8000/accounts/kakao/login/callback/', {
+                    const response = await fetch('http://3.36.243.22:8000/api/accounts/kakao/login/callback/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

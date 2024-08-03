@@ -15,13 +15,13 @@ const PlusCourseRandom = ({ subwayStation, placelist }) => {
     const is_share = 'True'; 
 
     try {
-      const response = await apiCall('/user/course', 'POST', { title, description, subway_station: subwayStation, placelist, is_share }, token);
+      const response = await apiCall('/api/user/my_course', 'POST', { title, description, subway_station: subwayStation, placelist, is_share }, token);
 
       console.log('Response Data:', response.data);
 
       if (response.status === 200) {
         alert('코스가 저장되었습니다!');
-        navigate('/main');
+        navigate('/course');
       } else {
         alert(`코스 저장에 실패했습니다: ${response.data.message || '알 수 없는 오류'}`);
       }

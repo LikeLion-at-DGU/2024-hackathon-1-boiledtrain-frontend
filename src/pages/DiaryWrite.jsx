@@ -295,7 +295,7 @@ const DiaryWrite = () => {
     try {
       const token = getToken();
       console.log('Direct Token:', token); 
-      const response = await apiCall('/user/course', 'get', {}, token); 
+      const response = await apiCall('/api/user/course', 'get', {}, token); 
       setCourses(response.data);
       setModalIsOpen(true);
     } catch (error) {
@@ -326,7 +326,7 @@ const DiaryWrite = () => {
         alert('코스를 선택해주세요!');
         return;
       }
-      const response = await apiCall(`api/user/course/${courseId}/diary`, 'post', { title, content, mood }, token);
+      const response = await apiCall(`/api/user/course/${courseId}/diary`, 'post', { title, content, mood }, token);
       console.log(response.data); 
       alert('일기가 잘 작성되었습니다!');
       navigate('/');
