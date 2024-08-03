@@ -54,14 +54,13 @@ export const SubwayContainer=styled.div`
     justify-content:flex-end;
     width:430px;
     height:95px;
-    margin: 30px 0px 10px 0px;
+    margin: 20px 0px 60px 0px;
 `
 
-export const SubwayImg=styled.div`
+export const SubwayImg=styled.img`
     width:300px;
-    height:95px;
-    background-color: #D9D9D9;
-    border-radius: 100px 0px 0px 0px;
+    height:153px;
+
 `
 
 //Main
