@@ -98,7 +98,7 @@ export const newtext = styled.div`
 export const myprofile = styled.button`
   align-items: center;
   display: flex;
-  width: 126px;
+  width: 228px;
   height: 35px;
   flex-shrink: 0;
   border-radius: 17.5px;
@@ -122,9 +122,8 @@ export const myprofile = styled.button`
 export const newmyprofile = styled.button`
   align-items: center;
   display: flex;
-  width: 170px;
+  width: 110px;
   height: 35px;
-  flex-shrink: 0;
   border-radius: 17.5px;
   background: var(--Colors-Blue, #007AFF);
   color: #FFF;
@@ -166,12 +165,14 @@ export const logout = styled.button`
     background: #004494;
     transform: scale(0.98);
   }
+  position: absolute;
+  bottom:28px;
+  left:23px;
 `;
 
 export const Newbox = styled.div`
   display: flex;
-  flex-direction: row;
-  padding-left: 30px;
+  flex-direction: row; 
 `;
 
 export const box = styled.div`

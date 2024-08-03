@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from "./style";
 import closed from "../../assets/images/closed.png";
-import face from "../../assets/images/tr.jpg";
+import face from "../../assets/images/normalprofile.png";
 import ticket from "../../assets/images/ticket.jpg";
 import route from "../../assets/images/route.jpg";
 
@@ -32,24 +32,25 @@ function Menu({ onClose }) {
                     </S.Shape>
                     <S.box>
                         <S.myprofile>내 정보 보기</S.myprofile>
-                        <S.logout onClick={handleLogout}>로그아웃</S.logout>
+                        
                     </S.box>
                 </S.Box1>
 
                 <S.line></S.line>
                 <S.AllShape>
-                    <S.Shape1>
+                    <S.Shape1> 
                         <S.Ticket src={ticket} alt="ticket" />
-                        <S.AllText>Boiled Diary</S.AllText>
+                        <S.AllText>삶은 일기</S.AllText>
                     </S.Shape1>
 
                     <S.Shape2>
                         <S.Route src={route} alt="route" />
-                        <S.AllText>Boiled Course</S.AllText>
+                        <S.AllText>삶은 코스 </S.AllText>
                     </S.Shape2>
                 </S.AllShape>
-
+                
             </S.middle>
+            <S.logout onClick={handleLogout}>로그아웃</S.logout>
         </S.Board>
     );
 }
