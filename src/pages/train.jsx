@@ -49,7 +49,7 @@ function TrainMap() {
   
   const fetchData = async () => {
     try {
-      const response = await API.get(`/map/search_places_random/`);
+      const response = await API.get(`/api/map/search_places_random/`);
       console.log('Response:', response);
   
       const data = response.data; 

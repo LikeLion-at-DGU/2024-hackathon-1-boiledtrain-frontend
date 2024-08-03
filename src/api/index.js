@@ -4,7 +4,7 @@ import { getToken } from "../utils/auth";
 
 // Axios 인스턴스 생성
 export const API = axios.create({
-    baseURL: 'http://3.36.243.22:8000/'
+    baseURL: 'http://3.36.243.22:8000'
     // baseURL: 'https://0de0-210-94-220-228.ngrok-free.app'
 });
 
