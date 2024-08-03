@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./style";
 import closed from "../../assets/images/closed.png";
 import face from "../../assets/images/normalprofile.png";
@@ -7,10 +7,21 @@ import route from "../../assets/images/route.jpg";
 import { Link } from "react-router-dom";
 
 function Menu({ onClose }) {
+    const [userInfo, setUserInfo] = useState({ nickname: "", email: "" });
+
+    useEffect(() => {
+        const storedUserInfo = localStorage.getItem('user_info');
+        if (storedUserInfo) {
+            const parsedUserInfo = JSON.parse(storedUserInfo);
+            setUserInfo(parsedUserInfo);
+        }
+    }, []);
+
     const handleLogout = async () => {
         try {
-            localStorage.removeItem('access_token'); // 로그아웃 처리
-            onClose(); // 사이드바 닫기
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('user_info');
+            onClose(); 
         } catch (error) {
             console.error("로그아웃 오류 발생: ", error);
         }
@@ -27,29 +38,34 @@ function Menu({ onClose }) {
                     <S.Shape>
                         <S.Face src={face} alt="face" />
                         <S.name>
-                            <S.text>@@@님,<br />반가워요!</S.text>
-                            <S.text2>아이디</S.text2>
+                            <S.text>{userInfo.nickname}님,<br />반가워요!</S.text>
+                            <S.text2>{userInfo.email}</S.text2>
                         </S.name>
                     </S.Shape>
                     <S.box>
-                        <S.myprofile>내 정보 보기</S.myprofile>
-                        
+                        <Link to="/mypage" style={{ textDecoration: "none" }}>
+                            <S.myprofile>내 정보 보기</S.myprofile>
+                        </Link>
                     </S.box>
                 </S.Box1>
 
                 <S.line></S.line>
                 <S.AllShape>
-                    <Link src='/'><S.Shape1> 
-                        <S.Ticket src={ticket} alt="ticket" />
-                        <S.AllText>삶은 일기</S.AllText>
-                    </S.Shape1></Link>
+                    <Link to='/diarymain' style={{ textDecoration: "none" }}>
+                        <S.Shape1>
+                            <S.Ticket src={ticket} alt="ticket" />
+                            <S.AllText>삶은 일기</S.AllText>
+                        </S.Shape1>
+                    </Link>
 
-                    <S.Shape2>
-                        <S.Route src={route} alt="route" />
-                        <S.AllText>삶은 코스 </S.AllText>
-                    </S.Shape2>
+                    <Link to='/course' style={{ textDecoration: "none" }}>
+                        <S.Shape2>
+                            <S.Route src={route} alt="route" />
+                            <S.AllText>삶은 코스 </S.AllText>
+                        </S.Shape2>
+                    </Link>
                 </S.AllShape>
-                
+
             </S.middle>
             <S.logout onClick={handleLogout}>로그아웃</S.logout>
         </S.Board>

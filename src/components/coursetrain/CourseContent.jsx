@@ -15,7 +15,6 @@ const CourseContent = ({ onCourseClick }) => {
             const response = await apiCall("/api/user/course", "get", { headers: { Authorization: `Bearer ${token}` } });
             setData(response.data);
 
-            // Initialize likedCourses state
             const likedState = {};
             response.data.forEach(course => {
                 likedState[course.id] = course.liked; // Assuming 'liked' field exists
@@ -58,7 +57,7 @@ const CourseContent = ({ onCourseClick }) => {
     }
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
+        <S.TopContainer>
             {data.slice().reverse().map((course, index) => (
                 <S.CourseContainer key={index} onClick={() => onCourseClick(course)}>
                     <S.PhotoContainer>
@@ -87,7 +86,7 @@ const CourseContent = ({ onCourseClick }) => {
                     </S.InfoUser>
                 </S.CourseContainer>
             ))}
-        </div>
+        </S.TopContainer>
     );
 };
 

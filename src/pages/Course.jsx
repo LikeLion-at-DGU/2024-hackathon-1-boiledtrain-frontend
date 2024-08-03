@@ -28,13 +28,13 @@ const Course = () => {
 
     const handleAddCourseClick = () => {
         setIsCourseMakeVisible(true);
-        setEditingCourse(null); // Clear editing course when adding new course
+        setEditingCourse(null);
     };
 
     const handleBackButtonClick = () => {
         setIsCourseMakeVisible(false);
-        setEditingCourse(null); // Reset editingCourse state
-        setSelectedCourse(null); // Ensure CourseDetail is hidden
+        setEditingCourse(null);
+        setSelectedCourse(null);
     };
 
     const handleSelect = (value) => {
@@ -43,7 +43,7 @@ const Course = () => {
             setIsCourseMakeVisible(false);
         }
         if (selectedCourse) {
-            setSelectedCourse(null); // Head의 값이 바뀌면 CourseDetail을 숨김
+            setSelectedCourse(null);
         }
     };
 
@@ -58,11 +58,11 @@ const Course = () => {
     const handleEditCourse = (course) => {
         setEditingCourse(course);
         setIsCourseMakeVisible(true);
-        setSelectedCourse(null); // Ensure CourseDetail is hidden
+        setSelectedCourse(null);
     };
 
     return (
-        <>
+        <div>
             <Head 
                 selected={selected} 
                 onSelect={handleSelect}
@@ -101,7 +101,7 @@ const Course = () => {
             <StyledBottomBar>
                 <BottomBar />
             </StyledBottomBar>
-        </>
+        </div>
     );
 }
 

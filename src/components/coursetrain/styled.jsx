@@ -193,3 +193,16 @@ export const ContentContainer = styled.div`
     font-weight: bold;
 `
 
+export const TopContainer = styled.div`
+    display: flex; 
+    justify-content: center;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    max-height:630px; 
+    overflow-y:auto;
+    &::-webkit-scrollbar {
+        width: 0;
+        background: transparent;
+    }
+
+`

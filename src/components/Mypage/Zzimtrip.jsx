@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import * as S from "./styled";
-import point from "../../assets/images/pointer.png";
+import React,{useRef, useState,useCallback,useEffect} from "react";
+import * as S from "./styled"
+import point from "../../assets/images/pointer.png"
 import apiCall from "../../api/index";
 
-const Mytrip = () => {
+const Zzimtrip=()=>{
     const [data, setData] = useState([]);
 
     const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('access_token');
-            const response = await apiCall("/api/user/my_course", "get", { headers: { Authorization: `Bearer ${token}` } });
+            const response = await apiCall("/api/user/course/zzim_course", "get", { headers: { Authorization: `Bearer ${token}` } });
             setData(response.data);
         } catch (error) {
             console.error(error);
@@ -18,8 +18,7 @@ const Mytrip = () => {
 
     useEffect(() => {
         fetchData();
-    }, [fetchData]);
-
+    }, []);
     const containerRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
     const [startX, setStartX] = useState(0);
@@ -42,30 +41,32 @@ const Mytrip = () => {
         setIsDragging(false);
     };
 
-    return (
+    return(
         <>
-            <S.triptext>최근 내 여행</S.triptext>
-            <S.tripContainer2
-                ref={containerRef}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
-            >
-                {data.slice().reverse().map((course, index) => (
-                    <S.courseContainer key={index}>
-                        <S.Div>
-                            <S.pointImg src={point} />
-                            <S.stationP>{course.subway_station}</S.stationP>
-                        </S.Div>
-                        {course.placelist.map((place, idx) => (
+        <S.triptext2>최근 내가 찜한 여행</S.triptext2>
+        {/* <S.tripContainer>
+            <S.emptytext>이곳에서 내 여행 기록을/ 볼 수 있어요!</S.emptytext>
+        </S.tripContainer> */}
+        <S.tripContainer2
+            ref={containerRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+        >
+            {data.slice().reverse().map((course, index)=>(
+                <S.courseContainer key={index}>
+                <S.Div>
+                    <S.pointImg src={point} />
+                    <S.stationP>{course.subway_station}</S.stationP>
+                </S.Div>
+                {course.placelist.map((place, idx) => (
                             <S.placeP key={idx}>{place.name}</S.placeP> // name 속성을 출력
                         ))}
-                    </S.courseContainer>
-                ))}
+            </S.courseContainer>
+            ))}
             </S.tripContainer2>
         </>
-    );
-};
-
-export default Mytrip;
+    )
+}
+export default Zzimtrip;

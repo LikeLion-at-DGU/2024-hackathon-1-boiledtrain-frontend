@@ -71,6 +71,18 @@ export const triptext = styled.div`
     left: 33px;
 `
 
+export const triptext2 = styled.div`
+    color: #000;
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    position: absolute;
+    top:  600px;
+    left: 33px;
+`
+
 export const emptytext = styled.div`
     color: #00ABFC;
     font-feature-settings: 'liga' off, 'clig' off;
@@ -83,7 +95,7 @@ export const emptytext = styled.div`
 //내 코스 출력
 export const tripContainer2 = styled.div`
     width: 430px;
-    height: 250px;
+    height: 200px;
     margin-top: 17px;
     display: flex;
     gap: 12px;
@@ -136,4 +148,102 @@ export const placeP = styled.p`
     font-style: normal;
     font-weight: 400;
     margin: 0px 0px 0px 14px;
+`
+
+//MypageEdit
+export const Maincontainer = styled.div`
+    width:430px;
+    height:106px;
+    margin: 64px 0px 0px 30px;
+`
+
+export const userImg = styled.img`
+    width: 106px;
+    height: 106px;
+    border-radius: 100%;
+`
+export const editImg = styled.img`
+    width: 37px;
+    height: 37px;
+    position: absolute;
+    top:140px;
+    left:100px
+`
+export const userInfoContainer = styled.div`
+    width: 430px;
+    height: 80px;
+    margin : 30px 0px 0px 30px;
+    display: flex;
+    flex-direction: column;
+`
+
+export const infoText = styled.p`
+    color: #8C8C8C;
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: Pretendard;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+`
+export const Hr = styled.hr`
+    width:80%;
+    margin:15px 30px;
+`
+
+export const Hr2 = styled.hr`
+    width:80%;
+    margin:-6px 30px;
+`
+
+export const userInput = styled.input`
+    width:360px;
+    height: 30px;
+    border-width: 0;
+    outline: none;
+    color: #000;
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    &::value{
+        color: #000;
+        font-feature-settings: 'liga' off, 'clig' off;
+        font-family: Pretendard;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+    }
+`
+export const userID = styled.p`
+    width:360px;
+    color: #000;
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+`
+
+export const editButtonContainer = styled.div`
+    width:430px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:300px;
+`
+export const editButton = styled.button`
+    width: 360px;
+    height: 80px;
+    border-radius: 58px;
+    background: #00ABFC;
+    color: #FFF;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border:0;
 `
