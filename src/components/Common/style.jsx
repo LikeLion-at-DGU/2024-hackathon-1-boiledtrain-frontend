@@ -36,6 +36,13 @@ export const TopHead = styled.div`
   align-items: center;
   flex-shrink: 0;
 `;
+export const TopHead2 = styled.div`
+  display: flex;
+  width: 430px;
+  padding-top:10px;
+  align-items: center;
+  flex-shrink: 0;
+`;
 
 export const Topimage = styled.img`
   display: flex;

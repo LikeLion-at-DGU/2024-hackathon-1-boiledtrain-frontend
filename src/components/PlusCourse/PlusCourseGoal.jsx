@@ -3,26 +3,26 @@ import * as S from './style';
 import Main from '../../assets/images/mainch.png';
 import apiCall from '../../api';
 import { useNavigate } from 'react-router-dom';
-import { getToken } from "../../utils/auth"; // getToken 함수 import
+import { getToken } from "../../utils/auth";
 
 const PlusCourseGoal = ({ subwayStation, placelist, onClose }) => {
   const navigate = useNavigate();
 
   const handleClick = async () => {
-    console.log('Placelist:', placelist); // 추가된 로그
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyNjQxMzM1LCJpYXQiOjE3MjI2MTYxMzUsImp0aSI6ImNmMWE2OGM0YmUwZTQyNjlhYmE0NGUxNGRkYWRmMWJiIiwidXNlcl9pZCI6M30.4t0X6F3XeDfHkQTcbrM0AkNDeDG2ZFxB9aXWbdVgilE'; // getToken 함수를 사용하여 토큰 가져오기
-    const title = '테스트 코스입니다요'; 
-    const description = '테스트 설명'; 
+    console.log('Placelist:', placelist); 
+    const token = getToken();
+    const title = '테스트 코스입니다요_목적'; 
+    const description = '테스트 설명_목적'; 
     const is_share = 'True'; 
-  
+
     try {
-      const response = await apiCall('/api/user/course', 'POST', { title, description, subway_station: subwayStation, placelist, is_share }, token); 
-  
+      const response = await apiCall('/api/user/my_course', 'POST', { title, description, subway_station: subwayStation, placelist, is_share }, token); 
+
       console.log('Response Data:', response.data);
-  
+
       if (response.status === 200) {
         alert('코스가 저장되었습니다!');
-        navigate('/main'); 
+        navigate('/course'); 
       } else {
         alert(`코스 저장에 실패했습니다: ${response.data.message || '알 수 없는 오류'}`);
       }
@@ -30,9 +30,8 @@ const PlusCourseGoal = ({ subwayStation, placelist, onClose }) => {
       console.error('Error:', error);
       alert('API 호출 중 오류가 발생했습니다.');
     }
-    onClose(); // 저장 후 모달 닫기
+    onClose();
   };
-  
 
   return (
     <S.MainContainer onClick={handleClick}>
