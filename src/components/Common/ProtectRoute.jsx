@@ -1,31 +1,20 @@
-import React, { useEffect, useState } from 'react';
+// src/components/Common/ProtectedRoute.js
+import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import WarningChoose from './WarningChoose';
+import { useWarning } from './WarningContext';
 
-const ProtectedRoute = ({ element }) => {
+const ProtectedRoute = ({ element, excludePaths = [] }) => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [showWarning, setShowWarning] = useState(false);
+    const { showWarning } = useWarning();
 
     useEffect(() => {
         const token = localStorage.getItem('access_token');
-        if (!token) {
-            setShowWarning(true);
+        if (!token && !excludePaths.includes(location.pathname)) {
+            showWarning("로그인 후 이용 가능합니다.");
+            navigate(-1);
         }
-    }, [navigate]);
-
-    const handleLogin = () => {
-        navigate('/login', { state: { from: location } });
-    };
-
-    const handleCloseWarning = () => {
-        setShowWarning(false);
-        navigate(-1); // 이전 페이지로 이동
-    };
-
-    if (showWarning) {
-        return <WarningChoose message="로그인 후 이용 가능합니다." onClose={handleCloseWarning} onLogin={handleLogin} />;
-    }
+    }, [navigate, showWarning, location.pathname, excludePaths]);
 
     return element;
 };

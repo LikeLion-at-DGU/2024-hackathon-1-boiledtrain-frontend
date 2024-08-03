@@ -141,3 +141,33 @@ export const MenuButton = styled.button`
 export const Hr = styled.hr`
   width:70%;
 `
+
+export const chooseButton = styled.button`
+  width:173px;
+  height:67px;
+  border-radius: 0px 0px 0px 22px;
+  border :0;
+  border-top : 2px solid #D9D9D9;;
+  background-color: inherit;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24.2px;
+`
+
+export const chooseButton2 = styled.button`
+  width:173px;
+  height:67px;
+  border-radius: 0px 0px 22px 0px;
+  border :0;
+  border-top : 2px solid #D9D9D9;;
+  background-color: inherit;
+  color: #00ABFC;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24.2px;
+`
