@@ -43,7 +43,8 @@ const router = createBrowserRouter([
       { path: '/testpage', element: <TestPage /> },
       { path: '/diarymain', element: <DiaryMain /> },
       { path: '/diarywrite', element: <DiaryWrite /> },
-      { path: '/diarydetail', element: <DiaryDetail /> },
+      { path: '/diarydetail/:id', element: <DiaryDetail /> },
+
     ],
     errorElement: <NotFound />,
   },
