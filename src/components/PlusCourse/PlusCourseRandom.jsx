@@ -15,7 +15,7 @@ const PlusCourseRandom = ({ subwayStation, placelist }) => {
     const is_share = 'True'; 
 
     try {
-      const response = await apiCall('/user/course', 'POST', { title, description, subway_station: subwayStation, placelist, is_share }, token);
+      const response = await apiCall('/api/user/course', 'POST', { title, description, subway_station: subwayStation, placelist, is_share }, token);
 
       console.log('Response Data:', response.data);
 

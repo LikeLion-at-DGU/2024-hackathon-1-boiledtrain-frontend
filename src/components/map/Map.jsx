@@ -145,7 +145,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
             console.log("Selected Place:", selectedPlace);
             try {
                 const token = localStorage.getItem('access_token');
-                const response = await apiCall("/user/choose_and_add_place/", 'post', {
+                const response = await apiCall("/api/user/choose_and_add_place/", 'post', {
                     subway_station: selectedStation,
                     place: selectedPlace.place_id,
                 }, token);

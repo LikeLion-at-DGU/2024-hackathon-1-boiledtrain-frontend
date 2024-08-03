@@ -168,7 +168,7 @@ function GoalTravel() {
     setSelectedCategory(category);
 
     try {
-      const response = await apiCall('/map/search_places_category/', 'post', { category });
+      const response = await apiCall('/api/map/search_places_category/', 'post', { category });
       
       if (response.data && Array.isArray(response.data.places)) {
         const fetchedPlaces = response.data.places;
