@@ -9,7 +9,7 @@ const Mytrip = () => {
     const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('access_token');
-            const response = await apiCall("/api/user/course", "get", { headers: { Authorization: `Bearer ${token}` } });
+            const response = await apiCall("/api/user/my_course", "get", { headers: { Authorization: `Bearer ${token}` } });
             setData(response.data);
         } catch (error) {
             console.error(error);

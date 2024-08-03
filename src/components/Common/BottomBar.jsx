@@ -27,7 +27,7 @@ function BottomBar() {
       <S.Allimage src={course} alt="course" />삶은 코스
       </S.Home>
       </Link>
-      <Link to="/maypage" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Link to="/mypage" style={{ textDecoration: 'none', color: 'inherit' }}>
       <S.Home>
       <S.Allimage src={mypage} alt="mypage" />My Page
       </S.Home>

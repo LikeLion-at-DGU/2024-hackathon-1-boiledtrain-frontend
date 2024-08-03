@@ -9,8 +9,8 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => {
     const [isLock, setIsLock] = useState(true);
     const [courseName, setCourseName] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
-    const [showWarning, setShowWarning] = useState(false); // 경고 메시지 상태 추가
-    const [warningMessage,setWarningMessage] = useState("")
+    const [showWarning, setShowWarning] = useState(false);
+    const [warningMessage, setWarningMessage] = useState("");
 
     const Locked = () => {
         setIsLock(prevState => !prevState);
@@ -23,19 +23,20 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => {
         }
 
         if (addedPlaces.length <= 2) {
-            setShowWarning(true); // 경고 메시지 상태를 true로 설정
+            setShowWarning(true);
+            setWarningMessage("코스는 최소 3개 등록해야해요!");
             return;
         } else {
-            setShowWarning(false); // 경고 메시지 상태를 false로 설정
+            setShowWarning(false); 
         }
 
         try {
             const token = localStorage.getItem('access_token');
-            const response = await apiCall('/user/course', 'post', {
+            const response = await apiCall('api/user/my_course', 'post', {
                 title: courseName,
                 description: courseDescription,
                 subway_station: selectedStation,
-                placelist: addedPlaces.map(place => place.name),
+                placelist: addedPlaces.map(place => place.id),
                 is_share: isLock ? "False" : "True",
             }, token);
 
@@ -46,10 +47,11 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => {
             alert("코스 등록 중 오류가 발생했습니다.");
         }
     };
-    const handleWarningClose=()=>{
+
+    const handleWarningClose = () => {
         setShowWarning(false);
         setWarningMessage("");
-    }
+    };
 
     return (
         <>
@@ -72,7 +74,7 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => {
                     maxLength="20"
                 />
             </Courseguide>
-            {showWarning && <Warning message={"코스는 최소 3개 등록해야해요!"} onClose={handleWarningClose}/>} {/* 경고 메시지 조건부 렌더링 */}
+            {showWarning && <Warning message={warningMessage} onClose={handleWarningClose}/>} {/* 경고 메시지 조건부 렌더링 */}
             <PlaceAddButton onClick={handleRegister}>등록하기</PlaceAddButton>
         </>
     );

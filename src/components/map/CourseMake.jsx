@@ -7,11 +7,9 @@ import { SearchContainer, SearchText } from "../Course/styled";
 import Back from "../../assets/images/back.png";
 
 const CourseMake = ({ onBackButtonClick, course }) => {
-    // State to hold selected station and added places
     const [selectedStation, setSelectedStation] = useState(course?.subway_station || '');
     const [addedPlaces, setAddedPlaces] = useState(course?.placelist || []);
 
-    // Effect to update state if course prop changes
     useEffect(() => {
         if (course) {
             setSelectedStation(course.subway_station || '');
@@ -19,7 +17,6 @@ const CourseMake = ({ onBackButtonClick, course }) => {
         }
     }, [course]);
 
-    // Determine if SearchContainer should be hidden
     const isSearchContainerHidden = selectedStation !== '';
 
     return (

@@ -20,8 +20,7 @@ import DiaryDetail from './pages/DiaryDetail';
 import CourseDetail from './components/coursetrain/CourseDetail';
 import Loginpage from './pages/Loginpage';
 import Mypage from './pages/Mypage';
-
-const excludePaths = ['/', '/random', '/goaltravel'];
+import MypageEdit from './pages/MypageEdit';
 
 const router = createBrowserRouter([
   {
@@ -32,8 +31,9 @@ const router = createBrowserRouter([
       { path: '/random', element: <OnlyRandom /> },
       { path: '/goaltravel', element: <GoalTravel1 /> },
       { path: '/mypage', element: <Mypage /> },
-      { path: '/course', element: <ProtectedRoute element={<Course />} excludePaths={excludePaths} /> },
-      { path: '/train', element: <ProtectedRoute element={<Train />} excludePaths={excludePaths} /> },
+      { path: '/mypage/edit', element:<MypageEdit/>},
+      { path: '/course', element: <Course/> },
+      { path: '/train', element: <Train /> },
       { path: '/login', element: <Loginpage /> },
       { path:'/kakao/login',element:<KakaoCallback/>},
       { path: '/coursedetail', element: <CourseDetail /> },

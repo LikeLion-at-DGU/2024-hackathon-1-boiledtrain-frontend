@@ -2,14 +2,17 @@ import React from "react";
 import * as S from "./styled"
 import profile from "../../assets/images/normalprofile.png";
 import edit from "../../assets/images/edit.png"
+import { getUserInfo } from "../../utils/auth";
+import { Link } from "react-router-dom";
 
 const Info =()=>{
+    const id = getUserInfo()
     return(
         <S.infoContainer>
             <S.profileImg src={profile}/>
-            <S.EditButton src={edit}/>
-            <S.name>@@@</S.name>
-            <S.id>아이디</S.id>
+            <Link to='/mypage/edit'><S.EditButton src={edit}/></Link>
+            <S.name>{id.nickname}</S.name>
+            <S.id>{id.email}</S.id>
         </S.infoContainer>
     )
 }
