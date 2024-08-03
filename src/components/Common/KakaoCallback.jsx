@@ -29,7 +29,7 @@ const KakaoCallback = () => {
                     
                     localStorage.setItem('access_token', result.access);
 
-                    navigate('/main');
+                    navigate('/');
                 } catch (error) {
                     console.error("Error during Kakao login:", error);
                     //로그인 실패화면
