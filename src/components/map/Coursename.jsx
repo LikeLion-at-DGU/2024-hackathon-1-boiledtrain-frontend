@@ -3,11 +3,14 @@ import { Describ, Bold, Lockcontainer, LockButton, Courseguide, Courseinput, Pla
 import Lock from "../../assets/images/Lock.svg";
 import unLock from "../../assets/images/unLock.png";
 import apiCall from "../../api";
+import Warning from "../Common/Warning";
 
-const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => { // onRegisterSuccess prop 추가
+const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => {
     const [isLock, setIsLock] = useState(true);
     const [courseName, setCourseName] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
+    const [showWarning, setShowWarning] = useState(false); // 경고 메시지 상태 추가
+    const [warningMessage,setWarningMessage] = useState("")
 
     const Locked = () => {
         setIsLock(prevState => !prevState);
@@ -18,7 +21,14 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => { //
             alert("모든 값을 입력해주세요!");
             return;
         }
-        
+
+        if (addedPlaces.length <= 2) {
+            setShowWarning(true); // 경고 메시지 상태를 true로 설정
+            return;
+        } else {
+            setShowWarning(false); // 경고 메시지 상태를 false로 설정
+        }
+
         try {
             const token = localStorage.getItem('access_token');
             const response = await apiCall('/user/course', 'post', {
@@ -30,12 +40,16 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => { //
             }, token);
 
             console.log("등록 성공: ", response);
-            onRegisterSuccess(); // 등록 성공 시 onRegisterSuccess 호출
+            onRegisterSuccess();
         } catch (error) {
             console.error("등록 실패", error);
             alert("코스 등록 중 오류가 발생했습니다.");
         }
     };
+    const handleWarningClose=()=>{
+        setShowWarning(false);
+        setWarningMessage("");
+    }
 
     return (
         <>
@@ -58,6 +72,7 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => { //
                     maxLength="20"
                 />
             </Courseguide>
+            {showWarning && <Warning message={"코스는 최소 3개 등록해야해요!"} onClose={handleWarningClose}/>} {/* 경고 메시지 조건부 렌더링 */}
             <PlaceAddButton onClick={handleRegister}>등록하기</PlaceAddButton>
         </>
     );

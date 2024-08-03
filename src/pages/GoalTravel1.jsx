@@ -129,6 +129,7 @@ function GoalTravel() {
         setStations(results.data);
       },
     });
+    console.log()
   };
 
   useEffect(() => {

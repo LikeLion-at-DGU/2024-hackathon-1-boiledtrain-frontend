@@ -182,6 +182,22 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
         }
     };
 
+    const handleEditPlace = async (placeName) => {
+        const service = new google.maps.places.PlacesService(map);
+        
+        service.textSearch({ query: placeName }, (results, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
+                const place = results[0];
+                map.setCenter(place.geometry.location);
+                map.setZoom(15);
+                setSelectedPlace(place);
+                createMarker(place.geometry.location, place);
+            } else {
+                console.error('장소를 찾을 수 없습니다.');
+            }
+        });
+    };
+
     const handleDeletePlace = (placeName) => {
         setAddedPlaces(prevPlaces => prevPlaces.filter(place => place.name !== placeName));
     };
@@ -217,14 +233,16 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                 {addedPlaces.map((place, index) => (
                     <AddedPlace
                         key={index}
+                        placeid={place.place_id}
                         placeName={place.name}
                         placeAddress={place.address}
                         placeCategory={place.category}
                         order={index + 1}
                         onDelete={() => handleDeletePlace(place.name)}
+                        onEdit={() => handleEditPlace(place.name)} // 수정하기 버튼 클릭 시 호출
                     />
                 ))}
-             </PlaceAddContainer>
+            </PlaceAddContainer>
             <hr />
         </div>
     );

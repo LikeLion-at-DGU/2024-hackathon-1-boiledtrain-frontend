@@ -113,3 +113,31 @@ export const TopSelect = styled.img`
   width: 24px;
   height: 24px;
 `;
+
+
+//MenuList
+export const MenuContainer=styled.div`
+  position: absolute;
+  right:18px;
+  top:120px;
+  width: 160px;
+  height: 80px;
+  border-radius: 15px;
+  border: 1px solid #D9D9D9;
+  background: #FFF;
+  box-shadow: 0px 4px 4.8px 0px rgba(0, 0, 0, 0.25);
+`
+export const MenuButton = styled.button`
+  border-radius: 15px;
+  height:24px;
+  width:160px;
+  background-color: inherit;
+  border:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+`
+
+export const Hr = styled.hr`
+  width:70%;
+`

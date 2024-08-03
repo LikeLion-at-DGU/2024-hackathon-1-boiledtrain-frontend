@@ -1,10 +1,10 @@
 import styled from "styled-components"
-
+import "../../styles/font.css"
 
 // course_1
 export const CourseContainer = styled.div`
     width:375px;
-    height: 153px;
+    min-height: 153px;
     background-color: rgba(212, 242, 255, 1);
     border-radius: 27px;
     position: relative;
@@ -101,3 +101,95 @@ export const Button = styled.button`
     background-color: inherit;
     display:flex;
 `
+
+//코스 디테일 페이지
+
+export const detailContainer = styled.div`
+    width: 400px;
+    min-height: 712px;
+    border-radius: 20px;
+    background: #D4F2FF;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 15px;
+`
+
+export const header = styled.div`
+    width:400px;
+    height: 28px;
+    padding-top: 20px;
+    padding-bottom: 13px;
+    border-radius: 20px;
+    display:flex;
+    justify-content: space-between;
+`
+
+export const HeadButton = styled.div`
+    background-color: inherit;
+    border:0;
+    width: 24px;
+    height: 24px;
+`
+
+export const infoUserContainer = styled.div`
+    width:384px;
+    height: 45px;
+    display: flex;
+    flex-direction: row;
+    margin-left: 16px;
+`
+
+export const userImg= styled.img`
+    border-radius: 100%;
+    width:45px;
+    height: 45px;
+`
+
+export const User = styled.div`
+    height: 45px;
+    display:flex;
+    flex-direction: column;
+    gap:10px;
+    margin-top:3px;
+    margin-left: 6px;
+`
+
+export const userNickname = styled.p`
+    color: #000;
+    font-family: Pretendard;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    margin: 0;
+`
+
+export const userId = styled.p`
+    color: #8C8C8C;
+    font-family: Pretendard;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    margin: 0;
+`
+
+export const mapContainer = styled.div`
+    width: 360px;
+    height: 393px;
+    border-radius: 20px;
+    margin-top: 22px;
+`
+
+export const ContentContainer = styled.div`
+    width: 400px;
+    min-height: 139px;
+    margin-left:20px;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    font-size: 16px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+`
+

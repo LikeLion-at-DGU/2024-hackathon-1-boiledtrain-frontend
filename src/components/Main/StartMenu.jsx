@@ -23,7 +23,7 @@ function StartMenu({onClose}) {
           <S.newtext>안녕하세요!<br/>로그인하고 더 많은 기능을<br/>삶아봅시다.</S.newtext>
           </S.NewShape>
           <S.Newbox>
-          <S.newmyprofile onClick={redirectToKakaoLogin}>카카오 로그인</S.newmyprofile>
+          <S.newmyprofile onClick={redirectToKakaoLogin}>로그인</S.newmyprofile>
           </S.Newbox>
         </S.Box1>
 
@@ -31,12 +31,12 @@ function StartMenu({onClose}) {
         <S.AllShape>
           <S.Shape1>
           <S.Ticket src={ticket} alt="ticket" />
-          <S.AllText>Boiled Diary</S.AllText>
+          <S.AllText>삶은 일기</S.AllText>
           </S.Shape1>
           
           <S.Shape2>
           <S.Route src={route} alt="route" />
-          <S.AllText>Boiled Course</S.AllText>
+          <S.AllText>삶은 코스</S.AllText>
           </S.Shape2>
         </S.AllShape>
 

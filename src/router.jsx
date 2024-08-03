@@ -17,18 +17,22 @@ import TestPage from "./pages/TestPage"
 import DiaryMain from "./pages/DiaryMain"
 import DiaryWrite from "./pages/DiaryWrite"
 import DiaryDetail from "./pages/DiaryDetail"
-
+import CourseDetail from './components/coursetrain/CourseDetail';
+import Loginpage from './pages/Loginpage';
+import Mypage from './pages/Mypage';
 const router = createBrowserRouter([
   {
     path: "/", 
     element: <App />,
     children: [
-      { path: "/main", element: <MainHome1 /> },
+      { path: "/", element: <MainHome1 /> },
+      { path:"/mypage",element:<Mypage/>},
       { path: "/course", element: <ProtectedRoute element={<Course />} /> },
       { path: "/train", element: <ProtectedRoute element={<Train />} /> },
+      { path: "/login", element: <Loginpage /> },
       { path: "/kakao", element: <Kakaologin /> },
       { path: "/kakao/login", element: <KakaoCallback /> },
-      { path: "/course" , element: <Course/>},
+      { path: "/coursedetail",element:<CourseDetail/>},
       { path:"/train",element:<Train/>},
       { path:"/trainsearch",element:<TrainSearch/>},
       { path:"/test",element:<Test/>},
