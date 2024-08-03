@@ -60,7 +60,7 @@ export const Face = styled.img`
   height: 49px;
   border-radius: 50%;
   flex-shrink: 0;
-  margin-top: -22px;
+  margin-top: -7px;
 `;
 
 export const text = styled.div`
@@ -197,11 +197,11 @@ export const Ticket = styled.img`
 
 export const AllText = styled.div`
   color: #000;
-  font-family: "SF Pro";
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 590;
-  line-height: 24.2px;
+font-family: 'Pretendard';
+font-size: 15px;
+font-style: normal;
+font-weight: 600;
+line-height: 24.2px; /* 161.333% */
 `;
 
 export const Route = styled.img`

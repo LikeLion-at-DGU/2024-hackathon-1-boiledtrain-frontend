@@ -1,5 +1,16 @@
-import { styled } from "styled-components";
-import "../../styles/font.css"
+import styled, { keyframes } from 'styled-components';
+import '../../styles/font.css';
+
+const slideInFromRight = keyframes`
+from {
+    transform: translateX(100%); 
+    opacity: 0;
+}
+to {
+    transform: translateX(0); 
+    opacity: 1;
+}
+`;
 
 // TopBar
 export const TopBarContainer =styled.div`
@@ -49,19 +60,20 @@ export const Content = styled.div`
 `
 
 //Subwayai
-export const SubwayContainer=styled.div`
-    display:flex;
-    justify-content:flex-end;
-    width:430px;
-    height:95px;
-    margin: 20px 0px 60px 0px;
-`
+export const SubwayContainer = styled.div`
+display: flex;
+justify-content: flex-end;
+width: 430px;
+height: 95px;
+margin: 20px 0px 60px 0px;
+animation: ${slideInFromRight} 0.7s ease-in-out;
+`;
 
-export const SubwayImg=styled.img`
-    width:300px;
-    height:153px;
+export const SubwayImg = styled.img`
+width: 300px;
+height: 153px;
+`;
 
-`
 
 //Main
 export const MainContainer=styled.div`
