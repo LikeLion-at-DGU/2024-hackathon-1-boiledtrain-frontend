@@ -81,6 +81,10 @@ const PostContent = styled.textarea`
     color: #D9D9D9;
     font-size: 19px;
   }
+  &::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
 `;
 
 const PostLine = styled.div`
@@ -279,6 +283,25 @@ const CourseDetails = styled.div`
   width: 380px;
   text-align: left;
 `;
+const PreviewImageWrapper = styled.div`
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center;     /* 세로 중앙 정렬 */
+  margin: 10px 0;         /* 위아래 여백 */
+`;
+
+const FileInput = styled.input`
+  margin: 10px;
+  display: block;
+  width:300px;
+`;
+
+const PreviewImage = styled.img`
+  width: 300px;
+  height: 200px;
+  margin: 10px 0;
+  align-items:center;
+`;
 
 const DiaryWrite = () => {
   const { course_id } = useParams(); 
@@ -289,13 +312,14 @@ const DiaryWrite = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourseDetails, setSelectedCourseDetails] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [image, setImage] = useState(null); // 이미지 상태 추가
+  const [imagePreview, setImagePreview] = useState(null); // 이미지 미리보기 상태 추가
   const navigate = useNavigate();
 
   const fetchCourseData = async () => {
     try {
       const token = getToken();
-      console.log('Direct Token:', token); 
-      const response = await apiCall('/api/user/course', 'get', {}, token); 
+      const response = await apiCall('/api/user/my_course', 'get', {}, token); 
       setCourses(response.data);
       setModalIsOpen(true);
     } catch (error) {
@@ -307,29 +331,51 @@ const DiaryWrite = () => {
   const selectCourse = async (id) => {
     setCourseId(id);
     setModalIsOpen(false);
-    console.log('Selected Course ID:', id);
-
     try {
       const token = getToken();
-      const response = await apiCall(`/user/course/${id}`, 'get', {}, token);
+      const response = await apiCall(`/api/user/course/${id}`, 'get', {}, token);
       setSelectedCourseDetails(response.data);
     } catch (error) {
       console.error('Error fetching course details:', error);
     }
   };
 
+  const handleAddImage = (e) => {
+    const file = e.target.files[0]; // 하나의 파일만 선택
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result); // 미리보기 상태 업데이트
+      };
+      setImage(file); // 이미지 상태 업데이트
+      reader.readAsDataURL(file);
+    }
+  };
+
   const PostData = async () => {
     try {
       const token = getToken();
-      console.log('Course ID:', courseId);
       if (!courseId) {
         alert('코스를 선택해주세요!');
         return;
       }
-      const response = await apiCall(`/api/user/course/${courseId}/diary`, 'post', { title, content, mood }, token);
-      console.log(response.data); 
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('content', content);
+      formData.append('mood', mood);
+      
+      // 이미지가 선택된 경우에만 추가
+      if (image) {
+        formData.append('image', image); // 이미지 추가
+      }
+
+      const response = await apiCall(`/api/user/course/${courseId}/diary`, 'post', formData, token, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       alert('일기가 잘 작성되었습니다!');
-      navigate('/');
+      navigate('/diarymain');
     } catch (error) {
       console.error(error);
       alert('일기가 작성되지 않았습니다!');
@@ -361,24 +407,16 @@ const DiaryWrite = () => {
           <PostCourseImage src={Photo} />
           <PostCourseText>
           {selectedCourseDetails 
-            ? `${selectedCourseDetails.subway_station}역 코스 - ${selectedCourseDetails.placelist.join(' - ')}` 
+            ? `${selectedCourseDetails.subway_station}역 코스 - ${selectedCourseDetails.title}` 
             : '코스 추가'}
           </PostCourseText>
         </PostCourse>
-          {/* {selectedCourseDetails && (
-            <CourseDetails>
-              <p style={{ paddingLeft: '15px' }}>
-                {selectedCourseDetails.subway_station}역 코스
-                <span style={{ margin: '10px' }}></span>
-                {formatDate(selectedCourseDetails.created_at)}
-              </p>
-              <ul>
-                {selectedCourseDetails.placelist.map((place, index) => (
-                  <li key={index}>{place}</li>
-                ))}
-              </ul>
-            </CourseDetails>
-          )} */}
+        <FileInput type="file" accept="image/*" onChange={handleAddImage} /> {/* 이미지 업로드 */}
+        {imagePreview && (
+          <PreviewImageWrapper>
+          <PreviewImage src={imagePreview} alt="미리보기" />
+          </PreviewImageWrapper>
+        )}
         <PostMood
           placeholder="코스에 대한 당신의 기분을 한줄로!"
           value={mood}
@@ -399,7 +437,7 @@ const DiaryWrite = () => {
               {courses.map((course) => (
                 <CourseButton key={course.id} onClick={() => selectCourse(course.id)}>
                   <CourseStation>{course.subway_station}<CourseTime>{formatDate(course.created_at)}</CourseTime></CourseStation>
-                  <CoursePlace>{course.placelist.join(' - ')}</CoursePlace>
+                  <CoursePlace>{course.title}</CoursePlace>
                 </CourseButton>
               ))}
             </ScrollableArea>

@@ -9,9 +9,22 @@ import apiCall from '../api';
 import { getToken } from "../utils/auth";
 
 const BottomStyle = styled.div`
-  position: fixed;
-  bottom: 0px;
-  transform: translateX(0px);
+    position: absolute;
+    bottom: 0px;
+    width: 430px;
+    height: 77px;
+    background: #00ABFC;
+`;
+
+const ContentContainer = styled.div`
+  max-height: 650px;
+  padding-bottom:50px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
 `;
 
 const DiaryMain = () => {
@@ -35,14 +48,16 @@ const DiaryMain = () => {
   return (
     <>
       <Head />
-      {data.length > 0 ? (
-        data.map(data => (
-          <DiaryBox key={data.id} data={data} />
-        ))
-      ) : (
-        <EmptyMent />
-      )}
-      <Plus />
+      <ContentContainer>
+        {data.length > 0 ? (
+          data.map(data => (
+            <DiaryBox key={data.id} data={data} />
+          ))
+        ) : (
+          <EmptyMent />
+        )}
+        <Plus />
+      </ContentContainer>
       <BottomStyle>
         <Bottom />
       </BottomStyle>

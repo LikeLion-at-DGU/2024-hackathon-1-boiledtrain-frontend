@@ -34,15 +34,15 @@ background: #AFAFAF;
 
 export const DiaryBoxContainer = styled.div`
 width: 360px;
-height: 258px;
+/* height: 258px; */
 flex-shrink: 0;
 display:flex;
 flex-direction:column;
 align-items:flex-start;
 gap:10px;
 padding-left:35px;
-padding-top:40px;
-padding-bottom:40px;
+padding-top:10px;
+padding-bottom:10px;
 `;
 
 export const BoxTitle = styled.div`
@@ -56,7 +56,7 @@ font-weight: 600;
 line-height: normal;
 `;
 
-export const BoxPhoto = styled.div`
+export const BoxPhoto = styled.img`
 width: 360px;
 height: 170px;
 border-radius: 10px;
@@ -64,14 +64,19 @@ background: var(--Miscellaneous-Kit-Section-Fill, #F5F5F5);
 `;
 
 export const BoxContent = styled.div`
-color: #8C8C8C;
-font-feature-settings: 'clig' off, 'liga' off;
-font-family: 'Pretendard';
-font-size: 12px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
+  width: 100%; 
+  color: #8C8C8C;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: 'Pretendard';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; /
 `;
+
 
 export const BoxDate = styled.div`
 color: #AFAFAF;
@@ -124,9 +129,14 @@ height: 159px;
 flex-shrink: 0;
 border-radius: 117px;
 background: #D4F2FF;
-position: fixed;
-bottom: 0px;
+/* position: fixed; */
+/* bottom: 0px; */
 transform: translateX(0px);
+
+position: absolute;
+bottom: 0px;
+/* width: 430px;
+height: 77px; */
 `;
 
 export const MentBtn = styled.div`
@@ -192,4 +202,62 @@ export const EmptyPhoto = styled.img`
 width: 90px;
 height: 90px;
 flex-shrink: 0;
+`;
+
+export const MenuContainer=styled.div`
+  position: absolute;
+  transform: translate(65%, 20%);
+  width: 160px;
+  height: 100px;
+  border-radius: 15px;
+  border: 1px solid #D9D9D9;
+  background: #FFF;
+  box-shadow: 0px 4px 4.8px 0px rgba(0, 0, 0, 0.25);
+`;
+export const MenuButton = styled.button`
+  border-radius: 15px;
+  padding-top:20px;
+  height:24px;
+  width:160px;
+  background-color: inherit;
+  border:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color: #000;
+  text-align: center;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family:'Pretendard';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  cursor:pointer;
+`;
+
+export const MenuButton2 = styled.button`
+  border-radius: 15px;
+  padding-top:10px;
+  padding-bottom:10px;
+  height:24px;
+  width:160px;
+  background-color: inherit;
+  border:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color: #FF453A;
+  text-align: center;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family:'Pretendard';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  cursor:pointer;
+`;
+
+export const Hr = styled.hr`
+  width:70%;
+  margin-top:20px;
 `;

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import * as S from "./style";
-import Image from "../../assets/images/tr.jpg";
-import pointerImage from '../../assets/images/pointer.png';
 import Base from '../../assets/images/baseimage.png';
 import Main from '../../assets/images/mainch.png';
 import RandomMap from '../RandomMap/RandomMap';

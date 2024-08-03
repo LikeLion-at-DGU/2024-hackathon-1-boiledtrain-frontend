@@ -23,7 +23,7 @@ function DetailModalGoal({ isOpen, onClose, places, getPhotoUrl, subwayStation }
 
         setPlaceIds(ids);
         setShowPlusCourse(true); 
-        setShowMap(true); // showMap 상태를 true로 설정
+        setShowMap(true);
     };
 
     const handleClose = () => {
@@ -40,7 +40,7 @@ function DetailModalGoal({ isOpen, onClose, places, getPhotoUrl, subwayStation }
 
     return (
         <div>
-            {showPlusCourse && <PlusCourseGoal placeIds={placeIds} onClose={() => setShowPlusCourse(false)} />}
+            {showPlusCourse && <PlusCourseGoal placelist={placeIds} onClose={() => setShowPlusCourse(false)} subwayStation={subwayStation} />}
             <S.ModalTotal $isExiting={isExiting}>
                 <S.Head2>
                     <S.Icon src={Main} />
@@ -82,7 +82,7 @@ function DetailModalGoal({ isOpen, onClose, places, getPhotoUrl, subwayStation }
                                             <img 
                                                 src={getPhotoUrl(additionalPlace.photo_reference)} 
                                                 alt={additionalPlace.name} 
-                                                style={{ width: '178px', height: '114px' }} 
+                                                style={{ width: '178px', height: '114px', paddingRight:'1.5px' }} 
                                             />
                                         ) : (
                                             <img 
