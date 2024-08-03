@@ -35,6 +35,7 @@ const router = createBrowserRouter([
       { path: '/course', element: <ProtectedRoute element={<Course />} excludePaths={excludePaths} /> },
       { path: '/train', element: <ProtectedRoute element={<Train />} excludePaths={excludePaths} /> },
       { path: '/login', element: <Loginpage /> },
+      { path:'/kakao/login',element:<KakaoCallback/>},
       { path: '/coursedetail', element: <CourseDetail /> },
       { path: '/train', element: <Train /> },
       { path: '/trainsearch', element: <TrainSearch /> },
