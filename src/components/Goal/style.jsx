@@ -107,35 +107,51 @@ export const MainMent = styled.div`
 `;
 
 export const MainMent2 = styled.div`
-  padding-top:47px;
-  padding-bottom:10px;
   color: #000;
   font-family: 'Pretendard';
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
   line-height: 24.2px;
-  height:36px;
+  display: flex;
+  width: 430px;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
 `;
 
 export const MainMent3 = styled.div`
-  padding-bottom:75px;
+  padding-bottom:58px;
   color: #000;
   font-family: 'Pretendard';
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
   line-height: 24.2px;
-  height:36px;
+  height:45px;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:11px;
 `;
 
+export const Ment2 = styled.div`
+display:flex;
+  flex-direction:row;
+  align-items:center;
+`;
+
+
+export const Ment2Image = styled.img`
+  width: auto;
+  height: 58px;
+  flex-shrink: 0;
+  margin-bottom:10px;
+`;
+
+
 export const Ment3Image = styled.img`
-  width: 199px;
-  height: 38px;
+  width: 95px;
+  height: 58px;
   flex-shrink: 0;
 `;
 
@@ -163,5 +179,4 @@ export const MentButton = styled.div`
   display:flex;
   flex-direction:row;
   align-items:center;
-  gap:10px;
 `;

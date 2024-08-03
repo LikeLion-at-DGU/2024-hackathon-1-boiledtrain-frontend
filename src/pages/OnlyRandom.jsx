@@ -10,6 +10,8 @@ import BottomBar from "../components/Common/BottomBar";
 import Station from "../components/Main/Station";
 import DetailModal from "../components/Modal/DetailModal";
 import apiCall from "../api";
+import Base from '../assets/images/baseimage.png';
+import PlusCourseRandom from '../components/PlusCourse/PlusCourseRandom'; 
 
 
 const PageContainer = styled.div`
@@ -131,12 +133,12 @@ function OnlyRandom() {
   const fetchData = async () => {
     try {
       const response = await apiCall('/map/search_places_random/', 'get');
-  
+
       const { subway_station, places } = response.data;
-  
+
       console.log('Fetched subway station:', subway_station);
       console.log('Fetched nearby places:', places);
-  
+
       if (subway_station && subway_station !== subwayStation) {
         setSubwayStation(subway_station);
         setNearbyPlaces(places);
@@ -147,7 +149,6 @@ function OnlyRandom() {
       console.error('Error fetching data:', error);
     }
   };
-  
 
   useEffect(() => {
     if (!subwayStation) {
@@ -211,7 +212,7 @@ function OnlyRandom() {
   const handleDetailClick = () => {
     setSelectedPlace(nearbyPlaces);
     setDetailModalOpen(true);
-}
+  };
 
   return (
     <PageContainer>
@@ -225,19 +226,10 @@ function OnlyRandom() {
         <Ment2 />
       )}
       <MapContainer>
-        <TransformWrapper
-          initialScale={scale}
-          initialPositionX={-110}
-          initialPositionY={0}
-        >
+        <TransformWrapper initialScale={scale} initialPositionX={-110} initialPositionY={0}>
           <TransformComponent>
             <MapImage src={mapImage} alt="Subway Map" />
-            {pointPosition && (
-              <Point
-                style={pointPosition}
-                onClick={() => {}}
-              />
-            )}
+            {pointPosition && <Point style={pointPosition} onClick={() => {}} />}
           </TransformComponent>
         </TransformWrapper>
         {subwayStation && (
@@ -246,19 +238,19 @@ function OnlyRandom() {
             <StationInfoModalDetail>
               {nearbyPlaces.map((place, index) => (
                 <div key={index}>
-                {place.nearby_place.photo_reference ? (
-                <img 
-                    src={getPhotoUrl(place.nearby_place.photo_reference)} 
-                    alt={place.nearby_place.name} 
-                    style={{ width: '118px', height: '76px', paddingRight:'2.5px' }}
-                />
-            ) : (
-                <img 
-                    src={pointerImage} 
-                    alt="기본 이미지" 
-                    style={{ width: '118px', height: '76px' }} 
-                />
-            )}
+                  {place.nearby_place.photo_reference ? (
+                    <img 
+                      src={getPhotoUrl(place.nearby_place.photo_reference)} 
+                      alt={place.nearby_place.name} 
+                      style={{ width: '118px', height: '76px', paddingRight:'2.5px' }}
+                    />
+                  ) : (
+                    <img 
+                      src={Base} 
+                      alt="기본 이미지" 
+                      style={{ width: '118px', height: '76px' }} 
+                    />
+                  )}
                   <strong>{place.category} <br/></strong> {place.nearby_place.name}
                 </div>
               ))}
@@ -271,15 +263,18 @@ function OnlyRandom() {
         <BottomBar />
       </StyledBottomBar>
 
+      {/* <PlusCourseRandom
+        subwayStation={subwayStation}
+        placelist={nearbyPlaces.map(place => place.nearby_place.name)}
+      /> */}
+
       <DetailModal
-          isOpen={detailModalOpen}
-          onClose={() => setDetailModalOpen(false)}
-          placeDetails={selectedPlace}
-          getPhotoUrl={getPhotoUrl}
-          subwayStation={subwayStation}
+        isOpen={detailModalOpen}
+        onClose={() => setDetailModalOpen(false)}
+        placeDetails={selectedPlace}
+        getPhotoUrl={getPhotoUrl}
+        subwayStation={subwayStation}
       />
-
-
     </PageContainer>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Papa from 'papaparse';
 import mapImage from '../assets/images/map2.jpg';
+import Base from '../assets/images/baseimage.png';
 import pointerImage from '../assets/images/pointer.png';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import TopBar2 from "../components/Common/TopBar2";
@@ -246,7 +247,7 @@ function GoalTravel() {
                     />
                   ) : (
                     <img 
-                      src={pointerImage} 
+                      src={Base} 
                       alt="기본 이미지" 
                       style={{ width: '118px', height: '76px' }} 
                     />
@@ -267,7 +268,7 @@ function GoalTravel() {
                     />
                   ) : (
                     <img 
-                      src={pointerImage} 
+                      src={Base} 
                       alt="기본 이미지" 
                       style={{ width: '118px', height: '76px' }} 
                     />

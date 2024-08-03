@@ -37,7 +37,7 @@ const DetailDate = styled.div`
   color: #8C8C8C;
   text-align: center;
   font-feature-settings: 'liga' off, 'clig' off;
-  font-family: Pretendard;
+  font-family: 'Pretendard';
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
