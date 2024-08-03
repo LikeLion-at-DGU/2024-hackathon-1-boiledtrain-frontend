@@ -79,7 +79,7 @@ const RandomMap = ({ placeIds, onClose }) => {
 
   return (
     <div>
-      <div id="map" style={{ width: '450px', height: '510px' }} />
+      <div id="map" style={{ width: '450px', height: '500px' }} />
     </div>
   );
 };

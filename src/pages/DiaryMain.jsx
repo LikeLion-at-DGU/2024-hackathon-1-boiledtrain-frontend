@@ -5,7 +5,8 @@ import Plus from "../components/Diary/DiaryPlus";
 import EmptyMent from "../components/Diary/DiaryEmptyMent";
 import Bottom from "../components/Common/BottomBar";
 import styled from 'styled-components';
-import { API } from '../api';
+import apiCall from '../api';
+import { getToken } from "../utils/auth";
 
 const BottomStyle = styled.div`
   position: fixed;
@@ -18,11 +19,12 @@ const DiaryMain = () => {
 
   const fetchData = async () => {
     try {
-      const response = await API.get('/user/diary/');
+      const token = getToken();
+      const response = await apiCall('/user/diary', 'get', null, token);
       console.log(response.data);
       setData(response.data);
     } catch (error) {
-      console.log(error);
+      console.log('Error fetching diary data:', error);
     }
   };
 

@@ -46,7 +46,7 @@ padding-bottom:40px;
 `;
 
 export const BoxTitle = styled.div`
-width: 28px;
+width: 360px;
 color: #000;
 font-feature-settings: 'clig' off, 'liga' off;
 font-family: 'Pretendard';
