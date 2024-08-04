@@ -32,7 +32,7 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => {
 
         try {
             const token = localStorage.getItem('access_token');
-            const response = await apiCall('api/user/my_course', 'post', {
+            const response = await apiCall('api/user/course', 'post', {
                 title: courseName,
                 description: courseDescription,
                 subway_station: selectedStation,

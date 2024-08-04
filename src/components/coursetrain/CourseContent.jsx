@@ -4,6 +4,7 @@ import heart from "../../assets/images/mdi_heart.svg";
 import train from "../../assets/images/ticket.jpg";
 import apiCall from "../../api";
 import EmptyCourse from "../Common/EmptyCourse";
+import profile from "../../assets/images/normalprofile.png"
 
 const CourseContent = ({ onCourseClick }) => {
     const [data, setData] = useState([]);
@@ -11,7 +12,7 @@ const CourseContent = ({ onCourseClick }) => {
     const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('access_token');
-            const response = await apiCall("/api/user/course", 
+            const response = await apiCall("/api/user/my_course", 
                 "get", { headers: { Authorization: `Bearer ${token}` } });
             setData(response.data);
         } catch (error) {
@@ -60,7 +61,7 @@ const CourseContent = ({ onCourseClick }) => {
                     </S.PhotoContainer>
                     <S.InfoUser>
                         <S.CourseContentContainer>
-                            <img src={train} style={{ borderRadius: '100px' }} alt="course thumbnail" />
+                            <img src={profile} style={{ borderRadius: '100px' }} alt="course thumbnail" />
                             <div style={{ marginLeft: '5px' }}>
                                 <S.Course>{course.title}</S.Course>
                                 <S.Describ>{formatDateTime(course.created_at)} | {course.description}</S.Describ>

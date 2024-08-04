@@ -3,8 +3,10 @@ import React from 'react';
 
 const Kakaologin = () => {
     const redirectToKakaoLogin = async () => {
-        const kakaoAuthUrl = 'http://3.36.243.22/api/accounts/kakao/login/';
-        // const kakaoAuthUrl = 'https://0de0-210-94-220-228.ngrok-free.app/accounts/kakao/login/';
+        // 서버 배포용
+        // const kakaoAuthUrl = 'http://3.36.243.22/api/accounts/kakao/login/';
+        // 로컬 테스트용
+        const kakaoAuthUrl = 'http://3.36.243.22/api/accounts/front_kakao/login/';
         window.location.href = kakaoAuthUrl;
     };
 
