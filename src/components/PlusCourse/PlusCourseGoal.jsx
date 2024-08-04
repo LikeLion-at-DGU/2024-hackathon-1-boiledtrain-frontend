@@ -13,8 +13,8 @@ const PlusCourseGoal = ({ subwayStation, placelist, onClose }) => {
   const handleClick = async () => {
     console.log('Placelist:', placelist); 
     const token = getToken();
-    const title = '테스트 코스입니다요_목적'; 
-    const description = '테스트 설명_목적'; 
+    const title = '목적 여행으로 삶아진 코스입니다 !'; 
+    const description = '설명을 삶아주세요 !'; 
     const is_share = 'True'; 
 
     try {

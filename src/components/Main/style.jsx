@@ -247,6 +247,18 @@ export const Shape1 = styled.button`
     transform: scale(0.98);
   }
 `;
+export const Button = styled.button`
+  width:70px;
+  height:20px;
+  border: none; 
+  position:absolute;
+  transform: translate(515%, -420%);
+  background-color:white;
+  text-align: center;
+  font-family: 'Pretendard';
+  font-size: 11px;
+  cursor: pointer;
+`;
 
 export const Shape2 = styled.button`
   display: flex;

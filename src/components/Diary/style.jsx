@@ -54,6 +54,9 @@ font-size: 16px;
 font-style: normal;
 font-weight: 600;
 line-height: normal;
+white-space: nowrap; 
+overflow: hidden; 
+text-overflow: ellipsis;
 `;
 
 export const BoxPhoto = styled.img`
@@ -74,7 +77,7 @@ export const BoxContent = styled.div`
   line-height: normal;
   white-space: nowrap; 
   overflow: hidden; 
-  text-overflow: ellipsis; /
+  text-overflow: ellipsis;
 `;
 
 
@@ -206,7 +209,7 @@ flex-shrink: 0;
 
 export const MenuContainer=styled.div`
   position: absolute;
-  transform: translate(65%, 20%);
+  transform: translate(150%,20%);
   width: 160px;
   height: 100px;
   border-radius: 15px;

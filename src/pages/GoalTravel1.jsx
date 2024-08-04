@@ -12,6 +12,7 @@ import Ment3 from "../components/Goal/Ment3";
 import BottomBar from "../components/Common/BottomBar";
 import DetailModalGoal from "../components/Modal/DetailModalGoal";
 import apiCall from "../api";
+import Loading from "../components/Modal/Loading";
 
 const PageContainer = styled.div`
   position: relative;
@@ -76,34 +77,49 @@ const StationInfoModal = styled.div`
   font-family: 'Pretendard';
   font-size: 16px;
   line-height: 24.2px;
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StationInfoModalDetail = styled.div`
-  display:flex;
-  flex-direction:row;
+  display: flex;
+  flex-direction: row;
 `;
 
 const Detail = styled.div`
-color: #00ABFC;
-display:flex;
-flex-direction:column;
-justify-content:center;
-padding-top:20px;
-align-items:center;
-font-family: 'Pretendard';
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: 24.2px;
-cursor: pointer; 
+  color: #00ABFC;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 20px;
+  align-items: center;
+  font-family: 'Pretendard';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24.2px;
+  cursor: pointer; 
 `;
+
 const UnderBar = styled.div`
-width: 74px;
-height: 1px;
-flex-shrink: 0;
-background: #00ABFC;
+  width: 74px;
+  height: 1px;
+  flex-shrink: 0;
+  background: #00ABFC;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+
+  &:hover {
+    color: red; 
+  }
 `;
 
 function GoalTravel() {
@@ -117,6 +133,7 @@ function GoalTravel() {
   const [hasPointer, setHasPointer] = useState(false);
   const [detailModalOpen, setDetailModalOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState([]);
+  const [loading, setLoading] = useState(false); 
 
   const fetchStations = async () => {
     const response = await fetch('/newtrain.csv');
@@ -130,7 +147,6 @@ function GoalTravel() {
         setStations(results.data);
       },
     });
-    console.log()
   };
 
   useEffect(() => {
@@ -166,6 +182,7 @@ function GoalTravel() {
     }
 
     setSelectedCategory(category);
+    setLoading(true); 
 
     try {
       const response = await apiCall('/api/map/search_places_category/', 'post', { category });
@@ -184,6 +201,8 @@ function GoalTravel() {
       }
     } catch (error) {
       console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -200,16 +219,30 @@ function GoalTravel() {
     setDetailModalOpen(true);
   };
 
+  const resetState = () => {
+    setSubwayStations([]);
+    setCoordinatesList([]);
+    setPlaces([]);
+    setSelectedCategory('');
+    setScale(1.0);
+    setSelectedStation(null);
+    setHasPointer(false);
+    setDetailModalOpen(false);
+    setSelectedPlace([]);
+  };
+
   return (
     <PageContainer>
       <TopBar2 />
-      {!hasPointer ? (
+      {loading ? (
+        <Loading />
+      ) : !hasPointer ? (
         <>
-          <Search onCategorySelect={handleCategorySelect} />
           <Ment />
+          <Search onCategorySelect={handleCategorySelect} />
         </>
       ) : (
-        <Ment3 />
+        <Ment3 onReset={resetState} />
       )}
       <MapContainer>
         <TransformWrapper
@@ -234,51 +267,52 @@ function GoalTravel() {
         </TransformWrapper>
         {selectedStation && (
           <StationInfoModal>
+            <CloseButton onClick={() => setSelectedStation(null)}>×</CloseButton>
             <h4>{selectedStation}역 {selectedCategory} 투어 코스</h4>
             <StationInfoModalDetail>
-            {places
-              .filter(place => place.subway_station === selectedStation)
-              .map((place, index) => (
-                <div key={index}>
-                  {place.nearby_place.photo_reference ? (
-                    <img 
-                      src={getPhotoUrl(place.nearby_place.photo_reference)} 
-                      alt={place.nearby_place.name} 
-                      style={{ width: '118px', height: '76px' }}
-                    />
-                  ) : (
-                    <img 
-                      src={Base} 
-                      alt="기본 이미지" 
-                      style={{ width: '118px', height: '76px' }} 
-                    />
-                  )}
-                  <strong>{selectedCategory}<br/></strong> {place.nearby_place.name}
-                </div>
-              ))}
-            {places
-              .filter(place => place.subway_station === selectedStation)
-              .flatMap(place => place.additional_places || [])
-              .map((place, index) => (
-                <div key={index}>
-                  {place.photo_reference ? (
-                    <img 
-                      src={getPhotoUrl(place.photo_reference)} 
-                      alt={place.name} 
-                      style={{ width: '118px', height: '76px', paddingRight:'1.5px' }}
-                    />
-                  ) : (
-                    <img 
-                      src={Base} 
-                      alt="기본 이미지" 
-                      style={{ width: '118px', height: '76px' }} 
-                    />
-                  )}
-                  <strong>{place.category}<br/></strong> {place.name}
-                </div>
-              ))}
-              </StationInfoModalDetail>
-              <Detail onClick={handleDetailClick} >자세히 보기<UnderBar /></Detail>
+              {places
+                .filter(place => place.subway_station === selectedStation)
+                .map((place, index) => (
+                  <div key={index}>
+                    {place.nearby_place.photo_reference ? (
+                      <img 
+                        src={getPhotoUrl(place.nearby_place.photo_reference)} 
+                        alt={place.nearby_place.name} 
+                        style={{ width: '118px', height: '76px' }}
+                      />
+                    ) : (
+                      <img 
+                        src={Base} 
+                        alt="기본 이미지" 
+                        style={{ width: '118px', height: '76px' }} 
+                      />
+                    )}
+                    <strong>{selectedCategory}<br/></strong> {place.nearby_place.name}
+                  </div>
+                ))}
+              {places
+                .filter(place => place.subway_station === selectedStation)
+                .flatMap(place => place.additional_places || [])
+                .map((place, index) => (
+                  <div key={index}>
+                    {place.photo_reference ? (
+                      <img 
+                        src={getPhotoUrl(place.photo_reference)} 
+                        alt={place.name} 
+                        style={{ width: '118px', height: '76px', paddingRight:'1.5px' }}
+                      />
+                    ) : (
+                      <img 
+                        src={Base} 
+                        alt="기본 이미지" 
+                        style={{ width: '118px', height: '76px' }} 
+                      />
+                    )}
+                    <strong>{place.category}<br/></strong> {place.name}
+                  </div>
+                ))}
+            </StationInfoModalDetail>
+            <Detail onClick={handleDetailClick}>자세히 보기<UnderBar /></Detail>
           </StationInfoModal>
         )}
       </MapContainer>
@@ -287,13 +321,12 @@ function GoalTravel() {
       </StyledBottomBar>
 
       <DetailModalGoal
-          isOpen={detailModalOpen}
-          onClose={() => setDetailModalOpen(false)}
-          places={selectedPlace}
-          getPhotoUrl={getPhotoUrl}
-          subwayStation={selectedStation} 
+        isOpen={detailModalOpen}
+        onClose={() => setDetailModalOpen(false)}
+        places={selectedPlace}
+        getPhotoUrl={getPhotoUrl}
+        subwayStation={selectedStation} 
       />
-
     </PageContainer>
   );
 }

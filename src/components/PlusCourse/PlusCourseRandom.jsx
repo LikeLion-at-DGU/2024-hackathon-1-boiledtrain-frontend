@@ -12,7 +12,7 @@ const PlusCourseRandom = ({ subwayStation, placelist }) => {
 
   const handleClick = async () => {
     const token = getToken();
-    const title = '랜덤으로 삶아진 코스입니다 ! 제목을 바꿔주세요 !'; 
+    const title = '랜덤 여행으로 삶아진 코스입니다 !'; 
     const description = '설명을 삶아주세요 !'; 
     const is_share = "True"; 
 
