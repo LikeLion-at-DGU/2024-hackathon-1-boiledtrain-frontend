@@ -6,7 +6,6 @@ import MainHome1 from './pages/MainHome1';
 import NotFound from './pages/NotFound';
 import Course from './pages/Course';
 import Train from './pages/train';
-import Kakaologin from './components/Common/Kakaologin';
 import KakaoCallback from './components/Common/KakaoCallback';
 import ProtectedRoute from './components/Common/ProtectRoute'
 import TrainSearch from './pages/TrainSearch';
