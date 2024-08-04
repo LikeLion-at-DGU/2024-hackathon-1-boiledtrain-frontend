@@ -10,7 +10,10 @@ const KakaoCallback = () => {
     useEffect(() => {
         const fetchToken = async () => {
             try {
-                const response = await fetch('http://3.36.243.22:8000/api/accounts/kakao/login/callback/', {
+                // 서버 배포용
+                // const response = await fetch('http://3.36.243.22:8000/api/accounts/kakao/login/callback/', {
+                // 로컬 테스트용
+                const response = await fetch('http://3.36.243.22:8000/api/accounts/front_kakao/login/callback/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -28,7 +31,6 @@ const KakaoCallback = () => {
 
                 localStorage.setItem('access_token', result.access);
 
-                // Fetch user info
                 const userInfoResponse = await fetch('http://3.36.243.22:8000/api/accounts/userinfo/yes', {
                     method: 'GET',
                     headers: {
@@ -45,7 +47,6 @@ const KakaoCallback = () => {
                 localStorage.setItem('user_info', JSON.stringify(userInfo));
 
                 navigate('/');
-                // window.location.href = 'http://localhost/';
             } catch (error) {
                 console.error("Error during Kakao login:", error);
             }
