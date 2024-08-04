@@ -1,5 +1,15 @@
-import styled from "styled-components";
+import styled, { keyframes, css } from 'styled-components';
 import '../../styles/font.css';
+
+const fadeInOut = keyframes`
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+`;
+
+const fadeInOutAlternate = keyframes`
+  0%, 100% { opacity: 0; }
+  25%, 75% { opacity: 1; }
+`;
 
 export const SearchContainer = styled.div`
   width: 313px;
@@ -126,6 +136,9 @@ export const MainMent3 = styled.div`
   font-family: 'Pretendard';
   font-size: 18px;
   font-style: normal;
+  width: 430px;
+  height: 91px;
+  position: relative; 
   font-weight: 600;
   line-height: 24.2px;
   height:45px;
@@ -158,25 +171,32 @@ export const Ment3Image = styled.img`
 export const Button = styled.button`
   width:70px;
   height:20px;
-  background-color: #00ABFC;
-  color: white;
   border: none; 
-  border-radius: 3px;
-  color: #FFFFFF;
+  position:absolute;
+  transform: translate(385%, -510%);
+  background-color:white;
   text-align: center;
   font-family: 'Pretendard';
   font-size: 11px;
   cursor: pointer;
-
-  &:hover {
-    background-color: #008BCE;
-    transform: scale(1.05); 
-    transition: background-color 0.3s ease, transform 0.3s ease; 
-  }
 `;
 
 export const MentButton = styled.div`
   display:flex;
   flex-direction:row;
   align-items:center;
+`;
+
+export const Ment2Image1= styled.img`
+  width:40px;
+  position: absolute;
+  transform:translate(50%,-80%);
+  animation: ${fadeInOut} 1.3s infinite;
+`;
+
+export const Ment2Image2 = styled.img`
+  width:30px;
+  position: absolute;
+  transform:translate(150%,-20%);
+  animation: ${fadeInOutAlternate} 1.3s infinite;
 `;

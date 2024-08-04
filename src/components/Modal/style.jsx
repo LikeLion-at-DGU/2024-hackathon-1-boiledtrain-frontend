@@ -22,6 +22,16 @@ const slideDown = keyframes`
   }
 `;
 
+const fadeInOut = keyframes`
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+`;
+
+const fadeInOutAlternate = keyframes`
+  0%, 100% { opacity: 0; }
+  25%, 75% { opacity: 1; }
+`;
+
 export const ModalTotal = styled.div`
   width: 430px;
   height: 608px;
@@ -98,7 +108,6 @@ export const Body = styled.div`
 export const PlaceContainer = styled.div`
   display: flex;
   align-items: center; 
-  margin-bottom: 10px;
 `;
 
 export const MidBox = styled.div`
@@ -118,7 +127,14 @@ export const Box = styled.div`
 export const Btn = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 330px;
+  margin-top: 340px;
+  gap: 20px;
+`;
+
+export const Btn2 = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 345px;
   gap: 20px;
 `;
 
@@ -138,6 +154,7 @@ export const ClosedBtn = styled.button`
   border: none;
   margin-left: 30px;
 `;
+
 
 export const PushBtn = styled.button`
   width: 188px;
@@ -195,4 +212,51 @@ export const CloseButton = styled.button`
   &:hover {
     color: #ff0000; 
   }
+`;
+export const CloseButton2 = styled.button`
+  position: absolute;
+  transform: translate(80px, -50px);
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #000; 
+  cursor: pointer;
+  &:hover {
+    color: #ff0000; 
+  }
+`;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:430px;
+  min-height: 873px;
+  background-color: white;
+  gap:18px;
+`;
+
+export const LImage = styled.img`
+`;
+export const LImage1 = styled.img`
+  position: absolute;
+  transform:translate(50%,-218%);
+  animation: ${fadeInOut} 1.5s infinite;
+`;
+
+export const LImage2 = styled.img`
+  position: absolute;
+  transform:translate(120%,-210%);
+  animation: ${fadeInOutAlternate} 1.5s infinite;
+`;
+export const LoadingMent = styled.div`
+color: #000;
+text-align: center;
+font-feature-settings: 'liga' off, 'clig' off;
+font-family: 'Pretendard';
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
 `;

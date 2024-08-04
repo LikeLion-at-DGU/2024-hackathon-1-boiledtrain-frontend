@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import apiCall from '../api'; 
+import apiCall from '../api';
 import styled from 'styled-components';
 import BottomBar from "../components/Common/BottomBar";
 import TopBarDiary from "../components/Common/TopBarDiary";
 import DiaryMenuList from '../components/Diary/DiaryMenuList';
 import { getToken } from '../utils/auth';
-import Photo from '../assets/images/baseimage.png'; 
+import Photo from '../assets/images/baseimage.png';
 
 const DetailContainer = styled.div`
   width: 430px;
@@ -19,6 +19,7 @@ const DetailContainer = styled.div`
 
 const DetailTitle = styled.div`
   color: #000;
+  width: 380px;
   text-align: center;
   font-family: 'Pretendard';
   font-size: 26px;
@@ -60,6 +61,19 @@ const DetailContent = styled.div`
   font-family: 'Pretendard';
   font-size: 16px;
   font-weight: 400;
+  width:300px;
+  overflow: hidden;  
+  overflow-y: auto; 
+  max-height: 270px; 
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & {
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
+  }
 `;
 
 const DetailMood = styled.div`
@@ -72,7 +86,7 @@ const DetailMood = styled.div`
 `;
 
 const DiaryDetailLine = styled.div`
-  margin-top: 20px;
+  margin-top: 15px;
   width: 430px;
   height: 2px;
   background: #AFAFAF;
@@ -99,6 +113,13 @@ const UnderBar = styled.div`
   height: 1px;
   background: #00ABFC;
 `;
+const BottomStyle = styled.div`
+    position: absolute;
+    bottom: 0px;
+    width: 430px;
+    height: 77px;
+    background: #00ABFC;
+`;
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -109,8 +130,8 @@ const Detail = () => {
     try {
       const token = getToken();
       const response = await apiCall(`/api/user/diary/${id}`, 'get', {}, token);
-      console.log(response.data); 
-      setData(response.data); 
+      console.log(response.data);
+      setData(response.data);
     } catch (error) {
       console.error("Error fetching diary data:", error);
     }
@@ -119,7 +140,7 @@ const Detail = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -131,12 +152,27 @@ const Detail = () => {
     navigate(`/diarywrite`);
   };
 
+  // const handleCourseDetailClick = () => {
+  //   if (data?.courseId) {
+  //     navigate(`/course/${
+  //       data.courseId}`);
+  //     }
+  // };
+
+  // const handleCourseDetailClick = () => {
+  //   if (data && data.course_id) {
+  //     navigate(`/coursedetail/${data.course_id}`);
+  //   } else {
+  //     console.error("코스 ID가 존재하지 않습니다.");
+  //   }
+  // };
+  
   const handleCourseDeleted = () => {
   };
 
   return (
     <DetailContainer>
-      <TopBarDiary />
+      <TopBarDiary id={id} /> 
       <DiaryDetailLine />
       <DetailTitle>{data?.title}</DetailTitle>
       <DetailDate>{formatDate(data?.created_at)}</DetailDate>
@@ -148,12 +184,14 @@ const Detail = () => {
       <DetailThumbnail src={data?.image || Photo} alt="다이어리 이미지" />
       <DetailMood>{data?.mood}</DetailMood>
       <DetailContent>{data?.content}</DetailContent>
-      <DiaryMenuList 
+      {/* <DiaryMenuList 
         courseId={id} 
         onCourseDeleted={handleCourseDeleted} 
         onEditCourse={() => navigate(`/diaryedit/${id}`)} 
-      />
+      /> */}
+      <BottomStyle>
       <BottomBar />
+      </BottomStyle>
     </DetailContainer>
   );
 };

@@ -1,30 +1,37 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './style';
-import back from '../../assets/images/back.png'; 
-import select from '../../assets/images/select.png'; 
+import back from '../../assets/images/back.png';
+import select from '../../assets/images/select.png';
 import DiaryMenuList from '../Diary/DiaryMenuList';
 
-function TopBarDiary() {
+function TopBarDiary({ id }) {  // id를 prop으로 받음
   const navigate = useNavigate();
-  const [menuVisible, setMenuVisible] = useState(false); 
+  const [menuVisible, setMenuVisible] = useState(false);
 
   const handleBackClick = () => {
     navigate(-1);
   };
 
   const handleSelectClick = () => {
-    setMenuVisible(prev => !prev); 
+    setMenuVisible(prev => !prev);
   };
 
   const handleOutsideClick = () => {
     if (menuVisible) {
-      setMenuVisible(false); 
+      setMenuVisible(false);
     }
   };
 
+  const handleCourseDeleted = () => {
+  };
+
+  const handleEditCourse = () => {
+    navigate(`/diaryedit/${id}`);
+  };
+
   return (
-    <div onClick={handleOutsideClick} style={{ position: 'relative' }}> 
+    <div onClick={handleOutsideClick} style={{ position: 'relative' }}>
       <S.TopHead2>
         <S.Topimage 
           src={back} 
@@ -37,7 +44,7 @@ function TopBarDiary() {
         </S.Ment>
         <S.TopSelect 
           src={select}
-          onClick={handleSelectClick} 
+          onClick={handleSelectClick}
           style={{ cursor: 'pointer' }}
         />
       </S.TopHead2>

@@ -11,8 +11,6 @@ import Station from "../components/Main/Station";
 import DetailModal from "../components/Modal/DetailModal";
 import apiCall from "../api";
 import Base from '../assets/images/baseimage.png';
-import PlusCourseRandom from '../components/PlusCourse/PlusCourseRandom'; 
-
 
 const PageContainer = styled.div`
   position: relative;
@@ -77,13 +75,13 @@ const StationInfoModal = styled.div`
   font-family: 'Pretendard';
   font-size: 16px;
   line-height: 24.2px;
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StationInfoModalDetail = styled.div`
-  display:flex;
-  flex-direction:row;
+  display: flex;
+  flex-direction: row;
 `;
 
 const StationName = styled.h2`
@@ -101,24 +99,39 @@ const StationName = styled.h2`
 `;
 
 const Detail = styled.div`
-color: #00ABFC;
-display:flex;
-flex-direction:column;
-justify-content:center;
-padding-top:20px;
-align-items:center;
-font-family: 'Pretendard';
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: 24.2px;
-cursor: pointer; 
+  color: #00ABFC;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 20px;
+  align-items: center;
+  font-family: 'Pretendard';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24.2px;
+  cursor: pointer; 
 `;
+
 const UnderBar = styled.div`
-width: 74px;
-height: 1px;
-flex-shrink: 0;
-background: #00ABFC;
+  width: 74px;
+  height: 1px;
+  flex-shrink: 0;
+  background: #00ABFC;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+
+  &:hover {
+    color: red;
+  }
 `;
 
 function OnlyRandom() {
@@ -129,21 +142,16 @@ function OnlyRandom() {
   const [nearbyPlaces, setNearbyPlaces] = useState([]);
   const [detailModalOpen, setDetailModalOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [infoModalOpen, setInfoModalOpen] = useState(true);
 
   const fetchData = async () => {
     try {
       const response = await apiCall('/api/map/search_places_random/', 'get');
-
       const { subway_station, places } = response.data;
-
-      console.log('Fetched subway station:', subway_station);
-      console.log('Fetched nearby places:', places);
 
       if (subway_station && subway_station !== subwayStation) {
         setSubwayStation(subway_station);
         setNearbyPlaces(places);
-      } else {
-        console.error('subway_station not found in response or station is the same');
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -167,7 +175,6 @@ function OnlyRandom() {
         header: true,
         complete: (results) => {
           setStations(results.data);
-          console.log('Fetched stations:', results.data);
         },
       });
     };
@@ -180,7 +187,6 @@ function OnlyRandom() {
       const stationCoordinates = getCoordinatesByStationName(subwayStation);
       if (stationCoordinates) {
         setCoordinates(stationCoordinates);
-        console.log('Coordinates found:', stationCoordinates);
       }
     }
   }, [subwayStation]);
@@ -202,10 +208,6 @@ function OnlyRandom() {
 
   const getPhotoUrl = (photoReference) => {
     const apiKey = import.meta.env.VITE_GOOGLEMAP_API_KEY;
-    if (!apiKey) {
-      console.error('Google Maps API key is missing');
-      return '';
-    }
     return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${apiKey}`;
   };
 
@@ -214,13 +216,26 @@ function OnlyRandom() {
     setDetailModalOpen(true);
   };
 
+  const resetState = () => {
+    setSubwayStation(null);
+    setNearbyPlaces([]);
+    setCoordinates({ x: null, y: null });
+    setScale(1.0);
+    setDetailModalOpen(false);
+    setSelectedPlace([]);
+  };
+  
+  const handlePointClick = () => {
+    setInfoModalOpen(true);
+  };
+
   return (
     <PageContainer>
       <TopBar2 />
       {subwayStation ? (
         <>
           <StationName>{subwayStation}역</StationName>
-          <Station />
+          <Station onReset={resetState} />
         </>
       ) : (
         <Ment2 />
@@ -229,11 +244,12 @@ function OnlyRandom() {
         <TransformWrapper initialScale={scale} initialPositionX={-110} initialPositionY={0}>
           <TransformComponent>
             <MapImage src={mapImage} alt="Subway Map" />
-            {pointPosition && <Point style={pointPosition} onClick={() => {}} />}
+            {pointPosition && <Point style={pointPosition} onClick={handlePointClick} />} 
           </TransformComponent>
         </TransformWrapper>
-        {subwayStation && (
+        {infoModalOpen && subwayStation && ( 
           <StationInfoModal>
+            <CloseButton onClick={() => setInfoModalOpen(false)}>×</CloseButton>
             <h4>{subwayStation}역 코스</h4>
             <StationInfoModalDetail>
               {nearbyPlaces.map((place, index) => (
@@ -242,7 +258,7 @@ function OnlyRandom() {
                     <img 
                       src={getPhotoUrl(place.nearby_place.photo_reference)} 
                       alt={place.nearby_place.name} 
-                      style={{ width: '118px', height: '76px', paddingRight:'2.5px' }}
+                      style={{ width: '118px', height: '76px', paddingRight: '2.5px' }}
                     />
                   ) : (
                     <img 
@@ -262,11 +278,6 @@ function OnlyRandom() {
       <StyledBottomBar>
         <BottomBar />
       </StyledBottomBar>
-
-      {/* <PlusCourseRandom
-        subwayStation={subwayStation}
-        placelist={nearbyPlaces.map(place => place.nearby_place.name)}
-      /> */}
 
       <DetailModal
         isOpen={detailModalOpen}

@@ -47,6 +47,7 @@ function DetailModal({ isOpen, onClose, placeDetails, getPhotoUrl, subwayStation
                         <>
                             <S.Box>
                                 {placeDetails.map((place, index) => (
+                                    <>
                                     <S.PlaceContainer key={index} style={{ marginBottom: '0px' }}>
                                         {place.nearby_place.photo_reference ? (
                                             <img 
@@ -67,6 +68,10 @@ function DetailModal({ isOpen, onClose, placeDetails, getPhotoUrl, subwayStation
                                             <S.Point>평점 : {place.nearby_place.rating || '평점 정보가 없습니다.'}점</S.Point>
                                         </S.MidBox>
                                     </S.PlaceContainer>
+                                    <div>
+                                    <hr style={{ width: '380px', height: '1px', background: '#E7E7E7', border: 'none', marginBottom: '0px',marginTop: '0px' }} />
+                                    </div>
+                                    </>
                                 ))}
                             </S.Box>
                             <S.Btn>

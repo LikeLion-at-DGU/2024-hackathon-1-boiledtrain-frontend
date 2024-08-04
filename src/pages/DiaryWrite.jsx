@@ -18,7 +18,7 @@ const PostLayout = styled.div`
 `;
 
 const PostLayout2 = styled.div`
-  height: 770px;
+  height: 843px;
   border-radius: 20px;
   background: #FFFFFF;
   margin-top: 13px;
@@ -35,6 +35,7 @@ const PostTop = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const PostTitle = styled.input`
@@ -104,7 +105,11 @@ const PostButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  padding-left: 340px;
+  padding-right:20px;
+`;
+
+const CancelButton = styled(PostButton)`
+  padding-left: 20px;
 `;
 
 const PostMood = styled.input`
@@ -285,15 +290,23 @@ const CourseDetails = styled.div`
 `;
 const PreviewImageWrapper = styled.div`
   display: flex;
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center;     /* 세로 중앙 정렬 */
-  margin: 10px 0;         /* 위아래 여백 */
+  justify-content: center;
+  align-items: center;     
+  margin: 10px 0;         
 `;
 
 const FileInput = styled.input`
-  margin: 10px;
+  margin: 0px 25px;
   display: block;
   width:300px;
+  color: #8C8C8C;
+  text-align: center;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 `;
 
 const PreviewImage = styled.img`
@@ -301,6 +314,20 @@ const PreviewImage = styled.img`
   height: 200px;
   margin: 10px 0;
   align-items:center;
+`;
+
+const RemainingText = styled.div`
+  color: #8C8C8C;
+  font-size: 14px;
+  text-align: right;
+  margin-top: -10px;
+  padding-right:19px;
+  margin-bottom: 10px;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 `;
 
 const DiaryWrite = () => {
@@ -312,8 +339,8 @@ const DiaryWrite = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourseDetails, setSelectedCourseDetails] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [image, setImage] = useState(null); // 이미지 상태 추가
-  const [imagePreview, setImagePreview] = useState(null); // 이미지 미리보기 상태 추가
+  const [image, setImage] = useState(null); 
+  const [imagePreview, setImagePreview] = useState(null); 
   const navigate = useNavigate();
 
   const fetchCourseData = async () => {
@@ -341,13 +368,13 @@ const DiaryWrite = () => {
   };
 
   const handleAddImage = (e) => {
-    const file = e.target.files[0]; // 하나의 파일만 선택
+    const file = e.target.files[0]; 
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result); // 미리보기 상태 업데이트
+        setImagePreview(reader.result); 
       };
-      setImage(file); // 이미지 상태 업데이트
+      setImage(file);
       reader.readAsDataURL(file);
     }
   };
@@ -364,9 +391,9 @@ const DiaryWrite = () => {
       formData.append('content', content);
       formData.append('mood', mood);
       
-      // 이미지가 선택된 경우에만 추가
+
       if (image) {
-        formData.append('image', image); // 이미지 추가
+        formData.append('image', image); 
       }
 
       const response = await apiCall(`/api/user/course/${courseId}/diary`, 'post', formData, token, {
@@ -394,6 +421,7 @@ const DiaryWrite = () => {
     <PostLayout>
       <PostLayout2>
         <PostTop>
+          <CancelButton onClick={() => navigate(-1)}>취소</CancelButton>
           <PostButton onClick={PostData}>등록</PostButton>
         </PostTop>
         <PostTitle
@@ -401,27 +429,31 @@ const DiaryWrite = () => {
           placeholder="제목"
           value={title}
           onChange={e => setTitle(e.target.value)}
+          maxLength={50}
         />
+        <RemainingText>{50 - title.length}/50</RemainingText> 
         <PostLine />
         <PostCourse onClick={fetchCourseData}>
           <PostCourseImage src={Photo} />
           <PostCourseText>
-          {selectedCourseDetails 
-            ? `${selectedCourseDetails.subway_station}역 코스 - ${selectedCourseDetails.title}` 
-            : '코스 추가'}
+            {selectedCourseDetails 
+              ? `${selectedCourseDetails.subway_station}역 코스 - ${selectedCourseDetails.title}` 
+              : '코스 추가'}
           </PostCourseText>
         </PostCourse>
-        <FileInput type="file" accept="image/*" onChange={handleAddImage} /> {/* 이미지 업로드 */}
+        <FileInput type="file" accept="image/*" onChange={handleAddImage} /> 
         {imagePreview && (
           <PreviewImageWrapper>
-          <PreviewImage src={imagePreview} alt="미리보기" />
+            <PreviewImage src={imagePreview} alt="미리보기" />
           </PreviewImageWrapper>
         )}
         <PostMood
           placeholder="코스에 대한 당신의 기분을 한줄로!"
           value={mood}
           onChange={e => setMood(e.target.value)}
+          maxLength={50}
         />
+        <RemainingText>{50 - mood.length}/50</RemainingText> 
         <PostContent
           placeholder="코스를 따라 여행한 당신의 일기를 작성해주세요"
           value={content}

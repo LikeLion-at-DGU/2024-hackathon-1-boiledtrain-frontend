@@ -4,7 +4,7 @@ import apiCall from "../../api";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../../utils/auth";
 
-const MenuList = ({ courseId, onCourseDeleted, onEditCourse }) => {
+const MenuList = ({ courseId, onCourseDeleted }) => {
     const navigate = useNavigate();
 
     const deleteCourse = async () => {
@@ -20,9 +20,13 @@ const MenuList = ({ courseId, onCourseDeleted, onEditCourse }) => {
         }
     };
 
+    const editCourse = () => {
+        navigate(`/course/${courseId}/edit`);
+    };
+
     return (
         <S.MenuContainer>
-            <S.MenuButton style={{ marginTop: '8px' }} onClick={onEditCourse}>수정하기</S.MenuButton>
+            <S.MenuButton style={{ marginTop: '8px' }} onClick={editCourse}>수정하기</S.MenuButton>
             <S.Hr />
             <S.MenuButton2 onClick={deleteCourse}>삭제하기</S.MenuButton2>
         </S.MenuContainer>
