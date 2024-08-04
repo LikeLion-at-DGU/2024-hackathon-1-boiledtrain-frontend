@@ -4,6 +4,7 @@ import HeartIcon from "../../assets/images/HeartIcon";
 import train from "../../assets/images/ticket.jpg";
 import apiCall from "../../api";
 import EmptyCourse from "../Common/EmptyCourse";
+import profile from "../../assets/images/normalprofile.png"
 
 const CourseContentLike = ({ onCourseClick }) => {
     const [data, setData] = useState([]);
@@ -36,14 +37,14 @@ const CourseContentLike = ({ onCourseClick }) => {
         return `${year}.${month}.${day}`;
     };
 
-    const toggleLike = async (courseId, isLiked, e) => {
-        e.stopPropagation();  // Prevent triggering the onCourseClick event
+    const toggleLike = async (id, isLiked, event) => {
+        event.stopPropagation();
         try {
             const token = localStorage.getItem('access_token');
-            await apiCall(`/api/user/course/${courseId}/likes`, "get", { headers: { Authorization: `Bearer ${token}` } });
+            await apiCall(`/api/user/course/${id}/likes`, "get", null, token);
             setLikedCourses((prevState) => ({
                 ...prevState,
-                [courseId]: !isLiked
+                [id]: !isLiked
             }));
         } catch (error) {
             console.log("error 발생: ", error);
@@ -69,7 +70,7 @@ const CourseContentLike = ({ onCourseClick }) => {
                         </S.PhotoContainer>
                         <S.InfoUser>
                             <S.CourseContentContainer>
-                                <img src={train} style={{ borderRadius: '100px' }} alt="course thumbnail" />
+                                <img src={course.user.profile_image || profile} style={{ borderRadius: '100px',width:'40px',height:'40px' }} alt="course thumbnail" />
                                 <div style={{ marginLeft: '5px' }}>
                                     <S.Course>{course.title}</S.Course>
                                     <S.Describ>{formatDateTime(course.created_at)} | {course.description}</S.Describ>

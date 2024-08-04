@@ -5,6 +5,7 @@ import menu from "../../assets/images/select.png";
 import user from "../../assets/images/tr.jpg";
 import MenuList from "../Common/MenuList";
 import apiCall from "../../api";
+import profile from "../../assets/images/normalprofile.png"
 
 // User info retrieval function
 const getUserInfo = () => {
@@ -136,7 +137,7 @@ const CourseDetail = ({ courseId, onClose, onEditCourse, selected, selected2 }) 
                 {shouldShowMenu && <S.HeadButton onClick={handleMenuClick}><img src={menu} alt="menu" /></S.HeadButton>}
             </S.header>
             <S.infoUserContainer>
-                <S.userImg src={user} alt="user" />
+                <S.userImg src={course.user.profile_image || profile} alt="user" />
                 <S.User>
                     <S.userNickname>{course.user.nickname}</S.userNickname>
                     <S.userId>{course.user.email}</S.userId>
