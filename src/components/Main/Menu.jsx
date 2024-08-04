@@ -11,6 +11,7 @@ function Menu({ onClose }) {
 
     useEffect(() => {
         const storedUserInfo = localStorage.getItem('user_info');
+        console.log(storedUserInfo);
         if (storedUserInfo) {
             const parsedUserInfo = JSON.parse(storedUserInfo);
             setUserInfo(parsedUserInfo);

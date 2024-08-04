@@ -47,9 +47,8 @@ const Course = () => {
         }
     };
 
-    const handleCourseClick = (course) => {
-        console.log(course);
-        setSelectedCourse(course);
+    const handleCourseClick = (courseId) => {
+        setSelectedCourse(courseId);
     };
 
     const handleCloseDetail = () => {
@@ -94,7 +93,7 @@ const Course = () => {
             )}
             {selectedCourse && !isCourseMakeVisible && (
                 <CourseDetail 
-                    course={selectedCourse} 
+                    courseId={selectedCourse} 
                     onClose={handleCloseDetail} 
                     onEditCourse={handleEditCourse} 
                 />
