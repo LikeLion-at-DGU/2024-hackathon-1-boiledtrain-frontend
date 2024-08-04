@@ -4,7 +4,7 @@ import Search from "../components/Course/Search";
 import Select from "../components/Course/Select";
 import CourseMake from "../components/map/CourseMake";
 import CourseContent from "../components/coursetrain/CourseContent";
-import CourseContentLike from "../components/coursetrain/CourseContentLike";
+import CourseContentLike from "../components/coursetrain/CourseContentLike"
 import CourseContentSharedFast from "../components/coursetrain/CourseContentSharedFast";
 import CourseContentShaedLike from "../components/coursetrain/CourseContentShaedLike";
 import CourseDetail from "../components/coursetrain/CourseDetail";
@@ -13,7 +13,7 @@ import styled from "styled-components";
 
 const StyledBottomBar = styled.div`
     position: absolute;
-    bottom: 0px;
+    bottom: -77px;
     width: 430px;
     height: 77px;
     background: #00ABFC;
@@ -48,6 +48,7 @@ const Course = () => {
     };
 
     const handleCourseClick = (course) => {
+        console.log(course);
         setSelectedCourse(course);
     };
 

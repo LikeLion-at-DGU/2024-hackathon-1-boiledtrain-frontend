@@ -6,8 +6,7 @@ const MenuList = ({ courseId, onCourseDeleted, onEditCourse }) => {
     const deleteCourse = async () => {
         try {
             const token = localStorage.getItem('access_token');
-            await apiCall(`/user/course/${courseId}`, 'delete', { headers: { Authorization: `Bearer ${token}` } });
-            console.log("Course deleted successfully");
+            await apiCall(`/api/user/course/${courseId}`, 'delete', { headers: { Authorization: `Bearer ${token}` } });
             onCourseDeleted();
         } catch (error) {
             console.log("삭제 실패", error);
