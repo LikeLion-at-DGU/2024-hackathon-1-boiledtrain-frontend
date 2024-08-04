@@ -4,6 +4,7 @@ import train from "../../assets/images/ticket.jpg";
 import apiCall from "../../api";
 import EmptyCourse from "../Common/EmptyCourse";
 import HeartIcon from "../../assets/images/HeartIcon";
+import profile from "../../assets/images/normalprofile.png"
 
 const CourseContentSharedFast = ({onCourseClick}) => {
     const [data, setData] = useState([]);
@@ -35,7 +36,7 @@ const CourseContentSharedFast = ({onCourseClick}) => {
         return `${year}.${month}.${day}`;
     };
 
-    const toggleLike = async (courseId) => {
+    const toggleLike = async (id, isLiked, event) => {
         event.stopPropagation();
         try {
             const token = localStorage.getItem('access_token');
@@ -68,7 +69,7 @@ const CourseContentSharedFast = ({onCourseClick}) => {
                         </S.PhotoContainer>
                         <S.InfoUser>
                             <S.CourseContentContainer>
-                                <img src={train} style={{ borderRadius: '100px' }} alt="course thumbnail" />
+                                <img src={course.user.profile_image || profile} style={{ borderRadius: '100px',width:'40px',height:'40px' }} alt="course thumbnail" />
                                 <div style={{ marginLeft: '5px' }}>
                                     <S.Course>{course.title}</S.Course>
                                     <S.Describ>{formatDateTime(course.created_at)} | {course.description}</S.Describ>
