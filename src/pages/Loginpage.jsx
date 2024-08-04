@@ -27,9 +27,9 @@ const Loginpage = () => {
 
     const redirectToKakaoLogin = async () => {
         // 서버 배포용
-        // const kakaoAuthUrl = 'http://3.36.243.22/api/accounts/kakao/login/';
+        const kakaoAuthUrl = 'http://3.36.243.22/api/accounts/kakao/login/';
         // 로컬 테스트용
-        const kakaoAuthUrl = 'http://3.36.243.22/api/accounts/front_kakao/login/';
+        // const kakaoAuthUrl = 'http://3.36.243.22/api/accounts/front_kakao/login/';
         window.location.href = kakaoAuthUrl;
     };
 
