@@ -11,12 +11,6 @@ function StartMenu({ onClose }) {
   const [redirectPath, setRedirectPath] = useState('');
   const navigate = useNavigate();
 
-  const redirectToKakaoLogin = async () => {
-    const kakaoAuthUrl = 'http://3.36.243.22/api/accounts/kakao/login/';
-    // const kakaoAuthUrl = 'https://0de0-210-94-220-228.ngrok-free.app/accounts/kakao/login/';
-    window.location.href = kakaoAuthUrl;
-  };
-
   const handleLinkClick = (path) => {
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -47,7 +41,7 @@ function StartMenu({ onClose }) {
             <S.newtext>안녕하세요!<br/>로그인하고 더 많은 기능을<br/>삶아봅시다.</S.newtext>
           </S.NewShape>
           <S.Newbox>
-            <S.newmyprofile onClick={redirectToKakaoLogin}>로그인</S.newmyprofile>
+            <Link to='/login' style={{ textDecoration: "none" }}><S.newmyprofile>카카오 로그인</S.newmyprofile></Link>
           </S.Newbox>
         </S.Box1>
 

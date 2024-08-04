@@ -1,25 +1,19 @@
 import React, { useEffect, useState, useCallback } from "react";
 import * as S from "./styled";
-import HeartIcon from "../../assets/images/HeartIcon.jsx"; // 변경된 경로
+import heart from "../../assets/images/mdi_heart.svg";
 import train from "../../assets/images/ticket.jpg";
 import apiCall from "../../api";
 import EmptyCourse from "../Common/EmptyCourse";
 
 const CourseContent = ({ onCourseClick }) => {
     const [data, setData] = useState([]);
-    const [likedCourses, setLikedCourses] = useState({});
 
     const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('access_token');
-            const response = await apiCall("/api/user/course", "get", { headers: { Authorization: `Bearer ${token}` } });
+            const response = await apiCall("/api/user/course", 
+                "get", { headers: { Authorization: `Bearer ${token}` } });
             setData(response.data);
-
-            const likedState = {};
-            response.data.forEach(course => {
-                likedState[course.id] = course.liked; // Assuming 'liked' field exists
-            });
-            setLikedCourses(likedState);
         } catch (error) {
             console.log("error 발생: ", error);
         }
@@ -34,15 +28,14 @@ const CourseContent = ({ onCourseClick }) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${year}.${month}.${day} ${hours}:${minutes}`;
+        return `${year}.${month}.${day}`;
     };
 
-    const toggleLike = async (id, isLiked) => {
+    const toggleLike = async (id, isLiked, event) => {
+        event.stopPropagation();
         try {
             const token = localStorage.getItem('access_token');
-            await apiCall(`/user/course/${id}/likes`, "get", { headers: { Authorization: `Bearer ${token}` } });
+            await apiCall(`/api/user/course/${id}/likes`, "get", { headers: { Authorization: `Bearer ${token}` } });
             setLikedCourses(prevState => ({
                 ...prevState,
                 [id]: !isLiked
@@ -58,7 +51,7 @@ const CourseContent = ({ onCourseClick }) => {
 
     return (
         <S.TopContainer>
-            {data.slice().reverse().map((course, index) => (
+            {data.slice().map((course, index) => (
                 <S.CourseContainer key={index} onClick={() => onCourseClick(course)}>
                     <S.PhotoContainer>
                         <S.Img style={{ borderRadius: '12px 0px 0px 0px' }} src={train} />
@@ -70,18 +63,18 @@ const CourseContent = ({ onCourseClick }) => {
                             <img src={train} style={{ borderRadius: '100px' }} alt="course thumbnail" />
                             <div style={{ marginLeft: '5px' }}>
                                 <S.Course>{course.title}</S.Course>
-                                <S.Describ>{course.description}</S.Describ>
+                                <S.Describ>{formatDateTime(course.created_at)} | {course.description}</S.Describ>
                             </div>
                         </S.CourseContentContainer>
                         <S.Plus>
-                            <S.Button onClick={(e) => { 
-                                e.stopPropagation(); 
-                                toggleLike(course.id, likedCourses[course.id]); 
-                            }}>
-                                <HeartIcon fill={likedCourses[course.id] ? '#FF3434' : '#CCCCCC'} />
-                            </S.Button>
-                            <S.P>{course.subway_station}</S.P>
-                            <S.time>{formatDateTime(course.created_at)}</S.time>
+                            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                                <S.like_count>{course.like_count}</S.like_count>
+                                {/* <HeartIcon fill={likedCourses[course.id] ? '#FF3434' : '#CCCCCC'} /> */}
+                                <S.Button onClick={(e) => toggleLike(course.id, course.isLiked, e)}>
+                                    <img src={heart} alt="heart icon" />
+                                </S.Button>
+                            </div>
+                            <S.P>#{course.subway_station}역</S.P>
                         </S.Plus>
                     </S.InfoUser>
                 </S.CourseContainer>

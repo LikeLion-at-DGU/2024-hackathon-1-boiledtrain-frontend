@@ -45,6 +45,7 @@ const KakaoCallback = () => {
                 localStorage.setItem('user_info', JSON.stringify(userInfo));
 
                 navigate('/');
+                // window.location.href = 'http://localhost/';
             } catch (error) {
                 console.error("Error during Kakao login:", error);
             }

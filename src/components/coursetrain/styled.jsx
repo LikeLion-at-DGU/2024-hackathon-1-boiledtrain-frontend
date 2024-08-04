@@ -74,7 +74,16 @@ export const Plus = styled.div`
     display:flex;
     flex-direction: column;
     align-items: flex-end;
-    margin-top:18px;
+    margin-top:35px;
+`
+
+export const like_count = styled.div`
+    color: #8C8C8C;
+    text-align: right;
+    font-family: Pretendard;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
 `
 export const P = styled.div`
     color: #000;
@@ -100,6 +109,8 @@ export const Button = styled.button`
     border:0;
     background-color: inherit;
     display:flex;
+    padding:0;
+    z-index: 100;
 `
 
 //코스 디테일 페이지

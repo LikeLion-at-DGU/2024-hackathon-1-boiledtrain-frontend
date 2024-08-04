@@ -30,11 +30,10 @@ const Loginpage = () => {
         window.location.href = kakaoAuthUrl;
     };
 
-    const handleKakaoLogin = () => {
-        // Assuming the token is set after successful login
-        localStorage.setItem('access_token', 'your_token'); // Example token set
-        navigate(from, { replace: true }); // Redirect back to the original page
-    };
+    // const handleKakaoLogin = () => {
+    //     localStorage.setItem('access_token', 'your_token');
+    //     navigate(from, { replace: true });
+    // };
 
     return (
         <RootContainer>
@@ -47,7 +46,7 @@ const Loginpage = () => {
                 <SubP>다시 삶아지러 오셨군요!</SubP>
             </MainContainer>
             <LoginDiv>
-                <Button onClick={handleKakaoLogin}><img src={kakao_login} alt="Kakao Login" /></Button>
+                <Button onClick={redirectToKakaoLogin}><img src={kakao_login} alt="Kakao Login" /></Button>
             </LoginDiv>
             <Footer><CloudImg src={cloud} alt="Cloud" /></Footer>
         </RootContainer>

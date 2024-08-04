@@ -133,7 +133,7 @@ const CourseDetail = ({ course, onClose, onEditCourse }) => {
                 <div ref={menuRef}>
                     <MenuList 
                         courseId={course.id} 
-                        onCourseDeleted={() => { onClose(); onCourseDeleted(); }} 
+                        onCourseDeleted={() => { onClose(); }} 
                         onEditCourse={() => onEditCourse(course)} // Pass course to onEditCourse
                     />
                 </div>
