@@ -1,15 +1,37 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as S from "./styled";
 import back from "../../assets/images/back.png";
 import menu from "../../assets/images/select.png";
 import user from "../../assets/images/tr.jpg";
 import MenuList from "../Common/MenuList";
+import apiCall from "../../api";
 
-const CourseDetail = ({ course, onClose, onEditCourse }) => {
+// User info retrieval function
+const getUserInfo = () => {
+    const userInfo = localStorage.getItem('user_info');
+    return userInfo ? JSON.parse(userInfo) : null;
+};
+
+const CourseDetail = ({ courseId, onClose, onEditCourse, selected, selected2 }) => {
     const [map, setMap] = useState(null);
     const [infoWindow, setInfoWindow] = useState(null);
+    const [course, setCourse] = useState(null);
     const [menuVisible, setMenuVisible] = useState(false);
     const menuRef = useRef(null);
+
+    const fetchData = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('access_token');
+            const response = await apiCall(`/api/user/course/${courseId}`, "get", null, token);
+            setCourse(response.data);
+        } catch (error) {
+            console.log("error 발생: ", error);
+        }
+    }, [courseId]);
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
     useEffect(() => {
         const apiKey = import.meta.env.VITE_GOOGLEMAP_API_KEY;
@@ -40,21 +62,21 @@ const CourseDetail = ({ course, onClose, onEditCourse }) => {
             const bounds = new window.google.maps.LatLngBounds();
 
             if (course && course.placelist && course.placelist.length > 0) {
-                course.placelist.forEach((placeName) => {
+                course.placelist.forEach((place) => {
                     const request = {
-                        query: placeName,
+                        query: place.name,
                         fields: ['place_id', 'name', 'geometry', 'formatted_address', 'rating']
                     };
 
                     service.findPlaceFromQuery(request, (results, status) => {
                         if (status === window.google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
-                            const place = results[0];
-                            const location = place.geometry.location;
+                            const placeResult = results[0];
+                            const location = placeResult.geometry.location;
 
                             const marker = new window.google.maps.Marker({
                                 position: location,
                                 map: mapInstance,
-                                title: place.name,
+                                title: placeResult.name,
                             });
 
                             bounds.extend(location);
@@ -62,9 +84,9 @@ const CourseDetail = ({ course, onClose, onEditCourse }) => {
                             marker.addListener('click', () => {
                                 infoWindowInstance.setContent(`
                                     <div>
-                                        <strong>${place.name}</strong><br>
-                                        평점: ${place.rating || '정보 없음'}<br>
-                                        ${place.formatted_address || '주소 정보 없음'}
+                                        <strong>${placeResult.name}</strong><br>
+                                        평점: ${placeResult.rating || '정보 없음'}<br>
+                                        ${placeResult.formatted_address || '주소 정보 없음'}
                                     </div>
                                 `);
                                 infoWindowInstance.open(mapInstance, marker);
@@ -101,20 +123,23 @@ const CourseDetail = ({ course, onClose, onEditCourse }) => {
     }, []);
 
     if (!course) {
-        return null;
+        return <p>Loading...</p>;
     }
+
+    const userInfo = getUserInfo();
+    const shouldShowMenu = !(userInfo && userInfo.email !== course.user.email);
 
     return (
         <S.detailContainer>
             <S.header>
                 <S.HeadButton onClick={onClose}><img src={back} alt="back" /></S.HeadButton>
-                <S.HeadButton onClick={handleMenuClick}><img src={menu} alt="menu" /></S.HeadButton>
+                {shouldShowMenu && <S.HeadButton onClick={handleMenuClick}><img src={menu} alt="menu" /></S.HeadButton>}
             </S.header>
             <S.infoUserContainer>
                 <S.userImg src={user} alt="user" />
                 <S.User>
-                    <S.userNickname>{course.username}</S.userNickname>
-                    <S.userId>{course.userId}</S.userId>
+                    <S.userNickname>{course.user.nickname}</S.userNickname>
+                    <S.userId>{course.user.email}</S.userId>
                 </S.User>
             </S.infoUserContainer>
             <S.mapContainer id='map'></S.mapContainer>
@@ -123,7 +148,7 @@ const CourseDetail = ({ course, onClose, onEditCourse }) => {
                 <p style={{ fontSize: '14px', color: '#8C8C8C' }}>{course.description}</p>
                 {course.placelist && course.placelist.length > 0 ? (
                     course.placelist.map((place, index) => (
-                        <p key={index}>{index + 1}. {place}</p>
+                        <p key={index}>{index + 1}. {place.name}</p>
                     ))
                 ) : (
                     <p>No places available</p>
@@ -134,7 +159,7 @@ const CourseDetail = ({ course, onClose, onEditCourse }) => {
                     <MenuList 
                         courseId={course.id} 
                         onCourseDeleted={() => { onClose(); }} 
-                        onEditCourse={() => onEditCourse(course)} // Pass course to onEditCourse
+                        onEditCourse={() => onEditCourse(course)}
                     />
                 </div>
             )}

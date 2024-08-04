@@ -14,7 +14,7 @@ const PlusCourseRandom = ({ subwayStation, placelist }) => {
     const token = getToken();
     const title = '랜덤으로 삶아진 코스입니다 ! 제목을 바꿔주세요 !'; 
     const description = '설명을 삶아주세요 !'; 
-    const is_share = 'True'; 
+    const is_share = "True"; 
 
     try {
       const response = await apiCall('/api/user/course', 'POST', { title, description, subway_station: subwayStation, placelist, is_share }, token);
