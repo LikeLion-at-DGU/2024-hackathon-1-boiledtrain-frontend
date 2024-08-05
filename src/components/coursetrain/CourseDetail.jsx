@@ -6,6 +6,7 @@ import user from "../../assets/images/tr.jpg";
 import MenuList from "../Common/MenuList";
 import apiCall from "../../api";
 import profile from "../../assets/images/normalprofile.png"
+import Loading from "../Modal/Loading"
 
 const getUserInfo = () => {
     const userInfo = localStorage.getItem('user_info');
@@ -123,8 +124,9 @@ const CourseDetail = ({ courseId, onClose, onEditCourse }) => {
     }, []);
 
     if (!course) {
-        return <p>Loading...</p>;
+        return <Loading />;
     }
+    
 
     const userInfo = getUserInfo();
     const shouldShowMenu = !(userInfo && userInfo.email !== course.user.email);
