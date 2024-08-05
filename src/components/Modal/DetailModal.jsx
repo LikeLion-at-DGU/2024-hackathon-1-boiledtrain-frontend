@@ -36,9 +36,10 @@ function DetailModal({ isOpen, onClose, placeDetails, getPhotoUrl, subwayStation
                 <PlusCourseRandom subwayStation={subwayStation} placelist={placeIds} />
             )}
             <S.ModalTotal2 $isExiting={isExiting}>
+            <S.CloseButton onClick={handleClose}>✖</S.CloseButton>
                 <S.Head>
                     <S.Icon src={Main} />
-                    <S.HeadMent>{subwayStation}역 코스<S.CloseButton onClick={handleClose}>✖</S.CloseButton></S.HeadMent>
+                    <S.HeadMent>{subwayStation}역 코스</S.HeadMent>
                 </S.Head>
                 <S.Body>
                     {showMap ? (

@@ -42,10 +42,10 @@ function DetailModalGoal({ isOpen, onClose, places, getPhotoUrl, subwayStation }
         <div>
             {showPlusCourse && <PlusCourseGoal placelist={placeIds} onClose={() => setShowPlusCourse(false)} subwayStation={subwayStation} />}
             <S.ModalTotal $isExiting={isExiting}>
+            <S.CloseButton2 onClick={handleClose}>✖</S.CloseButton2>
                 <S.Head2>
                     <S.Icon src={Main} />
                     <S.HeadMent>{subwayStation}역 코스
-                        <S.CloseButton2 onClick={handleClose}>✖</S.CloseButton2>
                     </S.HeadMent>
                 </S.Head2>
                 <S.Body>
