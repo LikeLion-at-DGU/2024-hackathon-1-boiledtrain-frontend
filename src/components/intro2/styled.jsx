@@ -92,15 +92,20 @@ export const ImgContainer = styled.div`
     width: 370px;
     height: 240px;
     border-radius: 20px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
     overflow:hidden;
     position:absolute;
     top:27px;
-`
+`;
 
 export const MapsImg = styled.img`
-    width: 386px;
-    height: 386px;
-`
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; 
+    transition: transform 0.2s ease; 
+`;
 
 //버튼 컨테이너
 export const MainConstainer2 = styled.div`

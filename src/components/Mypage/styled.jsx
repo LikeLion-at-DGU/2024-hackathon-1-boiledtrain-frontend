@@ -234,7 +234,7 @@ export const editButtonContainer = styled.div`
     gap:10px;
     justify-content: center;
     align-items: center;
-    margin-top:300px;
+    margin-top:250px;
 `
 export const editButton = styled.button`
     width: 200px;
