@@ -90,6 +90,7 @@ export const P = styled.div`
     text-align: right;
     font-family: Pretendard;
     font-size: 10px;
+    width:100px;
     font-style: normal;
     font-weight: 600;
     line-height: 18px;

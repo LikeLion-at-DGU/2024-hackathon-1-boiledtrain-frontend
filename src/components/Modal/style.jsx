@@ -208,7 +208,7 @@ export const Point = styled.div`
 
 export const CloseButton = styled.button`
   position: absolute;
-  transform: translate(100px, -55px);
+  transform: translate(110px, -50px);
   background: none;
   border: none;
   font-size: 24px;
@@ -220,7 +220,7 @@ export const CloseButton = styled.button`
 `;
 export const CloseButton2 = styled.button`
   position: absolute;
-  transform: translate(80px, -50px);
+  transform: translate(100px, -50px);
   background: none;
   border: none;
   font-size: 24px;
