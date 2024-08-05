@@ -61,10 +61,6 @@ const CourseContentSharedFast = ({selectedStation,onCourseClick}) => {
         return <EmptyCourse />;
     }
 
-    if (data.length === 0) {
-        return <EmptyCourse />;
-    }
-
     return (
         <S.TopContainer>
             {filteredData.slice().map((course, index) => {

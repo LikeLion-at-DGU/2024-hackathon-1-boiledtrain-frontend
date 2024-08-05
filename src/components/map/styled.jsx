@@ -15,6 +15,17 @@ export const BackButton = styled.button`
     border: 0;
 `
 
+export const Topcontainer = styled.div`
+    flex-wrap: wrap; 
+    gap: 10px; 
+    max-height:700px; 
+    overflow-y:auto;
+    &::-webkit-scrollbar {
+        width: 0;
+        background: transparent;
+    }
+`
+
 // 지도 화면 추가
 export const Mapcontainer = styled.div`
     width:100%;

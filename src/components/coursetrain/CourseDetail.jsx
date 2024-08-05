@@ -7,6 +7,7 @@ import MenuList from "../Common/MenuList";
 import apiCall from "../../api";
 import profile from "../../assets/images/normalprofile.png"
 import Loading from "../Modal/Loading"
+import { TopContainer2 } from "./styled";
 
 const getUserInfo = () => {
     const userInfo = localStorage.getItem('user_info');
@@ -137,6 +138,7 @@ const CourseDetail = ({ courseId, onClose, onEditCourse }) => {
                 <S.HeadButton onClick={onClose}><img src={back} alt="back" /></S.HeadButton>
                 {shouldShowMenu && <S.HeadButton onClick={handleMenuClick}><img src={menu} alt="menu" /></S.HeadButton>}
             </S.header>
+            <TopContainer2>
             <S.infoUserContainer>
                 <S.userImg src={course.user.profile_image || profile} alt="user" />
                 <S.User>
@@ -156,6 +158,7 @@ const CourseDetail = ({ courseId, onClose, onEditCourse }) => {
                     <p>No places available</p>
                 )}
             </S.ContentContainer>
+            </TopContainer2>
             {menuVisible && (
                 <div ref={menuRef}>
                     <MenuList 

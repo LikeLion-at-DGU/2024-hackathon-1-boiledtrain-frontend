@@ -5,6 +5,7 @@ import unLock from "../../assets/images/unLock.svg";
 import apiCall from "../../api";
 import Warning from "../Common/Warning";
 import ment from "../../assets/images/ment.png";
+import getPlacePhotoUrl from "../../utils/getPlacePhotoUrl";
 
 const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess, courseId, isEditMode }) => {
     const [isLock, setIsLock] = useState(true);
@@ -13,18 +14,43 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess, courseId,
     const [showWarning, setShowWarning] = useState(false);
     const [warningMessage, setWarningMessage] = useState("");
     const [isHovered, setIsHovered] = useState(false);
-
+    const [places, setPlaces] = useState([]); // Define state for places
+    useEffect(()=>{
+        console.log('Added Places in Coursename:', addedPlaces);
+    },[addedPlaces]);
     useEffect(() => {
         if (isEditMode && courseId) {
-            console.log('isEditMode in Coursename:', isEditMode); 
+            console.log('isEditMode in Coursename:', isEditMode);
             const fetchCourseDetails = async () => {
                 try {
                     const token = localStorage.getItem('access_token');
                     const response = await apiCall(`/api/user/course/${courseId}`, 'get', null, token);
                     const course = response.data;
+
+                    console.log('Course placelist:', course.placelist);
+
+                    // Fetch photo URLs for each place
+                    const placesWithPhotoUrls = await Promise.all(course.placelist.map(async (place) => {
+                        console.log('Place:', place); // Log the entire place object
+                        console.log('Photo Reference:', place.photo_reference);
+                        let photoUrl = '';
+                        if (place.photo_reference) {
+                            try {
+                                photoUrl = getPlacePhotoUrl(place.photo_reference); // No need for async here as we are generating URL
+                            } catch (error) {
+                                console.error('Error fetching photo URL:', error.message);
+                            }
+                        }
+                        return {
+                            ...place,
+                            photoUrl: photoUrl || '' // Default to empty string if URL is not found
+                        };
+                    }));
+
                     setCourseName(course.title);
                     setCourseDescription(course.description);
                     setIsLock(course.is_share === "False");
+                    setPlaces(placesWithPhotoUrls); // Set updated places with photo URLs
                 } catch (error) {
                     console.error("Failed to fetch course details", error);
                 }
@@ -51,7 +77,6 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess, courseId,
         } else {
             setShowWarning(false);
         }
-
         try {
             const token = localStorage.getItem('access_token');
             const method = isEditMode ? 'patch' : 'post';
@@ -61,7 +86,7 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess, courseId,
                 title: courseName,
                 description: courseDescription,
                 subway_station: selectedStation,
-                placelist: addedPlaces.map(place => place.id),
+                placelist: addedPlaces.map(addedPlaces => addedPlaces.id),
                 is_share: isLock ? "False" : "True",
             }, token);
 

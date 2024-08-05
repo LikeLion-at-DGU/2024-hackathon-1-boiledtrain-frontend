@@ -46,7 +46,10 @@ function Header({ setSelectedStation }) {
         value={keyword} 
         onChange={onChangeData} 
         placeholder="검색"
-        onFocus={() => setSelectedStation("")}
+        onFocus={() => {
+          setKeyword("");
+          setSelectedStation("");
+        }}
       />
       {/* <S.Searchicon src={sea} alt="icon" onClick={handleIconClick} /> */}
 
@@ -69,7 +72,7 @@ function Header({ setSelectedStation }) {
           </S.AutoSearchWrap>
         </S.AutoSearchContainer>
       )}
-      </>
+    </>
   );
 }
 
