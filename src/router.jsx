@@ -20,7 +20,7 @@ import CourseDetail from './components/coursetrain/CourseDetail';
 import Loginpage from './pages/Loginpage';
 import Mypage from './pages/Mypage';
 import MypageEdit from './pages/MypageEdit';
-import DiaryEdit from './pages/DiaryEdit'; //
+import DiaryEdit from './pages/DiaryEdit';
 
 const router = createBrowserRouter([
   {
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       { path: '/diarymain', element: <DiaryMain /> },
       { path: '/diarywrite', element: <DiaryWrite /> },
       { path: '/diarydetail/:id', element: <DiaryDetail /> },
-      { path:"/course/:courseId/edit", element:<DiaryEdit />}, //
+      { path:"/diary/:courseId/edit", element:<DiaryEdit />},
 
     ],
     errorElement: <NotFound />,

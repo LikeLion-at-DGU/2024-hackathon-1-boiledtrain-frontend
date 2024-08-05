@@ -35,7 +35,7 @@ export const menuButton = styled.button`
 export const HeadContainer=styled.div`
     display:flex;
     flex-direction: column;
-    margin:0px 125px 0px 37px;
+    margin:0px 0px 0px 37px;
 `
 
 export const Title = styled.div`
@@ -50,13 +50,12 @@ export const Title = styled.div`
 `
 
 export const Content = styled.div`
-    color: #FFF;
-
-    font-family: "SF Pro";
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 510;
-    line-height: normal;
+color: #FFF;
+font-family: 'Pretendard';
+font-size: 13px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
 `
 
 //Subwayai
@@ -145,10 +144,10 @@ export const LoginButton = styled.button`
   background: #00ABFC;
   color: #FFF;
   text-align: center;
-  font-family: "SF Pro";
+  font-family: "Pretendard";
   font-size: 20px;
   font-style: normal;
-  font-weight: 1000;
+  font-weight: 700;
   line-height: normal;
   border: 2px solid #007bff;
   cursor: pointer;
@@ -166,9 +165,9 @@ export const SubText = styled.span`
   margin-top: 8px;
   color: #FFF;
   text-align: center;
-  font-family: "SF Pro";
-  font-size: 10px;
+  font-family: "Pretendard";
+  font-size: 12px;
   font-style: normal;
-  font-weight: 510;
+  font-weight: 550;
   line-height: normal;
 `;

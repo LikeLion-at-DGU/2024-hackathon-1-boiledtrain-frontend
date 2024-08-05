@@ -11,6 +11,7 @@ import Station from "../components/Main/Station";
 import DetailModal from "../components/Modal/DetailModal";
 import apiCall from "../api";
 import Base from '../assets/images/baseimage.png';
+import subwayInfo from '../../subwayinfo.json';
 
 const PageContainer = styled.div`
   position: relative;
@@ -134,6 +135,71 @@ const CloseButton = styled.button`
   }
 `;
 
+const LineImagesContainer = styled.div`
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 9px;
+`;
+
+const LineImage = styled.img`
+  width: 16px;
+  height: auto;
+  margin-top: 10px;
+`;
+
+import line1 from '../assets/images/1호선.png';
+import line2 from '../assets/images/2호선.png';
+import line3 from '../assets/images/3호선.png';
+import line4 from '../assets/images/4호선.png';
+import line5 from '../assets/images/5호선.png';
+import line6 from '../assets/images/6호선.png';
+import line7 from '../assets/images/7호선.png';
+import line8 from '../assets/images/8호선.png';
+import line9 from '../assets/images/9호선.png';
+import gyeongui from '../assets/images/경의중앙선.png';
+import shinbundang from '../assets/images/신분당선.png';
+import suinbundang from '../assets/images/수인분당선.png';
+import airport from '../assets/images/공항철도.png';
+import incheon1 from '../assets/images/인천1호선.png';
+import uijeongbu from '../assets/images/의정부선.png';
+import ui from '../assets/images/우이신설.png';
+import gimpo from '../assets/images/김포골드.png';
+import incheon2 from '../assets/images/인천2.png';
+import yongin from '../assets/images/용인에버라인.png';
+import sinlim from '../assets/images/신림선.png';
+import gyeongchun from '../assets/images/경춘선.png';
+import gyeonggang from '../assets/images/경강선.png';
+import seohae from '../assets/images/서해선.png';
+
+const lineImages = {
+  "01호선": line1,
+  "02호선": line2,
+  "03호선": line3,
+  "04호선": line4,
+  "05호선": line5,
+  "06호선": line6,
+  "07호선": line7,
+  "08호선": line8,
+  "09호선": line9,
+  "경의선": gyeongui,
+  "신분당선": shinbundang,
+  "수인분당선": suinbundang,
+  "공항철도": airport,
+  "인천선": incheon1,
+  "의정부경전철": uijeongbu,
+  "우이신설경전철": ui,
+  "김포도시철도": gimpo,
+  "인천2호선": incheon2,
+  "용인경전철": yongin,
+  "신림선": sinlim,
+  "경춘선": gyeongchun,
+  "경강선": gyeonggang,
+  "서해선": seohae,
+};
+
 function OnlyRandom() {
   const [scale, setScale] = useState(1.0);
   const [stations, setStations] = useState([]);
@@ -224,10 +290,13 @@ function OnlyRandom() {
     setDetailModalOpen(false);
     setSelectedPlace([]);
   };
-  
+
   const handlePointClick = () => {
     setInfoModalOpen(true);
   };
+
+  const stationInfo = subwayInfo.DATA.filter((station) => station.station_nm === subwayStation);
+  const lineImagesToShow = stationInfo.map((info) => lineImages[info.line_num]);
 
   return (
     <PageContainer>
@@ -235,6 +304,11 @@ function OnlyRandom() {
       {subwayStation ? (
         <>
           <StationName>{subwayStation}역</StationName>
+          <LineImagesContainer>
+            {lineImagesToShow.map((lineImage, index) => (
+              <LineImage key={index} src={lineImage} alt={`${stationInfo[index].line_num} 이미지`} />
+            ))}
+          </LineImagesContainer>
           <Station onReset={resetState} />
         </>
       ) : (
