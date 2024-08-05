@@ -56,6 +56,10 @@ export const DropdownMenu = styled.ul`
   z-index: 1;
   max-height: 150px;
   overflow-y: auto;
+  &::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
 `;
 
 export const DropdownItem = styled.li`
@@ -71,6 +75,7 @@ export const DropdownItem = styled.li`
   &:not(:last-child) {
     border-bottom: 1px solid #8C8C8C; 
   }
+
 `;
 
 export const Arrow = styled.img`
