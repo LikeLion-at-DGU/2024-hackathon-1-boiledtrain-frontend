@@ -13,6 +13,21 @@
 
 
 
+/* body{
+  background-color: aliceblue;
+}
+
+#root{
+  display:flex;
+  background-color: #FFFFFF;
+  width:430px;
+  min-height: 873px;
+  margin: 0 auto;
+  position:relative;
+} */
+
+
+
 body {
   background-color: aliceblue;
   display: flex;
@@ -54,3 +69,4 @@ body {
     align-items: center; /* 데스크탑에서 중앙 정렬 */
   }
 }
+
