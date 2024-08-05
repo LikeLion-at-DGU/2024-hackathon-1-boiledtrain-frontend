@@ -4,7 +4,6 @@ import apiCall from '../api';
 import styled from 'styled-components';
 import BottomBar from "../components/Common/BottomBar";
 import TopBarDiary from "../components/Common/TopBarDiary";
-import DiaryMenuList from '../components/Diary/DiaryMenuList';
 import { getToken } from '../utils/auth';
 import Photo from '../assets/images/baseimage.png';
 
@@ -61,7 +60,7 @@ const DetailContent = styled.div`
   font-family: 'Pretendard';
   font-size: 16px;
   font-weight: 400;
-  width:300px;
+  width: 300px;
   overflow: hidden;  
   overflow-y: auto; 
   max-height: 270px; 
@@ -113,17 +112,19 @@ const UnderBar = styled.div`
   height: 1px;
   background: #00ABFC;
 `;
+
 const BottomStyle = styled.div`
-    position: absolute;
-    bottom: 0px;
-    width: 430px;
-    height: 77px;
-    background: #00ABFC;
+  position: absolute;
+  bottom: 0px;
+  width: 430px;
+  height: 77px;
+  background: #00ABFC;
 `;
 
 const Detail = () => {
   const navigate = useNavigate();
   const [data, setData] = useState();
+  const [courseData, setCourseData] = useState();
   const { id } = useParams();
 
   const fetchData = async () => {
@@ -132,8 +133,23 @@ const Detail = () => {
       const response = await apiCall(`/api/user/diary/${id}`, 'get', {}, token);
       console.log(response.data);
       setData(response.data);
+      
+      if (response.data.course) {
+        fetchCourseData(response.data.course);
+      }
     } catch (error) {
       console.error("Error fetching diary data:", error);
+    }
+  };
+
+  const fetchCourseData = async (courseId) => {
+    try {
+      const token = getToken();
+      const response = await apiCall(`/api/user/course/${courseId}`, 'get', {}, token); 
+      console.log(response.data);
+      setCourseData(response.data);
+    } catch (error) {
+      console.error("Error fetching course data:", error);
     }
   };
 
@@ -149,25 +165,7 @@ const Detail = () => {
   };
 
   const handleCourseDetailClick = () => {
-    navigate(`/diarywrite`);
-  };
-
-  // const handleCourseDetailClick = () => {
-  //   if (data?.courseId) {
-  //     navigate(`/course/${
-  //       data.courseId}`);
-  //     }
-  // };
-
-  // const handleCourseDetailClick = () => {
-  //   if (data && data.course_id) {
-  //     navigate(`/coursedetail/${data.course_id}`);
-  //   } else {
-  //     console.error("코스 ID가 존재하지 않습니다.");
-  //   }
-  // };
-  
-  const handleCourseDeleted = () => {
+    navigate(`/course`);
   };
 
   return (
@@ -177,20 +175,15 @@ const Detail = () => {
       <DetailTitle>{data?.title}</DetailTitle>
       <DetailDate>{formatDate(data?.created_at)}</DetailDate>
       <DiaryDetailLine2 />
-      <DetailCourse>#{data?.course}</DetailCourse>
+      <DetailMood># {courseData?.subway_station || ''}역 코스</DetailMood>
       <DetailURL onClick={handleCourseDetailClick} style={{ cursor: 'pointer' }}>
         코스 자세히 보기<UnderBar />
       </DetailURL>
       <DetailThumbnail src={data?.image || Photo} alt="다이어리 이미지" />
       <DetailMood>{data?.mood}</DetailMood>
       <DetailContent>{data?.content}</DetailContent>
-      {/* <DiaryMenuList 
-        courseId={id} 
-        onCourseDeleted={handleCourseDeleted} 
-        onEditCourse={() => navigate(`/diaryedit/${id}`)} 
-      /> */}
       <BottomStyle>
-      <BottomBar />
+        <BottomBar />
       </BottomStyle>
     </DetailContainer>
   );

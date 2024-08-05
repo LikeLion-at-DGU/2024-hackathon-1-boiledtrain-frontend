@@ -21,7 +21,7 @@ const MenuList = ({ courseId, onCourseDeleted }) => {
     };
 
     const editCourse = () => {
-        navigate(`/course/${courseId}/edit`);
+        navigate(`/diary/${courseId}/edit`);
     };
 
     return (
