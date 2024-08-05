@@ -13,11 +13,20 @@ import styled from "styled-components";
 
 const StyledBottomBar = styled.div`
     position: absolute;
-    bottom: -77px;
+    bottom: 0px;
     width: 430px;
     height: 77px;
     background: #00ABFC;
-;`
+    z-index:200;
+`;
+const PageContainer = styled.div`
+  position: relative;
+  height: 873px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+`;
 
 const Course = () => {
     const [selected, setSelected] = useState(1);
@@ -67,7 +76,7 @@ const Course = () => {
     };
 
     return (
-        <div>
+        <PageContainer>
             <Head 
                 selected={selected} 
                 onSelect={handleSelect}
@@ -116,7 +125,7 @@ const Course = () => {
             <StyledBottomBar>
                 <BottomBar />
             </StyledBottomBar>
-        </div>
+        </PageContainer>
     );
 }
 

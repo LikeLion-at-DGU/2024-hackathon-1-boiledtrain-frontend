@@ -32,7 +32,7 @@ export const Allimage = styled.img`
 
 export const TopHead = styled.div`
   display: flex;
-  width: 430px;
+  width: 100%;
   align-items: center;
   flex-shrink: 0;
 `;
