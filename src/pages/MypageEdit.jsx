@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from "react";
 import * as S from "../components/Mypage/styled";
+import styled from "styled-components";
 import userimg from "../assets/images/normalprofile.png";
 import edit from "../assets/images/editBackground.svg";
 import { getUserInfo } from "../utils/auth";
 import apiCall from "../api";
 import { useNavigate } from "react-router-dom";
+import Bottom from "../components/Common/BottomBar";
+
+const BottomStyle = styled.div`
+    position: absolute;
+    bottom: 0px;
+    width: 430px;
+    height: 77px;
+    background: #00ABFC;
+`;
 
 const MypageEdit = () => {
     const [userInfo, setUserInfo] = useState({
@@ -74,6 +84,9 @@ const MypageEdit = () => {
             <S.editButtonContainer>
                 <S.editButton onClick={handleSave}>저장</S.editButton>
             </S.editButtonContainer>
+            <BottomStyle>
+                <Bottom />
+            </BottomStyle>
         </>
     );
 };
