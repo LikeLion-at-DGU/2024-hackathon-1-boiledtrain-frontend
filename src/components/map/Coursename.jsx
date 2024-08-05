@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Describ, Bold, Lockcontainer, LockButton, Courseguide, Courseinput, PlaceAddButton } from "./styled";
+import { Describ, Bold, Lockcontainer, LockButton, Courseguide, Courseinput, PlaceAddButton, Ment, MentContainer } from "./styled";
 import Lock from "../../assets/images/Lock.svg";
-import unLock from "../../assets/images/unLock.png";
+import unLock from "../../assets/images/unLock.svg";
 import apiCall from "../../api";
 import Warning from "../Common/Warning";
+import ment from "../../assets/images/ment.png";
 
 const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess, courseId, isEditMode }) => {
     const [isLock, setIsLock] = useState(true);
@@ -11,6 +12,7 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess, courseId,
     const [courseDescription, setCourseDescription] = useState("");
     const [showWarning, setShowWarning] = useState(false);
     const [warningMessage, setWarningMessage] = useState("");
+    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         if (isEditMode && courseId) {
@@ -31,6 +33,7 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess, courseId,
             fetchCourseDetails();
         }
     }, [courseId, isEditMode]);
+
     const Locked = () => {
         setIsLock(prevState => !prevState);
     };
@@ -78,7 +81,22 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess, courseId,
     return (
         <>
             <Lockcontainer>
-                <LockButton onClick={Locked}><img src={isLock ? Lock : unLock} alt="Lock" /></LockButton>
+                <MentContainer 
+                    src={ment}
+                    style={{ display: isHovered ? 'block' : 'none' }} // Conditionally display MentContainer
+                />
+                <Ment 
+                    style={{ display: isHovered ? 'block' : 'none' }} // Conditionally display Ment
+                >
+                    공개 여부를 설정 할 수 있어요!
+                </Ment>
+                <LockButton 
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    onClick={Locked}
+                >
+                    <img src={isLock ? Lock : unLock} alt="Lock" style={{width:"30px", height:"30px"}}/>
+                </LockButton>
             </Lockcontainer>
             <Courseguide>
                 <Bold>코스 이름<Describ>나만의 이름을 붙여주세요. (10자 이내)</Describ></Bold>

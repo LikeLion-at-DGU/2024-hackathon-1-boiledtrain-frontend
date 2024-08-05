@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import Head from "../components/Course/Head";
 import Search from "../components/Course/Search";
 import Select from "../components/Course/Select";
@@ -10,7 +10,6 @@ import CourseContentShaedLike from "../components/coursetrain/CourseContentShaed
 import CourseDetail from "../components/coursetrain/CourseDetail";
 import BottomBar from "../components/Common/BottomBar";
 import styled from "styled-components";
-import apiCall from "../api";
 
 const StyledBottomBar = styled.div`
     position: absolute;
@@ -28,6 +27,7 @@ const Course = () => {
     const [editingCourse, setEditingCourse] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
     const [coursePlaces, setCoursePlaces] = useState([]);
+    const [selectedStation, setSelectedStation] = useState("");
 
     const handleAddCourseClick = () => {
         setIsCourseMakeVisible(true);
@@ -77,19 +77,24 @@ const Course = () => {
                     <Search 
                         selected={selected} 
                         onAddCourseClick={handleAddCourseClick}
+                        setSelectedStation={setSelectedStation}
                     />
                     <Select 
                         selected={selected} 
                         selected2={selected2} 
                         onSelect2={setSelected2} 
                     />
-                    {selected === 1 && selected2 === 1 && <CourseContentShaedLike onCourseClick={handleCourseClick} />}
+                    {selected === 1 && selected2 === 1 && <CourseContentShaedLike onCourseClick={handleCourseClick}  
+                        selectedStation={selectedStation}/>}
                     {/* 전체 코스 인기순 */}
-                    {selected === 1 && selected2 === 2 && <CourseContentSharedFast onCourseClick={handleCourseClick} />}
+                    {selected === 1 && selected2 === 2 && <CourseContentSharedFast onCourseClick={handleCourseClick}  
+                        selectedStation={selectedStation}/>}
                     {/* 전체 코스 최신순 */}
                     {selected === 2 && selected2 === 1 && <CourseContentLike onCourseClick={handleCourseClick} />}
                     {/* 내 코스 좋아요 누른거 */}
-                    {selected === 2 && selected2 === 2 && <CourseContent onCourseClick={handleCourseClick} />}
+                    {selected === 2 && selected2 === 2 && <CourseContent 
+                        onCourseClick={handleCourseClick}
+                    />}
                     {/* 내 코스 내가 만든거  */}
                 </>
             )}
