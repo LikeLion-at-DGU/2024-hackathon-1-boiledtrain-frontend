@@ -115,7 +115,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
             if (status === google.maps.places.PlacesServiceStatus.OK && place.photos) {
                 // Get the first photo URL from the place's photos
                 const photoUrl = place.photos.length > 0 ? place.photos[0].getUrl() : '';
-                console.log("photoUrllrllrllrlr",photoUrl);
+                console.log("photoUrllrllrllrlr", photoUrl);
                 setPlacePhotos(place.photos.map(photo => photo.getUrl()));
                 setSelectedPlace(prevPlace => ({
                     ...prevPlace,
@@ -130,11 +130,6 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
             }
         });
     };
-
-    // const fetchPlacePhotoUrl = (photoReference) => {
-    //     const apiKey = import.meta.env.VITE_GOOGLEMAP_API_KEY;
-    //     return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${apiKey}`;
-    // };
 
     const deleteMarker = () => {
         if (currentMarkerRef.current) {
@@ -171,15 +166,23 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
             setShowWarning(true);
             return;
         }
-    
+
         if (selectedPlace) {
+            // Check if the place is already added
+            const isPlaceAdded = addedPlaces.some(place => place.id === selectedPlace.place_id);
+            if (isPlaceAdded) {
+                setWarningMessage("이미 추가된 장소입니다.");
+                setShowWarning(true);
+                return;
+            }
+
             try {
                 const token = localStorage.getItem('access_token');
                 const response = await apiCall("/api/user/choose_and_add_place/", 'post', {
                     subway_station: selectedStation,
                     place: selectedPlace.place_id,
                 }, token);
-    
+
                 console.log('API response:', response);
                 if (response.data.true) {
                     setAddedPlaces(prevPlaces => [
@@ -189,7 +192,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                             address: selectedPlace.formatted_address,
                             category: selectedPlace.types.length > 0 ? selectedPlace.types[0] : '카테고리 정보가 없습니다.',
                             id: selectedPlace.place_id,
-                            photoUrl: selectedPlace.photoUrl || '', // Use the photo URL from selectedPlace
+                            photoUrl: selectedPlace.photoUrl || '',
                         }
                     ]);
                     setSelectedPlace(null);

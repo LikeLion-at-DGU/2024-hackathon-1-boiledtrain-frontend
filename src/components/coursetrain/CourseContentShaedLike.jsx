@@ -1,6 +1,6 @@
 import React, { useEffect, useState,useCallback } from "react";
 import * as S from "./styled";
-import train from "../../assets/images/ticket.jpg";
+import train from "../../assets/images/boiledtrainLogo.png";
 import apiCall from "../../api";
 import EmptyCourse from "../Common/EmptyCourse";
 import HeartIcon from "../../assets/images/HeartIcon";
@@ -9,13 +9,39 @@ import profile from "../../assets/images/normalprofile.png"
 const CourseContentSharedLike = ({ onCourseClick }) => {
     const [data, setData] = useState([]);
     const [likedCourses, setLikedCourses] = useState({});
+    const [placeImages, setPlaceImages] = useState({});
+    const [map, setMap] = useState(null);
+
+    useEffect(() => {
+        if (window.google && window.google.maps) {
+            const map = new window.google.maps.Map(document.createElement('div'));
+            setMap(map);
+        }
+    }, []);
+    const fetchPlaceImage = async (placeId) => {
+        return new Promise((resolve) => {
+            if (!map) {
+                resolve(train);
+                return;
+            }
+
+            const service = new window.google.maps.places.PlacesService(map);
+            service.getDetails({ placeId }, (place, status) => {
+                if (status === window.google.maps.places.PlacesServiceStatus.OK && place.photos && place.photos.length > 0) {
+                    const photoUrl = place.photos[0].getUrl();
+                    resolve(photoUrl);
+                } else {
+                    resolve(train); // 사진이 없으면 기본 이미지 사용
+                }
+            });
+        });
+    };
 
     const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('access_token');
             const response = await apiCall("/api/user/course/like_order", "get", null, token);
             setData(response.data);
-
             const initialLikedCourses = {};
             response.data.forEach(course => {
                 initialLikedCourses[course.id] = {
@@ -24,14 +50,29 @@ const CourseContentSharedLike = ({ onCourseClick }) => {
                 };
             });
             setLikedCourses(initialLikedCourses);
+            const placeImagePromises = response.data.flatMap(course =>
+                course.placelist.slice(0, 3).map(async placeId => {
+                    const imageUrl = await fetchPlaceImage(placeId);
+                    return { [placeId]: imageUrl };
+                })
+            );
+
+            const placeImageResults = await Promise.all(placeImagePromises);
+            const newPlaceImages = placeImageResults.reduce((acc, img) => {
+                return { ...acc, ...img };
+            }, {});
+
+            setPlaceImages(newPlaceImages);
         } catch (error) {
             console.log("error 발생: ", error);
         }
-    }, []);
+    }, [map]);
 
     useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+        if (map) {
+            fetchData();
+        }
+    }, [fetchData, map]);
 
 
     const formatDateTime = (dateString) => {
@@ -71,13 +112,22 @@ const CourseContentSharedLike = ({ onCourseClick }) => {
         <S.TopContainer>
             {data.slice().map((course, index) => {
                 const { is_like, like_count } = likedCourses[course.id] || { is_like: course.is_like, like_count: course.like_count };
+                const courseImages = course.placelist.slice(0, 3).map(
+                    placeId => placeImages[placeId] || train
+                );
 
                 return (
                     <S.CourseContainer key={index} onClick={() => onCourseClick(course.id)}>
                         <S.PhotoContainer>
-                            <S.Img style={{ borderRadius: '12px 0px 0px 0px' }} src={train} />
-                            <S.Img src={train} />
-                            <S.Img style={{ borderRadius: '0px 12px 0px 0px' }} src={train} />
+                            {courseImages.map((image, index) => (
+                                <S.Img 
+                                    key={index}
+                                    style={{
+                                        borderRadius: index === 0 ? '12px 0px 0px 0px' : index === 2 ? '0px 12px 0px 0px' : ''
+                                    }} 
+                                    src={image} 
+                                />
+                            ))}
                         </S.PhotoContainer>
                         <S.InfoUser>
                             <S.CourseContentContainer>

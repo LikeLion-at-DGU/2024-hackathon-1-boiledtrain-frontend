@@ -7,14 +7,14 @@ import Warning from "../Common/Warning";
 import ment from "../../assets/images/ment.png";
 import getPlacePhotoUrl from "../../utils/getPlacePhotoUrl";
 
-const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess, courseId, isEditMode }) => {
+const Coursename = ({ addedPlaces,setAddedPlaces, selectedStation, onRegisterSuccess, courseId, isEditMode }) => {
     const [isLock, setIsLock] = useState(true);
     const [courseName, setCourseName] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
     const [showWarning, setShowWarning] = useState(false);
     const [warningMessage, setWarningMessage] = useState("");
     const [isHovered, setIsHovered] = useState(false);
-    const [places, setPlaces] = useState([]); // Define state for places
+    const [places, setPlaces] = useState([]); 
     useEffect(()=>{
         console.log('Added Places in Coursename:', addedPlaces);
     },[addedPlaces]);
@@ -29,28 +29,31 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess, courseId,
 
                     console.log('Course placelist:', course.placelist);
 
-                    // Fetch photo URLs for each place
                     const placesWithPhotoUrls = await Promise.all(course.placelist.map(async (place) => {
-                        console.log('Place:', place); // Log the entire place object
+                        console.log('Place:', place); 
                         console.log('Photo Reference:', place.photo_reference);
                         let photoUrl = '';
                         if (place.photo_reference) {
                             try {
-                                photoUrl = getPlacePhotoUrl(place.photo_reference); // No need for async here as we are generating URL
+                                photoUrl = getPlacePhotoUrl(place.photo_reference); 
+                                console.log(photoUrl);
                             } catch (error) {
                                 console.error('Error fetching photo URL:', error.message);
                             }
                         }
                         return {
                             ...place,
-                            photoUrl: photoUrl || '' // Default to empty string if URL is not found
+                            photoUrl: photoUrl || '' 
                         };
+                        
                     }));
+                    console.log("phtourl 추가",placesWithPhotoUrls);
 
                     setCourseName(course.title);
                     setCourseDescription(course.description);
                     setIsLock(course.is_share === "False");
-                    setPlaces(placesWithPhotoUrls); // Set updated places with photo URLs
+                    setPlaces(placesWithPhotoUrls); 
+                    setAddedPlaces(placesWithPhotoUrls);
                 } catch (error) {
                     console.error("Failed to fetch course details", error);
                 }
@@ -58,12 +61,13 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess, courseId,
 
             fetchCourseDetails();
         }
-    }, [courseId, isEditMode]);
+    }, [courseId, isEditMode,setAddedPlaces]);
 
     const Locked = () => {
         setIsLock(prevState => !prevState);
     };
-
+    console.log("c최종ㅇㅇㅇㅇ",places);
+    console.log("adddedddpacel",addedPlaces);
     const handleRegister = async () => {
         if (courseName.trim() === "" || courseDescription.trim() === "") {
             alert("모든 값을 입력해주세요!");
