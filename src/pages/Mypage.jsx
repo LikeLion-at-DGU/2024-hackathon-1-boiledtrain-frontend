@@ -7,22 +7,31 @@ import Zzimtrip from "../components/Mypage/Zzimtrip";
 
 const BottomStyle = styled.div`
     position: absolute;
-    bottom: -30px;
+    bottom: 0px;
     width: 430px;
     height: 77px;
     background: #00ABFC;
 `;
+
+const PageContainer = styled.div`
+    position: relative;
+    height: 873px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+`;
 const Mypage=()=>{
     
     return(
-        <div>
+        <PageContainer>
             <Info/>
             <Mytrip/>
             <Zzimtrip/>
             <BottomStyle>
                 <Bottom />
             </BottomStyle>
-        </div>
+        </PageContainer>
     )
 }
 export default Mypage;

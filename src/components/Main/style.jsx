@@ -65,25 +65,33 @@ export const Face = styled.img`
 
 export const text = styled.div`
   color: #000;
-  font-family: "SF Pro";
+  font-family: "Pretendard";
   font-size: 18.7px;
   font-style: normal;
-  font-weight: 590;
+  font-weight: 600;
   line-height: 24.2px;
+  white-space: nowrap;        
+  overflow: hidden;       
+  text-overflow: ellipsis;   
+  width:182px;         
 `;
 
 export const text2 = styled.div`
   color: #8E8E8E;
-  font-family: "SF Pro";
+  font-family: "Pretendard";
   font-size: 12px;
   font-style: normal;
-  font-weight: 590;
+  font-weight: 500;
   line-height: 24.2px;
+  white-space: nowrap;        
+  overflow: hidden;       
+  text-overflow: ellipsis;   
+  width:182px;
 `;
 
 export const newtext = styled.div`
   color: #000;
-  font-family: "SF Pro";
+  font-family: "Pretendard";
   width: 250px;
   font-size: 18.7px;
   font-style: normal;
@@ -104,7 +112,7 @@ export const myprofile = styled.button`
   border-radius: 17.5px;
   background: var(--Colors-Blue, #007AFF);
   color: #FFF;
-  font-family: "SF Pro";
+  font-family: "Pretendard";
   font-size: 15px;
   font-style: normal;
   font-weight: 590;
@@ -127,7 +135,7 @@ export const newmyprofile = styled.button`
   border-radius: 17.5px;
   background: var(--Colors-Blue, #007AFF);
   color: #FFF;
-  font-family: "SF Pro";
+  font-family: "Pretendard";
   font-size: 15px;
   font-style: normal;
   font-weight: 590;
@@ -152,7 +160,7 @@ export const logout = styled.button`
   border-radius: 17.5px;
   background: var(--Colors-Blue, #007AFF);
   color: #FFF;
-  font-family: "SF Pro";
+  font-family: "Pretendard";
   font-size: 15px;
   font-style: normal;
   font-weight: 590;

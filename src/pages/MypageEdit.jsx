@@ -1,26 +1,41 @@
 import React, { useState, useEffect } from "react";
 import * as S from "../components/Mypage/styled";
+import styled from "styled-components";
 import userimg from "../assets/images/normalprofile.png";
 import edit from "../assets/images/editBackground.svg";
 import { getUserInfo } from "../utils/auth";
 import apiCall from "../api";
 import { useNavigate } from "react-router-dom";
+import Bottom from "../components/Common/BottomBar";
+
+const BottomStyle = styled.div`
+    position: absolute;
+    bottom: 0px;
+    width: 430px;
+    height: 77px;
+    background: #00ABFC;
+`;
 
 const MypageEdit = () => {
     const [userInfo, setUserInfo] = useState({
         nickname: '',
         name: ''
     });
-
+    const [nicknameLength, setNicknameLength] = useState(0); // 닉네임 글자 수 상태 추가
     const navigate = useNavigate();
 
     useEffect(() => {
         const info = getUserInfo();
         setUserInfo(info);
+        setNicknameLength(info.nickname.length); // 초기 닉네임 길이 설정
     }, []);
 
     const handleNicknameChange = (event) => {
-        setUserInfo({ ...userInfo, nickname: event.target.value });
+        const newNickname = event.target.value;
+        if (newNickname.length <= 30) { // 50자 제한
+            setUserInfo({ ...userInfo, nickname: newNickname });
+            setNicknameLength(newNickname.length); // 글자 수 업데이트
+        }
     };
 
     const register = async () => {
@@ -54,7 +69,11 @@ const MypageEdit = () => {
             </S.Maincontainer>
             <S.userInfoContainer>
                 <S.infoText>닉네임</S.infoText>
-                <S.userInput value={userInfo.nickname} onChange={handleNicknameChange} />
+                <S.userInput 
+                    value={userInfo.nickname} 
+                    onChange={handleNicknameChange} 
+                />
+                <S.charCount>{nicknameLength}/30</S.charCount> {/* 남은 글자 수 표시 */}
             </S.userInfoContainer>
             <S.Hr2 />
             <S.userInfoContainer>
@@ -65,6 +84,9 @@ const MypageEdit = () => {
             <S.editButtonContainer>
                 <S.editButton onClick={handleSave}>저장</S.editButton>
             </S.editButtonContainer>
+            <BottomStyle>
+                <Bottom />
+            </BottomStyle>
         </>
     );
 };

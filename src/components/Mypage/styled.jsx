@@ -30,13 +30,15 @@ export const EditButton = styled.img`
 
 export const name = styled.p`
     color: #000;
-    text-align: center;
+    text-align: left;
     font-feature-settings: 'liga' off, 'clig' off;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
-    margin:0px 0px 0px 38px;
+    width:350px;
+    margin-left:40px;
+    margin-top:50px;
 `
 
 export const id = styled.p`
@@ -229,13 +231,14 @@ export const editButtonContainer = styled.div`
     width:430px;
     height: 100px;
     display: flex;
+    gap:10px;
     justify-content: center;
     align-items: center;
-    margin-top:300px;
+    margin-top:250px;
 `
 export const editButton = styled.button`
-    width: 360px;
-    height: 80px;
+    width: 200px;
+    height: 70px;
     border-radius: 58px;
     background: #00ABFC;
     color: #FFF;
@@ -247,3 +250,31 @@ export const editButton = styled.button`
     line-height: normal;
     border:0;
 `
+
+export const cancelButton = styled.button`
+    width: 200px;
+    height: 70px;
+    border-radius: 58px;
+    background: #00ABFC;
+    color: #FFF;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border:0;
+`;
+
+export const charCount = styled.div`
+    color: #8C8C8C;
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: Pretendard;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24.2px; /* 186.154% */
+    text-align: right; /* 텍스트를 오른쪽 정렬 */
+    width: 82%;
+    margin-top:10px;
+`;

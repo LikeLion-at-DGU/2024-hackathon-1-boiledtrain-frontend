@@ -40,7 +40,7 @@ export const InfoUser = styled.div`
 
 // user 정보
 export const CourseContentContainer = styled.div`
-    width: 99px;
+    /* width: 99px; */
     height: 45px;
     display: flex;
     flex-direction: row;
