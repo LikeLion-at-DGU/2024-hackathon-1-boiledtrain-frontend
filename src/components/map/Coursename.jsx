@@ -1,17 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Describ, Bold, Lockcontainer, LockButton, Courseguide, Courseinput, PlaceAddButton } from "./styled";
 import Lock from "../../assets/images/Lock.svg";
 import unLock from "../../assets/images/unLock.png";
 import apiCall from "../../api";
 import Warning from "../Common/Warning";
 
-const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => {
+const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess, courseId, isEditMode }) => {
     const [isLock, setIsLock] = useState(true);
     const [courseName, setCourseName] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
     const [showWarning, setShowWarning] = useState(false);
     const [warningMessage, setWarningMessage] = useState("");
 
+    useEffect(() => {
+        if (isEditMode && courseId) {
+            console.log('isEditMode in Coursename:', isEditMode); 
+            const fetchCourseDetails = async () => {
+                try {
+                    const token = localStorage.getItem('access_token');
+                    const response = await apiCall(`/api/user/course/${courseId}`, 'get', null, token);
+                    const course = response.data;
+                    setCourseName(course.title);
+                    setCourseDescription(course.description);
+                    setIsLock(course.is_share === "False");
+                } catch (error) {
+                    console.error("Failed to fetch course details", error);
+                }
+            };
+
+            fetchCourseDetails();
+        }
+    }, [courseId, isEditMode]);
     const Locked = () => {
         setIsLock(prevState => !prevState);
     };
@@ -27,12 +46,15 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => {
             setWarningMessage("코스는 최소 3개 등록해야해요!");
             return;
         } else {
-            setShowWarning(false); 
+            setShowWarning(false);
         }
 
         try {
             const token = localStorage.getItem('access_token');
-            const response = await apiCall('api/user/course', 'post', {
+            const method = isEditMode ? 'patch' : 'post';
+            const url = isEditMode ? `/api/user/course/${courseId}` : '/api/user/course';
+
+            const response = await apiCall(url, method, {
                 title: courseName,
                 description: courseDescription,
                 subway_station: selectedStation,
@@ -75,7 +97,7 @@ const Coursename = ({ addedPlaces, selectedStation, onRegisterSuccess }) => {
                 />
             </Courseguide>
             {showWarning && <Warning message={warningMessage} onClose={handleWarningClose}/>} {/* 경고 메시지 조건부 렌더링 */}
-            <PlaceAddButton onClick={handleRegister}>등록하기</PlaceAddButton>
+            <PlaceAddButton onClick={handleRegister}>{isEditMode ? '수정하기' : '등록하기'}</PlaceAddButton>
         </>
     );
 };

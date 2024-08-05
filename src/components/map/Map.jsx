@@ -16,6 +16,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
     const [showWarning, setShowWarning] = useState(false);
     const [warningMessage, setWarningMessage] = useState("");
     const [placePhotos, setPlacePhotos] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
 
     const currentMarkerRef = useRef(null);
 
@@ -107,16 +108,31 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
             });
         }
     }, [autocomplete, map, infoWindow]);
+
     const fetchPlaceDetails = (placeId) => {
         const service = new google.maps.places.PlacesService(map);
         service.getDetails({ placeId }, (place, status) => {
             if (status === google.maps.places.PlacesServiceStatus.OK && place.photos) {
                 setPlacePhotos(place.photos.map(photo => photo.getUrl()));
+                setSelectedPlace(prevPlace => ({
+                    ...prevPlace,
+                    photoUrl: place.photos.length > 0 ? place.photos[0].getUrl() : ''
+                }));
             } else {
                 setPlacePhotos([]);
+                setSelectedPlace(prevPlace => ({
+                    ...prevPlace,
+                    photoUrl: ''
+                }));
             }
         });
     };
+
+    const fetchPlacePhotoUrl = (photoReference) => {
+        const apiKey = import.meta.env.VITE_GOOGLEMAP_API_KEY;
+        return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${apiKey}`;
+    };
+
     const deleteMarker = () => {
         if (currentMarkerRef.current) {
             currentMarkerRef.current.setMap(null);
@@ -152,9 +168,8 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
             setShowWarning(true);
             return;
         }
-        
+
         if (selectedPlace) {
-            console.log("Selected Place:", selectedPlace);
             try {
                 const token = localStorage.getItem('access_token');
                 const response = await apiCall("/api/user/choose_and_add_place/", 'post', {
@@ -170,14 +185,16 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                             name: selectedPlace.name,
                             address: selectedPlace.formatted_address,
                             category: selectedPlace.types.length > 0 ? selectedPlace.types[0] : '카테고리 정보가 없습니다.',
-                            id : selectedPlace.place_id,
-                            photoUrl: placePhotos[0] || '',
+                            id: selectedPlace.place_id,
+                            photoUrl: selectedPlace.photoUrl || placePhotos[0] || '',
                         }
                     ]);
                     setSelectedPlace(null);
+                    setSearchValue('');
                 } else if (response.data.false) {
                     setWarningMessage("두 지점은 도보로 20분 이상의 거리입니다.");
                     setShowWarning(true);
+                    setSearchValue('');
                 }
             } catch (error) {
                 console.error('Error sending data to API:', error);
@@ -194,22 +211,6 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
         } else {
             console.error('No place selected');
         }
-    };
-
-    const handleEditPlace = async (placeName) => {
-        const service = new google.maps.places.PlacesService(map);
-        
-        service.textSearch({ query: placeName }, (results, status) => {
-            if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
-                const place = results[0];
-                map.setCenter(place.geometry.location);
-                map.setZoom(15);
-                setSelectedPlace(place);
-                createMarker(place.geometry.location, place);
-            } else {
-                console.error('장소를 찾을 수 없습니다.');
-            }
-        });
     };
 
     const handleDeletePlace = (placeName) => {
@@ -230,7 +231,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
             {showWarning && <Warning message={warningMessage} onClose={handleWarningClose} />}
             <SearchContainer>
                 <SearchText>원하는 장소명을 검색해 등록하세요.</SearchText>
-                <SearchInput id='autocomplete' type='text' placeholder="검색" />
+                <SearchInput id='autocomplete' type='text' placeholder="검색" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
                 <SearchButton><img src={SearchImg} alt="Search" /></SearchButton>
             </SearchContainer>
             <Mapcontainer>
@@ -247,15 +248,13 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                 {addedPlaces.map((place, index) => (
                     <AddedPlace
                         key={index}
-                        placeid={place.place_id}
+                        placeid={place.id}
                         placeName={place.name}
                         placeAddress={place.address}
                         placeCategory={place.category}
-                        placeImg={place.reference}
                         photoUrl={place.photoUrl}
                         order={index + 1}
                         onDelete={() => handleDeletePlace(place.name)}
-                        onEdit={() => handleEditPlace(place.name)} // 수정하기 버튼 클릭 시 호출
                     />
                 ))}
             </PlaceAddContainer>

@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import "../../styles/font.css"
 
 //Head
 export const HeadContainer = styled.div`
@@ -51,13 +52,14 @@ export const Hr2 = styled.hr`
 //search
 
 export const SearchInput = styled.input`
-    width: 330px;
+    width: 290px;
     height: 40px;
     border-radius: 10px;
     background: #E7E7E7;
     border:0;
     margin: 16px 0px 0px 0px;
-    padding:0px 5px 0px 20px;
+    padding:0px 45px 0px 20px;
+    text-indent: 5px;
 `
 
 export const SearchButton = styled.button`

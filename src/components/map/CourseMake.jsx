@@ -6,9 +6,10 @@ import Header from "../Addcourse/AddTrainStation";
 import { SearchContainer, SearchText } from "../Course/styled";
 import Back from "../../assets/images/back.png";
 
-const CourseMake = ({ onBackButtonClick, course }) => {
+const CourseMake = ({ onBackButtonClick, course, isEditMode }) => {
     const [selectedStation, setSelectedStation] = useState(course?.subway_station || '');
     const [addedPlaces, setAddedPlaces] = useState(course?.placelist || []);
+    const courseId = course?.id; 
 
     useEffect(() => {
         if (course) {
@@ -38,6 +39,8 @@ const CourseMake = ({ onBackButtonClick, course }) => {
                     addedPlaces={addedPlaces} 
                     selectedStation={selectedStation} 
                     onRegisterSuccess={() => onBackButtonClick()}
+                    isEditMode={isEditMode}
+                    courseId={courseId}
                 />
             </CourseContainer>
         </>

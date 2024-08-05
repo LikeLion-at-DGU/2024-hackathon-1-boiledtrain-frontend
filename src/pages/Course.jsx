@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Head from "../components/Course/Head";
 import Search from "../components/Course/Search";
 import Select from "../components/Course/Select";
 import CourseMake from "../components/map/CourseMake";
 import CourseContent from "../components/coursetrain/CourseContent";
-import CourseContentLike from "../components/coursetrain/CourseContentLike"
+import CourseContentLike from "../components/coursetrain/CourseContentLike";
 import CourseContentSharedFast from "../components/coursetrain/CourseContentSharedFast";
 import CourseContentShaedLike from "../components/coursetrain/CourseContentShaedLike";
 import CourseDetail from "../components/coursetrain/CourseDetail";
 import BottomBar from "../components/Common/BottomBar";
 import styled from "styled-components";
+import apiCall from "../api";
 
 const StyledBottomBar = styled.div`
     position: absolute;
@@ -17,7 +18,7 @@ const StyledBottomBar = styled.div`
     width: 430px;
     height: 77px;
     background: #00ABFC;
-`;
+;`
 
 const Course = () => {
     const [selected, setSelected] = useState(1);
@@ -25,10 +26,13 @@ const Course = () => {
     const [isCourseMakeVisible, setIsCourseMakeVisible] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [editingCourse, setEditingCourse] = useState(null);
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [coursePlaces, setCoursePlaces] = useState([]);
 
     const handleAddCourseClick = () => {
         setIsCourseMakeVisible(true);
         setEditingCourse(null);
+        setIsEditMode(false);
     };
 
     const handleBackButtonClick = () => {
@@ -55,10 +59,11 @@ const Course = () => {
         setSelectedCourse(null);
     };
 
-    const handleEditCourse = (course) => {
-        setEditingCourse(course);
+    const handleEditCourse = (courseId) => {
+        setEditingCourse(courseId);
         setIsCourseMakeVisible(true);
         setSelectedCourse(null);
+        setIsEditMode(true);
     };
 
     return (
@@ -89,7 +94,12 @@ const Course = () => {
                 </>
             )}
             {isCourseMakeVisible && (
-                <CourseMake course={editingCourse} onBackButtonClick={handleBackButtonClick} />
+                <CourseMake 
+                    course={editingCourse} 
+                    onBackButtonClick={handleBackButtonClick} 
+                    isEditMode={isEditMode}
+                    coursePlaces={coursePlaces}
+                />
             )}
             {selectedCourse && !isCourseMakeVisible && (
                 <CourseDetail 
