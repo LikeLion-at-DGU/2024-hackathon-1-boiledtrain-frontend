@@ -164,6 +164,9 @@ export const LockButton = styled.button`
     background-color:inherit;
     border:0;
     flex-basis: 50px;
+    &:hover {
+        
+    }
 `
 
 export const Bold = styled.p`
@@ -201,4 +204,21 @@ export const Courseinput = styled.input`
     border-radius: 6px;
     border:0;
     background: #D4F2FF;
+`
+
+export const MentContainer = styled.img`
+    display: block;
+    width:150px;
+`
+export const Ment = styled.div`
+    position: absolute;
+    bottom:227px;
+    right: 70px;
+    color: #000;
+    font-family: 'Pretendard';
+    text-align: left;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 13px;
 `
