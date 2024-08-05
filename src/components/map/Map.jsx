@@ -113,10 +113,13 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
         const service = new google.maps.places.PlacesService(map);
         service.getDetails({ placeId }, (place, status) => {
             if (status === google.maps.places.PlacesServiceStatus.OK && place.photos) {
+                // Get the first photo URL from the place's photos
+                const photoUrl = place.photos.length > 0 ? place.photos[0].getUrl() : '';
+                console.log("photoUrllrllrllrlr",photoUrl);
                 setPlacePhotos(place.photos.map(photo => photo.getUrl()));
                 setSelectedPlace(prevPlace => ({
                     ...prevPlace,
-                    photoUrl: place.photos.length > 0 ? place.photos[0].getUrl() : ''
+                    photoUrl: photoUrl
                 }));
             } else {
                 setPlacePhotos([]);
@@ -128,10 +131,10 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
         });
     };
 
-    const fetchPlacePhotoUrl = (photoReference) => {
-        const apiKey = import.meta.env.VITE_GOOGLEMAP_API_KEY;
-        return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${apiKey}`;
-    };
+    // const fetchPlacePhotoUrl = (photoReference) => {
+    //     const apiKey = import.meta.env.VITE_GOOGLEMAP_API_KEY;
+    //     return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${apiKey}`;
+    // };
 
     const deleteMarker = () => {
         if (currentMarkerRef.current) {
@@ -168,7 +171,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
             setShowWarning(true);
             return;
         }
-
+    
         if (selectedPlace) {
             try {
                 const token = localStorage.getItem('access_token');
@@ -176,7 +179,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                     subway_station: selectedStation,
                     place: selectedPlace.place_id,
                 }, token);
-
+    
                 console.log('API response:', response);
                 if (response.data.true) {
                     setAddedPlaces(prevPlaces => [
@@ -186,7 +189,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                             address: selectedPlace.formatted_address,
                             category: selectedPlace.types.length > 0 ? selectedPlace.types[0] : '카테고리 정보가 없습니다.',
                             id: selectedPlace.place_id,
-                            photoUrl: selectedPlace.photoUrl || placePhotos[0] || '',
+                            photoUrl: selectedPlace.photoUrl || '', // Use the photo URL from selectedPlace
                         }
                     ]);
                     setSelectedPlace(null);
