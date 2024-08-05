@@ -1,5 +1,3 @@
-// 봄 축제 사이트 NotFound.jsx 코드보고 따옴
-// 에러 날 때 사이트
 import React from "react";
 import styled from "styled-components";
 
@@ -25,12 +23,12 @@ const NotFound = () => {
       <BackGroundColor>
         <br />
         <div style={{ fontSize: "50px", color: "#F7634E", fontWeight: "900" }}>
-          "Oops! 😖😖"
+          "Sorry!😖"
         </div>
         <br />
         <br />
-        Sorry, <br />
-        the page not found <br />
+        죄송합니다, <br />
+        페이지를 찾을 수 없습니다 <br />
         <br />
       </BackGroundColor>
     </>
