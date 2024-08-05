@@ -6,7 +6,7 @@ import EmptyCourse from "../Common/EmptyCourse";
 import HeartIcon from "../../assets/images/HeartIcon";
 import profile from "../../assets/images/normalprofile.png"
 
-const CourseContentShaedLike = ({onCourseClick}) => {
+const CourseContentShaedLike = ({selectedStation,onCourseClick}) => {
     const [data, setData] = useState([]);
     const [likedCourses, setLikedCourses] = useState({});
 
@@ -50,14 +50,21 @@ const CourseContentShaedLike = ({onCourseClick}) => {
             console.log("error 발생: ", error);
         }
     };
+    useEffect(() => {
+        console.log("Selected Station:", selectedStation);
+    }, [selectedStation]);
 
-    if (data.length === 0) {
+    const filteredData = selectedStation 
+        ? data.filter(course => course.subway_station === selectedStation) 
+        : data;
+
+    if (filteredData.length === 0) {
         return <EmptyCourse />;
     }
 
     return (
         <S.TopContainer>
-            {data.slice().map((course, index) => {
+            {filteredData.slice().map((course, index) => {
                 const isLiked = likedCourses[course.id] !== undefined ? likedCourses[course.id] : course.is_like;
                 const likeCount = isLiked ? course.like_count + 1 : course.like_count;
 

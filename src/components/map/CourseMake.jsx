@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Map from "../map/Map";
-import { CourseContainer, PlaceAddContainer, Backcontainer, BackButton } from "../map/styled";
+import { CourseContainer, PlaceAddContainer, Backcontainer, BackButton, Topcontainer } from "../map/styled";
 import Coursename from "../map/Coursename";
 import Header from "../Addcourse/AddTrainStation";
 import { SearchContainer, SearchText } from "../Course/styled";
@@ -27,6 +27,7 @@ const CourseMake = ({ onBackButtonClick, course, isEditMode }) => {
                     <img src={Back} alt="Back"/>
                 </BackButton>
             </Backcontainer>
+            <Topcontainer>
             <SearchContainer style={{ display: isSearchContainerHidden ? 'none' : 'flex' }}>
                 <SearchText>코스의 지하철 역을 검색해 등록하세요.</SearchText>
                 <Header setSelectedStation={setSelectedStation} />
@@ -43,6 +44,7 @@ const CourseMake = ({ onBackButtonClick, course, isEditMode }) => {
                     courseId={courseId}
                 />
             </CourseContainer>
+            </Topcontainer>
         </>
     );
 };
