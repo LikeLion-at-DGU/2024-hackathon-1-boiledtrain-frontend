@@ -175,114 +175,120 @@ const RemainingText = styled.div`
 `;
 
 const DiaryEdit = () => {
-    const { courseId } = useParams();
-    const navigate = useNavigate();
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [mood, setMood] = useState('');
-    const [imagePreview, setImagePreview] = useState('');
+  const { courseId } = useParams();
+  const navigate = useNavigate();
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [mood, setMood] = useState('');
+  const [imagePreview, setImagePreview] = useState('');
 
-    useEffect(() => {
-        const fetchDiaryData = async () => {
-            if (!courseId) {
-                console.error('courseId is undefined');
-                return;
-            }
-
-            try {
-                const token = getToken();
-                const response = await apiCall(`/api/user/diary/${courseId}`, 'get', {}, token);
-                const diaryData = response.data;
-                setTitle(diaryData.title);
-                setContent(diaryData.content);
-                setMood(diaryData.mood);
-                setImagePreview(diaryData.image);
-            } catch (error) {
-                console.error('Error fetching diary data:', error);
-            }
-        };
-
-        fetchDiaryData();
-    }, [courseId]);
-
-    const handleSave = async () => {
-        try {
-            const token = getToken();
-            const body = {
-              title,
-              content,
-              mood,
-          };
-
-          if (imagePreview && typeof imagePreview === 'string' && imagePreview.startsWith('data:image')) {
-              const imageResponse = await apiCall('/api/upload', 'post', { image: imagePreview }, token);
-              body.image = imageResponse.data.image_url;
+  useEffect(() => {
+      const fetchDiaryData = async () => {
+          if (!courseId) {
+              console.error('courseId is undefined');
+              return;
           }
 
-        await apiCall(`/api/user/diary/${courseId}`, 'put', body, token);
-        alert('저장을 성공했어요 ^ㅅ^');
-        navigate('/diarymain');
-    } catch (error) {
-        console.error('저장을 실패했어요!', error);
-        alert('저장을 실패했어요 ^ㅠ^');
-    }
-};
+          try {
+              const token = getToken();
+              const response = await apiCall(`/api/user/diary/${courseId}`, 'get', {}, token);
+              const diaryData = response.data;
+              setTitle(diaryData.title);
+              setContent(diaryData.content);
+              setMood(diaryData.mood);
+              setImagePreview(diaryData.image);
+          } catch (error) {
+              console.error('Error fetching diary data:', error);
+          }
+      };
 
-    const handleCancel = () => {
-        navigate('/diarymain');
-    };
+      fetchDiaryData();
+  }, [courseId]);
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setImagePreview(reader.result);
-        };
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    };
+  const handleSave = async () => {
+      try {
+          const token = getToken();
+          const body = new FormData();
+          body.append('title', title);
+          body.append('content', content);
+          body.append('mood', mood);
 
-    return (
-        <PostLayout>
-            <PostLayout2>
-                <PostTop>
-                    <CancelButton onClick={handleCancel}>취소</CancelButton>
-                    <PostButton onClick={handleSave}>수정하기</PostButton>
-                </PostTop>
-                <PostTitle
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="제목"
-                    maxLength={50}
-                />
-                <RemainingText>{50 - title.length}/50</RemainingText>
-                <PostLine />
-                <FileInput
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                />
-                <PreviewImageWrapper>
-                    {imagePreview && <PreviewImage src={imagePreview} alt="Diary Preview" />}
-                </PreviewImageWrapper>
-                <PostMood
-                    type="text"
-                    value={mood}
-                    onChange={(e) => setMood(e.target.value)}
-                    placeholder="코스에 대한 당신의 기분을 수정해주세요 !"
-                    maxLength={50}
-                />
-                <RemainingText>{50 - mood.length}/50</RemainingText>
-                <PostContent
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder="코스를 따라 여행한 당신의 일기를 수정해주세요 !"
-                />
-            </PostLayout2>
-        </PostLayout>
-    );
+          if (imagePreview && typeof imagePreview === 'string' && imagePreview.startsWith('data:image')) {
+              const response = await fetch(imagePreview);
+              const blob = await response.blob();
+              const file = new File([blob], 'diary-image.png', { type: 'image/png' });
+              body.append('image', file);
+          }
+
+          await apiCall(`/api/user/diary/${courseId}`, 'put', body, token, {
+              headers: {
+                  'Content-Type': 'multipart/form-data',
+              },
+          });
+
+          alert('저장을 성공했어요 ^ㅅ^');
+          navigate('/diarymain');
+      } catch (error) {
+          console.error('저장을 실패했어요!', error);
+          alert('저장을 실패했어요 ^ㅠ^');
+      }
+  };
+
+  const handleCancel = () => {
+      navigate('/diarymain');
+  };
+
+  const handleFileChange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+              setImagePreview(reader.result);
+          };
+          reader.readAsDataURL(file);
+      }
+  };
+
+  return (
+      <PostLayout>
+          <PostLayout2>
+              <PostTop>
+                  <CancelButton onClick={handleCancel}>취소</CancelButton>
+                  <PostButton onClick={handleSave}>수정하기</PostButton>
+              </PostTop>
+              <PostTitle
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="제목"
+                  maxLength={50}
+              />
+              <RemainingText>{50 - title.length}/50</RemainingText>
+              <PostLine />
+              <FileInput
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+              />
+              <PreviewImageWrapper>
+                  {imagePreview && <PreviewImage src={imagePreview} alt="Diary Preview" />}
+              </PreviewImageWrapper>
+              <PostMood
+                  type="text"
+                  value={mood}
+                  onChange={(e) => setMood(e.target.value)}
+                  placeholder="코스에 대한 당신의 기분을 수정해주세요 !"
+                  maxLength={50}
+              />
+              <RemainingText>{50 - mood.length}/50</RemainingText>
+              <PostContent
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  placeholder="코스를 따라 여행한 당신의 일기를 수정해주세요 !"
+              />
+          </PostLayout2>
+      </PostLayout>
+  );
 };
 
 export default DiaryEdit;
