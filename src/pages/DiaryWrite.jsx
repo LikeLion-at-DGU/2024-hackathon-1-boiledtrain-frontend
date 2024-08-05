@@ -401,7 +401,7 @@ const DiaryWrite = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      alert('일기가 잘 작성되었습니다!');
+      alert('일기가 작성되었습니다!');
       navigate('/diarymain');
     } catch (error) {
       console.error(error);
@@ -429,9 +429,9 @@ const DiaryWrite = () => {
           placeholder="제목"
           value={title}
           onChange={e => setTitle(e.target.value)}
-          maxLength={50}
+          maxLength={49}
         />
-        <RemainingText>{50 - title.length}/50</RemainingText> 
+        <RemainingText>{title.length}/50</RemainingText> 
         <PostLine />
         <PostCourse onClick={fetchCourseData}>
           <PostCourseImage src={Photo} />
@@ -451,9 +451,9 @@ const DiaryWrite = () => {
           placeholder="코스에 대한 당신의 기분을 한줄로!"
           value={mood}
           onChange={e => setMood(e.target.value)}
-          maxLength={50}
+          maxLength={49}
         />
-        <RemainingText>{50 - mood.length}/50</RemainingText> 
+        <RemainingText>{mood.length}/50</RemainingText> 
         <PostContent
           placeholder="코스를 따라 여행한 당신의 일기를 작성해주세요"
           value={content}

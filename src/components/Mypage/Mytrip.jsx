@@ -1,35 +1,26 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as S from "./styled";
 import point from "../../assets/images/pointer.png";
 import apiCall from "../../api/index";
+import { getToken } from "../../utils/auth";
 
 const Mytrip = () => {
     const [data, setData] = useState([]);
 
-    const fetchData = useCallback(async () => {
+    const fetchCourseData = async () => {
         try {
-            const token = localStorage.getItem('access_token');
-            if (!token) {
-                console.error("No access token found");
-                return;
-            }
-
-            const response = await apiCall("/api/user/my_course", "get", {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setData(response.data);
+            const token = getToken();
+            const response = await apiCall('/api/user/my_course', 'get', {}, token);
+            setData(response.data); 
         } catch (error) {
-            if (error.response) {
-                console.error("API call error:", error.response.status, error.response.data);
-            } else {
-                console.error("API call error:", error.message);
-            }
+            console.error('Error fetching course data:', error);
+            alert('코스 정보를 불러오는 데 실패했습니다.');
         }
-    }, []);
+    };
 
     useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+        fetchCourseData();
+    }, []);
 
     const containerRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -53,6 +44,15 @@ const Mytrip = () => {
         setIsDragging(false);
     };
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        }).replace(/\./g, '.');
+    };
+
     return (
         <>
             <S.triptext>최근 내 여행</S.triptext>
@@ -68,10 +68,9 @@ const Mytrip = () => {
                         <S.Div>
                             <S.pointImg src={point} />
                             <S.stationP>{course.subway_station}</S.stationP>
+                            <S.stationP>{course.description}</S.stationP>
+                            <S.stationP>{formatDate(course.created_at)}</S.stationP>
                         </S.Div>
-                        {course.placelist.map((place, idx) => (
-                            <S.placeP key={idx}>{place.name}</S.placeP> // name 속성을 출력
-                        ))}
                     </S.courseContainer>
                 ))}
             </S.tripContainer2>

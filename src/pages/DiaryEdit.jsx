@@ -226,11 +226,11 @@ const DiaryEdit = () => {
               },
           });
 
-          alert('저장을 성공했어요 ^ㅅ^');
+          alert('저장되었습니다!');
           navigate('/diarymain');
       } catch (error) {
           console.error('저장을 실패했어요!', error);
-          alert('저장을 실패했어요 ^ㅠ^');
+          alert('저장을 실패했습니다!');
       }
   };
 
@@ -261,9 +261,9 @@ const DiaryEdit = () => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="제목"
-                  maxLength={50}
+                  maxLength={49}
               />
-              <RemainingText>{50 - title.length}/50</RemainingText>
+              <RemainingText>{title.length}/50</RemainingText>
               <PostLine />
               <FileInput
                   type="file"
@@ -278,9 +278,9 @@ const DiaryEdit = () => {
                   value={mood}
                   onChange={(e) => setMood(e.target.value)}
                   placeholder="코스에 대한 당신의 기분을 수정해주세요 !"
-                  maxLength={50}
+                  maxLength={49}
               />
-              <RemainingText>{50 - mood.length}/50</RemainingText>
+              <RemainingText>{mood.length}/50</RemainingText>
               <PostContent
                   value={content}
                   onChange={(e) => setContent(e.target.value)}

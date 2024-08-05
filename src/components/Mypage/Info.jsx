@@ -11,8 +11,10 @@ const Info =()=>{
         <S.infoContainer>
             <S.profileImg src={profile}/>
             <Link to='/mypage/edit'><S.EditButton src={edit}/></Link>
+            <S.nameid>
             <S.name>{id.nickname}</S.name>
             <S.id>{id.email}</S.id>
+            </S.nameid>
         </S.infoContainer>
     )
 }

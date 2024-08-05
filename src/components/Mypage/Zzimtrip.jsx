@@ -2,14 +2,15 @@ import React,{useRef, useState,useCallback,useEffect} from "react";
 import * as S from "./styled"
 import point from "../../assets/images/pointer.png"
 import apiCall from "../../api/index";
+import { getToken } from "../../utils/auth";
 
-const Zzimtrip=()=>{
+const Zzimtrip=()=>{ 
     const [data, setData] = useState([]);
 
     const fetchData = useCallback(async () => {
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await apiCall("/api/user/course/zzim_course", "get", { headers: { Authorization: `Bearer ${token}` } });
+            const token = getToken();
+            const response = await apiCall("/api/user/course/zzim_course", "get", {}, token);
             setData(response.data);
         } catch (error) {
             console.error(error);
@@ -41,6 +42,15 @@ const Zzimtrip=()=>{
         setIsDragging(false);
     };
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        }).replace(/\./g, '.'); // 한국어 형식으로 변환
+    };
+
     return(
         <>
         <S.triptext2>최근 내가 찜한 여행</S.triptext2>
@@ -59,6 +69,8 @@ const Zzimtrip=()=>{
                 <S.Div>
                     <S.pointImg src={point} />
                     <S.stationP>{course.subway_station}</S.stationP>
+                    <S.stationP>{course.title}</S.stationP>
+                    <S.stationP>{formatDate(course.created_at)}</S.stationP>
                 </S.Div>
                 {course.placelist.map((place, idx) => (
                             <S.placeP key={idx}>{place.name}</S.placeP> // name 속성을 출력

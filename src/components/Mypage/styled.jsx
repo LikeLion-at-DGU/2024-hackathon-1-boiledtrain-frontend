@@ -4,7 +4,7 @@ import "../../styles/font.css"
 export const infoContainer = styled.div`
     margin-top: 90px;
     width:430px;
-    height:258px;
+    height:170px;
     background-color: #D4F2FF;
     display: flex;
     justify-content:center;
@@ -37,19 +37,25 @@ export const name = styled.p`
     font-style: normal;
     font-weight: 600;
     width:350px;
+    height:10px;
     margin-left:40px;
-    margin-top:50px;
+    margin-top:80px;
 `
 
 export const id = styled.p`
     color: #8C8C8C;
     font-feature-settings: 'liga' off, 'clig' off;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
-    margin-left:38px;
+    margin-left:42px;
 `
+    export const nameid = styled.div`
+    display:flex;
+    flex-direction:column;
+    gap:0px;
+    `;
 
 //my-trip
 export const tripContainer = styled.div`
@@ -64,13 +70,13 @@ export const tripContainer = styled.div`
 export const triptext = styled.div`
     color: #000;
     font-feature-settings: 'liga' off, 'clig' off;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
     position: absolute;
-    top:  370px;
-    left: 33px;
+    top:  280px;
+    left: 31px;
 `
 
 export const triptext2 = styled.div`
@@ -81,8 +87,8 @@ export const triptext2 = styled.div`
     font-style: normal;
     font-weight: 600;
     position: absolute;
-    top:  600px;
-    left: 33px;
+    top:  530px;
+    left: 31px;
 `
 
 export const emptytext = styled.div`
@@ -100,7 +106,7 @@ export const tripContainer2 = styled.div`
     height: 200px;
     margin-top: 17px;
     display: flex;
-    gap: 12px;
+    gap: 0px;
     flex-direction: row;
     justify-content: flex-start;
     margin-top:50px;
@@ -116,30 +122,39 @@ export const tripContainer2 = styled.div`
 `
 
 export const courseContainer = styled.div`
-    min-width: 160px;
-    height: 160px;
+    width: 330px;
+    height: 140px;
     border-radius: 15px;
     background: #D4F2FF;
-    margin-left: 30px;
+    margin-left: 20px;
+    margin-top:10px;
 `
 
 export const pointImg = styled.img`
-    width: 25.674px;
-    height: 30.282px;
+    width: 23.674px;
+    height: 26.282px;
     margin: 15px 5px 0px 10px;
+    padding-bottom:6px;
 ` 
 export const Div = styled.div`
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
+    height:140px;
+    width:150px;
 `
-export const stationP = styled.p`
+export const stationP = styled.div`
+    padding-left:8px;
     color: #000;
     font-feature-settings: 'liga' off, 'clig' off;
-    font-family: Pretendard;
-    font-size: 20px;
+    font-family: 'Pretendard';
+    font-size: 18px;
     font-style: normal;
-    font-weight: 600;
-    margin-bottom: 10px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    width: 130px; /* 원하는 너비를 지정 */
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 부분 숨기기 */
+    text-overflow: ellipsis; /
 `
 
 export const placeP = styled.p`

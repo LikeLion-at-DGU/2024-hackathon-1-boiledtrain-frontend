@@ -32,6 +32,11 @@ const fadeInOutAlternate = keyframes`
   25%, 75% { opacity: 1; }
 `;
 
+const fadeInOut2 = keyframes`
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+`;
+
 export const ModalTotal = styled.div`
   width: 430px;
   height: 608px;
@@ -259,4 +264,30 @@ font-size: 16px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;
+`;
+
+export const LImageOne = styled.img`
+  width: 20px;
+  height: 20px;
+  animation: ${fadeInOut} 1.5s 0s infinite; 
+`;
+
+export const LImageOne1 = styled.img`
+  width: 20px;
+  height: 20px;
+  animation: ${fadeInOut} 1.5s 0.5s infinite; 
+`;
+
+export const LImageTwo = styled.img`
+  width: 20px;
+  height: 20px;
+  animation: ${fadeInOut} 1.5s 1s infinite; 
+`;
+
+export const Column = styled.div`
+display:flex;
+flex-direction:row;
+gap:14px;
+justify-content:center;
+align-items:center;
 `;

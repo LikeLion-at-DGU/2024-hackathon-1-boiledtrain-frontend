@@ -11,8 +11,53 @@
   position:relative;
 } */
 
-/* 핸드폰에서의 화면 구현을 위해 추가해서 test */
 
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  background-color: aliceblue;
+}
+
+
+#root {
+  display: flex;
+  background-color: #FFFFFF;
+  width: 100%; 
+  max-width: 430px; 
+  min-height: 873px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden; 
+  /* padding: 10px;  */
+}
+
+
+.child-element {
+  width: 100%; 
+  max-width: 100%; 
+  position: relative; 
+  flex: 1; 
+}
+
+@media (max-width: 430px) {
+  #root {
+    padding: 10px; 
+  }
+}
+
+
+
+
+
+
+
+
+
+/* 핸드폰에서의 화면 구현을 위해 추가해서 test */
+/* 
 body {
   background-color: aliceblue;
 }
@@ -25,4 +70,4 @@ body {
   min-height: 873px;
   margin: 0 auto;
   position: relative;
-}
+} */

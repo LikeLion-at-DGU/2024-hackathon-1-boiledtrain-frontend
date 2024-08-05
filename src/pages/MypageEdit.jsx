@@ -32,7 +32,7 @@ const MypageEdit = () => {
 
     const handleNicknameChange = (event) => {
         const newNickname = event.target.value;
-        if (newNickname.length <= 30) { // 50자 제한
+        if (newNickname.length <= 16) { // 50자 제한
             setUserInfo({ ...userInfo, nickname: newNickname });
             setNicknameLength(newNickname.length); // 글자 수 업데이트
         }
@@ -73,7 +73,7 @@ const MypageEdit = () => {
                     value={userInfo.nickname} 
                     onChange={handleNicknameChange} 
                 />
-                <S.charCount>{nicknameLength}/30</S.charCount> {/* 남은 글자 수 표시 */}
+                <S.charCount>{nicknameLength}/16</S.charCount> {/* 남은 글자 수 표시 */}
             </S.userInfoContainer>
             <S.Hr2 />
             <S.userInfoContainer>
