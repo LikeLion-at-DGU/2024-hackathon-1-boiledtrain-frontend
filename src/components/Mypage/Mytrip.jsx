@@ -14,9 +14,7 @@ const Mytrip = () => {
                 return;
             }
 
-            const response = await apiCall("/api/user/my_course", "get", {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const response = await apiCall("/api/user/my_course", "get", null,token);
             setData(response.data);
         } catch (error) {
             if (error.response) {
