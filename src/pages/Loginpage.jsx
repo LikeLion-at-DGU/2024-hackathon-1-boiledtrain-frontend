@@ -33,11 +33,6 @@ const Loginpage = () => {
         window.location.href = kakaoAuthUrl;
     };
 
-    // const handleKakaoLogin = () => {
-    //     localStorage.setItem('access_token', 'your_token');
-    //     navigate(from, { replace: true });
-    // };
-
     return (
         <RootContainer>
             <HeadContainer>

@@ -16,7 +16,7 @@ const Search = ({ selected, onAddCourseClick }) => { // 이벤트 핸들러 추�
                     </> :
                     <> 
                         <S.SearchText>나만의 장소를 조합해 코스를 만들 수 있어요.</S.SearchText>
-                        <S.AddButton onClick={onAddCourseClick}>코스 만들기<img src={Add} alt="Add"/></S.AddButton> {/* 클릭 이벤트 추가 */}
+                        <S.AddButton onClick={onAddCourseClick}>코스 만들기<img src={Add} alt="Add"/></S.AddButton>
                     </>}
             </S.SearchContainer>
             <S.Hr2/>

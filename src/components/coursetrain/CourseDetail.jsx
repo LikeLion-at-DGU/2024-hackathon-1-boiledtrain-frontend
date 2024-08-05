@@ -7,24 +7,23 @@ import MenuList from "../Common/MenuList";
 import apiCall from "../../api";
 import profile from "../../assets/images/normalprofile.png"
 
-// User info retrieval function
 const getUserInfo = () => {
     const userInfo = localStorage.getItem('user_info');
     return userInfo ? JSON.parse(userInfo) : null;
 };
 
-const CourseDetail = ({ courseId, onClose, onEditCourse, selected, selected2 }) => {
+const CourseDetail = ({ courseId, onClose, onEditCourse }) => {
     const [map, setMap] = useState(null);
     const [infoWindow, setInfoWindow] = useState(null);
     const [course, setCourse] = useState(null);
     const [menuVisible, setMenuVisible] = useState(false);
     const menuRef = useRef(null);
-
+    
     const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('access_token');
             const response = await apiCall(`/api/user/course/${courseId}`, "get", null, token);
-            setCourse(response.data);
+            setCourse(response.data);// course detail api 에 있는 정보들 모두 course에 저장.
         } catch (error) {
             console.log("error 발생: ", error);
         }

@@ -13,9 +13,13 @@ const MenuList = ({ courseId, onCourseDeleted, onEditCourse }) => {
         }
     };
 
+    const handleEditClick = () => {
+        onEditCourse({ id: courseId });
+    };
+
     return (
         <S.MenuContainer>
-            <S.MenuButton style={{ marginTop: '8px' }} onClick={onEditCourse}>수정하기</S.MenuButton>
+            <S.MenuButton style={{ marginTop: '8px' }} onClick={handleEditClick}>수정하기</S.MenuButton>
             <S.Hr />
             <S.MenuButton onClick={deleteCourse}>삭제하기</S.MenuButton>
         </S.MenuContainer>
