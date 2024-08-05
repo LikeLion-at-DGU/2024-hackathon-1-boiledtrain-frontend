@@ -13,6 +13,7 @@ const CourseMake = ({ onBackButtonClick, course, isEditMode }) => {
 
     useEffect(() => {
         if (course) {
+            console.log('adddddddeddddPlacessss',addedPlaces);
             setSelectedStation(course.subway_station || '');
             setAddedPlaces(course.placelist || []);
         }
@@ -42,6 +43,7 @@ const CourseMake = ({ onBackButtonClick, course, isEditMode }) => {
             <CourseContainer>
                 <Coursename 
                     addedPlaces={addedPlaces} 
+                    setAddedPlaces={setAddedPlaces}
                     selectedStation={selectedStation} 
                     onRegisterSuccess={() => onBackButtonClick()}
                     isEditMode={isEditMode}
