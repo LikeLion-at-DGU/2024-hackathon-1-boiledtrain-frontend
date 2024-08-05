@@ -15,11 +15,12 @@ const CourseContentLike = ({ onCourseClick }) => {
             const token = localStorage.getItem('access_token');
             const response = await apiCall("/api/user/course/zzim_course", "get", null, token);
             setData(response.data);
+
             const initialLikedCourses = {};
             response.data.forEach(course => {
                 initialLikedCourses[course.id] = {
                     is_like: course.is_like,
-                    like_count: course.like_count // 초기 like_count 저장
+                    like_count: course.like_count
                 };
             });
             setLikedCourses(initialLikedCourses);
@@ -27,6 +28,7 @@ const CourseContentLike = ({ onCourseClick }) => {
             console.log("error 발생: ", error);
         }
     }, []);
+
 
     useEffect(() => {
         fetchData();
@@ -46,7 +48,6 @@ const CourseContentLike = ({ onCourseClick }) => {
             const token = localStorage.getItem('access_token');
             await apiCall(`/api/user/course/${id}/likes`, "get", null, token);
 
-            // 기존 상태에서 like_count를 증가시키고 is_like 상태를 반전
             setLikedCourses((prevState) => {
                 const course = prevState[id];
                 return {
@@ -68,8 +69,8 @@ const CourseContentLike = ({ onCourseClick }) => {
 
     return (
         <S.TopContainer>
-            {data.map((course, index) => {
-                const { is_like, like_count } = likedCourses[course.id] || { is_like: course.is_like, like_count: course.like_count }
+            {data.slice().map((course, index) => {
+                const { is_like, like_count } = likedCourses[course.id] || { is_like: course.is_like, like_count: course.like_count };
 
                 return (
                     <S.CourseContainer key={index} onClick={() => onCourseClick(course.id)}>
@@ -88,7 +89,7 @@ const CourseContentLike = ({ onCourseClick }) => {
                             </S.CourseContentContainer>
                             <S.Plus>
                                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                                    <S.like_count>{like_count}</S.like_count> {/* 실시간으로 업데이트 되는 likeCount */}
+                                    <S.like_count>{like_count}</S.like_count>
                                     <S.Button onClick={(e) => toggleLike(course.id, is_like, e)}>
                                         <HeartIcon fill={is_like ? '#FF3434' : '#CCCCCC'} />
                                     </S.Button>
@@ -102,5 +103,6 @@ const CourseContentLike = ({ onCourseClick }) => {
         </S.TopContainer>
     );
 };
+
 
 export default CourseContentLike;
