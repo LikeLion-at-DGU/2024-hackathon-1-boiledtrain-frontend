@@ -5,7 +5,6 @@ import apiCall from "../../api";
 import EmptyCourse from "../Common/EmptyCourse";
 import HeartIcon from "../../assets/images/HeartIcon";
 import profile from "../../assets/images/normalprofile.png";
-const apiKey = import.meta.env.VITE_GOOGLEMAP_API_KEY;
 
 const CourseContent = ({ onCourseClick }) => {
     const [data, setData] = useState([]);
@@ -14,20 +13,14 @@ const CourseContent = ({ onCourseClick }) => {
     const [map, setMap] = useState(null);
 
     useEffect(() => {
-        // Google Maps JavaScript API 로드
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-        script.async = true;
-        script.defer = true;
-        script.onload = () => {
+        if (window.google && window.google.maps) {
             const map = new window.google.maps.Map(document.createElement('div'));
             setMap(map);
-        };
-        document.head.appendChild(script);
+        }
     }, []);
 
     const fetchPlaceImage = async (placeId) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             if (!map) {
                 resolve(train);
                 return;
@@ -54,12 +47,11 @@ const CourseContent = ({ onCourseClick }) => {
             response.data.forEach(course => {
                 initialLikedCourses[course.id] = {
                     is_like: course.is_like,
-                    like_count: course.like_count // 초기 like_count 저장
+                    like_count: course.like_count
                 };
             });
             setLikedCourses(initialLikedCourses);
 
-            // 장소 이미지 불러오기
             const placeImagePromises = response.data.flatMap(course =>
                 course.placelist.slice(0, 3).map(async placeId => {
                     const imageUrl = await fetchPlaceImage(placeId);
@@ -97,7 +89,6 @@ const CourseContent = ({ onCourseClick }) => {
         try {
             const token = localStorage.getItem('access_token');
             await apiCall(`/api/user/course/${id}/likes`, "get", null, token);
-            // 기존 상태에서 like_count를 증가시키고 is_like 상태를 반전
             setLikedCourses((prevState) => {
                 const course = prevState[id];
                 return {
@@ -119,9 +110,8 @@ const CourseContent = ({ onCourseClick }) => {
 
     return (
         <S.TopContainer>
-             {data.slice().map((course, index) => {
+            {data.slice().map((course) => {
                 const { is_like, like_count } = likedCourses[course.id] || { is_like: course.is_like, like_count: course.like_count };
-
 
                 const courseImages = course.placelist.slice(0, 3).map(
                     placeId => placeImages[placeId] || train
@@ -150,7 +140,7 @@ const CourseContent = ({ onCourseClick }) => {
                             </S.CourseContentContainer>
                             <S.Plus>
                                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                                <S.like_count>{like_count}</S.like_count> {/* 실시간으로 업데이트 되는 likeCount */}
+                                    <S.like_count>{like_count}</S.like_count>
                                     <S.Button onClick={(e) => toggleLike(course.id, is_like, e)}>
                                         <HeartIcon fill={is_like ? '#FF3434' : '#CCCCCC'} />
                                     </S.Button>
