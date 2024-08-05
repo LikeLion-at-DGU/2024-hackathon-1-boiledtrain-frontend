@@ -6,28 +6,33 @@ import EmptyCourse from "../Common/EmptyCourse";
 import HeartIcon from "../../assets/images/HeartIcon";
 import profile from "../../assets/images/normalprofile.png"
 
-const CourseContentShaedLike = ({selectedStation,onCourseClick}) => {
+const CourseContentSharedLike = ({ onCourseClick }) => {
     const [data, setData] = useState([]);
     const [likedCourses, setLikedCourses] = useState({});
 
     const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('access_token');
-            const response = await apiCall("/api/user/course/like_order", "get", { headers: { Authorization: `Bearer ${token}` } });
+            const response = await apiCall("/api/user/course/like_order", "get", null, token);
             setData(response.data);
+
             const initialLikedCourses = {};
             response.data.forEach(course => {
-                initialLikedCourses[course.id] = course.is_like;
+                initialLikedCourses[course.id] = {
+                    is_like: course.is_like,
+                    like_count: course.like_count 
+                };
             });
             setLikedCourses(initialLikedCourses);
         } catch (error) {
             console.log("error 발생: ", error);
         }
-    },[]);
+    }, []);
 
     useEffect(() => {
         fetchData();
     }, [fetchData]);
+
 
     const formatDateTime = (dateString) => {
         const date = new Date(dateString);
@@ -42,31 +47,30 @@ const CourseContentShaedLike = ({selectedStation,onCourseClick}) => {
         try {
             const token = localStorage.getItem('access_token');
             await apiCall(`/api/user/course/${id}/likes`, "get", null, token);
-            setLikedCourses((prevState) => ({
-                ...prevState,
-                [id]: !isLiked
-            }));
+
+            setLikedCourses((prevState) => {
+                const course = prevState[id];
+                return {
+                    ...prevState,
+                    [id]: {
+                        is_like: !course.is_like,
+                        like_count: course.is_like ? course.like_count - 1 : course.like_count + 1
+                    }
+                };
+            });
         } catch (error) {
             console.log("error 발생: ", error);
         }
     };
-    useEffect(() => {
-        console.log("Selected Station:", selectedStation);
-    }, [selectedStation]);
 
-    const filteredData = selectedStation 
-        ? data.filter(course => course.subway_station === selectedStation) 
-        : data;
-
-    if (filteredData.length === 0) {
+    if (data.length === 0) {
         return <EmptyCourse />;
     }
 
     return (
         <S.TopContainer>
-            {filteredData.slice().map((course, index) => {
-                const isLiked = likedCourses[course.id] !== undefined ? likedCourses[course.id] : course.is_like;
-                const likeCount = isLiked ? course.like_count + 1 : course.like_count;
+            {data.slice().map((course, index) => {
+                const { is_like, like_count } = likedCourses[course.id] || { is_like: course.is_like, like_count: course.like_count };
 
                 return (
                     <S.CourseContainer key={index} onClick={() => onCourseClick(course.id)}>
@@ -77,7 +81,7 @@ const CourseContentShaedLike = ({selectedStation,onCourseClick}) => {
                         </S.PhotoContainer>
                         <S.InfoUser>
                             <S.CourseContentContainer>
-                                <img src={course.user.profile_image || profile} style={{ borderRadius: '100px',width:'40px',height:'40px' }} alt="course thumbnail" />
+                                <img src={course.user.profile_image || profile} style={{ borderRadius: '100px', width: '40px', height: '40px' }} alt="course thumbnail" />
                                 <div style={{ marginLeft: '5px' }}>
                                     <S.Course>{course.title}</S.Course>
                                     <S.Describ>{formatDateTime(course.created_at)} | {course.description}</S.Describ>
@@ -85,9 +89,9 @@ const CourseContentShaedLike = ({selectedStation,onCourseClick}) => {
                             </S.CourseContentContainer>
                             <S.Plus>
                                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                                    <S.like_count>{likeCount}</S.like_count>
-                                    <S.Button onClick={(e) => toggleLike(course.id, isLiked, e)}>
-                                        <HeartIcon fill={isLiked ? '#FF3434' : '#CCCCCC'} />
+                                    <S.like_count>{like_count}</S.like_count>
+                                    <S.Button onClick={(e) => toggleLike(course.id, is_like, e)}>
+                                        <HeartIcon fill={is_like ? '#FF3434' : '#CCCCCC'} />
                                     </S.Button>
                                 </div>
                                 <S.P>#{course.subway_station}역</S.P>
@@ -100,4 +104,4 @@ const CourseContentShaedLike = ({selectedStation,onCourseClick}) => {
     );
 };
 
-export default CourseContentShaedLike;
+export default CourseContentSharedLike;
