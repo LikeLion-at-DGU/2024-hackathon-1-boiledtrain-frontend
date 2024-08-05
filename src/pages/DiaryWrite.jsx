@@ -181,16 +181,18 @@ const ModalContent = styled.div`
   background: white;
   padding: 20px;
   border-radius: 4px;
+  margin-top:60px;
   width: 400px;
   max-height: 550px;
   overflow: hidden;
+  /* padding-bottom:20px; */
 `;
 
 const ScrollableArea = styled.div`
-  max-height: 550px;
+  max-height: 610px;
   overflow-y: auto;
-  padding-right: 10px;
-  
+  padding:8px;
+  flex-grow: 1; 
   &::-webkit-scrollbar {
     width: 0;
     background: transparent; 
@@ -199,7 +201,7 @@ const ScrollableArea = styled.div`
 
 const CloseButton = styled.button`
   position: absolute;
-  transform: translate(365px, -50px);
+  transform: translate(180px, -315px);
   background: none;
   border: none;
   font-size: 16px;
@@ -274,6 +276,8 @@ const CourseTime = styled.div`
 `;
 const TopMent = styled.div`
   color: #000;
+  position:absolute;
+  transform:translate(0%,-1400%);
   text-align: center;
   font-feature-settings: 'liga' off, 'clig' off;
   font-family: 'Pretendard';
@@ -462,9 +466,9 @@ const DiaryWrite = () => {
       </PostLayout2>
       {modalIsOpen && (
         <ModalOverlay>
+          <CloseButton onClick={() => setModalIsOpen(false)}>X</CloseButton>
+          <TopMent>일기에 코스를 추가해보세요!</TopMent>
           <ModalContent>
-            <CloseButton onClick={() => setModalIsOpen(false)}>X</CloseButton>
-            <TopMent>일기에 코스를 추가해보세요!</TopMent>
             <ScrollableArea>
               {courses.map((course) => (
                 <CourseButton key={course.id} onClick={() => selectCourse(course.id)}>

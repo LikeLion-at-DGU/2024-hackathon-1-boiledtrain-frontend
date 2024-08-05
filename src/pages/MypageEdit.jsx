@@ -19,40 +19,66 @@ const BottomStyle = styled.div`
 const MypageEdit = () => {
     const [userInfo, setUserInfo] = useState({
         nickname: '',
-        name: ''
+        name: '',
+        profile_image: '',
     });
-    const [nicknameLength, setNicknameLength] = useState(0); // 닉네임 글자 수 상태 추가
+    const [nicknameLength, setNicknameLength] = useState(0);
+    const [imageFile, setImageFile] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const info = getUserInfo();
         setUserInfo(info);
-        setNicknameLength(info.nickname.length); // 초기 닉네임 길이 설정
+        setNicknameLength(info.nickname.length);
     }, []);
 
     const handleNicknameChange = (event) => {
         const newNickname = event.target.value;
-        if (newNickname.length <= 16) { // 50자 제한
+        if (newNickname.length <= 16) {
             setUserInfo({ ...userInfo, nickname: newNickname });
-            setNicknameLength(newNickname.length); // 글자 수 업데이트
+            setNicknameLength(newNickname.length);
+        }
+    };
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                alert("이미지 용량이 너무 큽니다. 5MB 이하로 업로드 해주세요.");
+                return;
+            }
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImageFile(file);
+                setUserInfo({ ...userInfo, profile_image: reader.result });
+            };
+            reader.readAsDataURL(file);
         }
     };
 
     const register = async () => {
         try {
             const token = localStorage.getItem('access_token');
-            const response = await apiCall('/api/accounts/userinfo/yes', 'patch', {
-                nickname: userInfo.nickname,
-            }, token);
+            const formData = new FormData();
+            formData.append('nickname', userInfo.nickname);
+            if (imageFile) {
+                formData.append('profile_image', imageFile); 
+            }
+
+            const response = await apiCall('/api/accounts/userinfo/yes', 'patch', formData, token, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
 
             console.log("API Response:", response);
 
-            const updatedUserInfo = { ...userInfo, nickname: response.data.nickname }; // 서버에서 반환된 정보로 업데이트
+            const updatedUserInfo = { ...userInfo, nickname: response.data.nickname, profile_image: response.data.profile_image };
             localStorage.setItem('user_info', JSON.stringify(updatedUserInfo));
 
             navigate('/mypage');
         } catch (error) {
-            console.log("Error updating nickname:", error);
+            console.log("Error updating nickname:", error.response.data);
         }
     };
 
@@ -64,8 +90,15 @@ const MypageEdit = () => {
     return (
         <>
             <S.Maincontainer>
-                <S.editImg src={edit} />
-                <S.userImg src={userimg} />
+                <S.editImg src={edit} onClick={() => document.getElementById('imageInput').click()} />
+                <S.userImg src={userInfo.profile_image || userimg} alt="User Profile" />
+                <input
+                    type="file"
+                    id="imageInput"
+                    style={{ display: "none" }}
+                    accept="image/*"
+                    onChange={handleImageChange}
+                />
             </S.Maincontainer>
             <S.userInfoContainer>
                 <S.infoText>닉네임</S.infoText>
@@ -73,7 +106,7 @@ const MypageEdit = () => {
                     value={userInfo.nickname} 
                     onChange={handleNicknameChange} 
                 />
-                <S.charCount>{nicknameLength}/16</S.charCount> {/* 남은 글자 수 표시 */}
+                <S.charCount>{nicknameLength}/16</S.charCount>
             </S.userInfoContainer>
             <S.Hr2 />
             <S.userInfoContainer>
