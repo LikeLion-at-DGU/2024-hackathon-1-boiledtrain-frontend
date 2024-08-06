@@ -15,28 +15,20 @@ const Coursename = ({ addedPlaces,setAddedPlaces, selectedStation, onRegisterSuc
     const [warningMessage, setWarningMessage] = useState("");
     const [isHovered, setIsHovered] = useState(false);
     const [places, setPlaces] = useState([]); 
-    useEffect(()=>{
-        console.log('Added Places in Coursename:', addedPlaces);
-    },[addedPlaces]);
     useEffect(() => {
         if (isEditMode && courseId) {
-            console.log('isEditMode in Coursename:', isEditMode);
             const fetchCourseDetails = async () => {
                 try {
                     const token = localStorage.getItem('access_token');
                     const response = await apiCall(`/api/user/course/${courseId}`, 'get', null, token);
                     const course = response.data;
 
-                    console.log('Course placelist:', course.placelist);
 
                     const placesWithPhotoUrls = await Promise.all(course.placelist.map(async (place) => {
-                        console.log('Place:', place); 
-                        console.log('Photo Reference:', place.photo_reference);
                         let photoUrl = '';
                         if (place.photo_reference) {
                             try {
                                 photoUrl = getPlacePhotoUrl(place.photo_reference); 
-                                console.log(photoUrl);
                             } catch (error) {
                                 console.error('Error fetching photo URL:', error.message);
                             }
@@ -47,7 +39,6 @@ const Coursename = ({ addedPlaces,setAddedPlaces, selectedStation, onRegisterSuc
                         };
                         
                     }));
-                    console.log("phtourl 추가",placesWithPhotoUrls);
 
                     setCourseName(course.title);
                     setCourseDescription(course.description);
@@ -66,8 +57,6 @@ const Coursename = ({ addedPlaces,setAddedPlaces, selectedStation, onRegisterSuc
     const Locked = () => {
         setIsLock(prevState => !prevState);
     };
-    console.log("c최종ㅇㅇㅇㅇ",places);
-    console.log("adddedddpacel",addedPlaces);
     const handleRegister = async () => {
         if (courseName.trim() === "" || courseDescription.trim() === "") {
             alert("모든 값을 입력해주세요!");
@@ -94,7 +83,6 @@ const Coursename = ({ addedPlaces,setAddedPlaces, selectedStation, onRegisterSuc
                 is_share: isLock ? "False" : "True",
             }, token);
 
-            console.log("등록 성공: ", response);
             onRegisterSuccess();
         } catch (error) {
             console.error("등록 실패", error);

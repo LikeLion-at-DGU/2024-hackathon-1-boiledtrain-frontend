@@ -26,7 +26,6 @@ const KakaoCallback = () => {
                 }
 
                 const result = await response.json();
-                console.log('Response data:', result);
                 setData(result);
 
                 localStorage.setItem('access_token', result.access);
@@ -43,7 +42,6 @@ const KakaoCallback = () => {
                 }
 
                 const userInfo = await userInfoResponse.json();
-                console.log('User Info:', userInfo);
                 localStorage.setItem('user_info', JSON.stringify(userInfo));
 
                 navigate('/');
