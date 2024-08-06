@@ -68,7 +68,7 @@ export const Describ = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 270px;
+    width: 220px;
 `;
 
 
