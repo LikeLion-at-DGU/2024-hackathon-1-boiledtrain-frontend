@@ -1,23 +1,38 @@
-import React, { useEffect, useState,useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import * as S from "./styled";
 import train from "../../assets/images/boiledtrainLogo.png";
 import apiCall from "../../api";
 import EmptyCourse from "../Common/EmptyCourse";
 import HeartIcon from "../../assets/images/HeartIcon";
-import profile from "../../assets/images/normalprofile.png"
+import profile from "../../assets/images/normalprofile.png";
 
-const CourseContentSharedLike = ({ selectedStation,onCourseClick }) => {
+const CourseContentSharedLike = ({ selectedStation, onCourseClick }) => {
     const [data, setData] = useState([]);
     const [likedCourses, setLikedCourses] = useState({});
     const [placeImages, setPlaceImages] = useState({});
     const [map, setMap] = useState(null);
 
-    useEffect(() => {
+    const initializeMap = useCallback(() => {
         if (window.google && window.google.maps) {
             const map = new window.google.maps.Map(document.createElement('div'));
             setMap(map);
         }
     }, []);
+
+    useEffect(() => {
+        if (window.google && window.google.maps) {
+            initializeMap();
+        } else {
+            const intervalId = setInterval(() => {
+                if (window.google && window.google.maps) {
+                    clearInterval(intervalId);
+                    initializeMap();
+                }
+            }, 100);
+            return () => clearInterval(intervalId);
+        }
+    }, [initializeMap]);
+
     const fetchPlaceImage = async (placeId) => {
         return new Promise((resolve) => {
             if (!map) {
@@ -46,7 +61,7 @@ const CourseContentSharedLike = ({ selectedStation,onCourseClick }) => {
             response.data.forEach(course => {
                 initialLikedCourses[course.id] = {
                     is_like: course.is_like,
-                    like_count: course.like_count 
+                    like_count: course.like_count
                 };
             });
             setLikedCourses(initialLikedCourses);
@@ -77,14 +92,13 @@ const CourseContentSharedLike = ({ selectedStation,onCourseClick }) => {
     useEffect(() => {
     }, [selectedStation]);
 
-    const filteredData = selectedStation 
-        ? data.filter(course => course.subway_station === selectedStation) 
+    const filteredData = selectedStation
+        ? data.filter(course => course.subway_station === selectedStation)
         : data;
 
     if (filteredData.length === 0) {
         return <EmptyCourse />;
     }
-
 
     const formatDateTime = (dateString) => {
         const date = new Date(dateString);
@@ -131,12 +145,12 @@ const CourseContentSharedLike = ({ selectedStation,onCourseClick }) => {
                     <S.CourseContainer key={index} onClick={() => onCourseClick(course.id)}>
                         <S.PhotoContainer>
                             {courseImages.map((image, index) => (
-                                <S.Img 
+                                <S.Img
                                     key={index}
                                     style={{
                                         borderRadius: index === 0 ? '12px 0px 0px 0px' : index === 2 ? '0px 12px 0px 0px' : ''
-                                    }} 
-                                    src={image} 
+                                    }}
+                                    src={image}
                                 />
                             ))}
                         </S.PhotoContainer>
