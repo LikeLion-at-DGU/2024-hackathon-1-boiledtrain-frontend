@@ -131,7 +131,6 @@ const Detail = () => {
     try {
       const token = getToken();
       const response = await apiCall(`/api/user/diary/${id}`, 'get', {}, token);
-      console.log(response.data);
       setData(response.data);
       
       if (response.data.course) {
@@ -146,7 +145,6 @@ const Detail = () => {
     try {
       const token = getToken();
       const response = await apiCall(`/api/user/course/${courseId}`, 'get', {}, token); 
-      console.log(response.data);
       setCourseData(response.data);
     } catch (error) {
       console.error("Error fetching course data:", error);

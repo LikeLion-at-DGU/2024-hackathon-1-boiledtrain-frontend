@@ -71,8 +71,6 @@ const MypageEdit = () => {
                 }
             });
 
-            console.log("API Response:", response);
-
             const updatedUserInfo = { ...userInfo, nickname: response.data.nickname, profile_image: response.data.profile_image };
             localStorage.setItem('user_info', JSON.stringify(updatedUserInfo));
 
@@ -83,7 +81,6 @@ const MypageEdit = () => {
     };
 
     const handleSave = () => {
-        console.log("저장된 정보:", userInfo);
         register();
     };
 
