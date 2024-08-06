@@ -4,7 +4,7 @@ import Lock from "../../assets/images/Lock.svg";
 import unLock from "../../assets/images/unLock.svg";
 import apiCall from "../../api";
 import Warning from "../Common/Warning";
-import ment from "../../assets/images/ment.png";
+import ment from "../../assets/images/mentment2.png";
 import getPlacePhotoUrl from "../../utils/getPlacePhotoUrl";
 
 const Coursename = ({ addedPlaces,setAddedPlaces, selectedStation, onRegisterSuccess, courseId, isEditMode }) => {
@@ -98,15 +98,7 @@ const Coursename = ({ addedPlaces,setAddedPlaces, selectedStation, onRegisterSuc
     return (
         <>
             <Lockcontainer>
-                <MentContainer 
-                    src={ment}
-                    style={{ display: isHovered ? 'block' : 'none' }}
-                />
-                <Ment 
-                    style={{ display: isHovered ? 'block' : 'none' }} 
-                >
-                    공개 여부를 설정 할 수 있어요!
-                </Ment>
+                <MentContainer src={ment} style={{ display: isHovered ? 'block' : 'none' }}></MentContainer>
                 <LockButton 
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}

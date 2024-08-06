@@ -193,9 +193,6 @@ function GoalTravel() {
         const subwayStations = fetchedPlaces.map(place => place.subway_station);
         setSubwayStations(subwayStations);
         setPlaces(fetchedPlaces); 
-
-        console.log('Fetched subway stations:', subwayStations);
-        console.log('Fetched places:', fetchedPlaces);
       } else {
         console.error('Invalid response structure:', response.data);
       }
