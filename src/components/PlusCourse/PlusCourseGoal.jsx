@@ -11,7 +11,6 @@ const PlusCourseGoal = ({ subwayStation, placelist, onClose }) => {
   const navigate = useNavigate();
 
   const handleClick = async () => {
-    console.log('Placelist:', placelist); 
     const token = getToken();
     const title = '목적 여행으로 삶아진 코스입니다 !'; 
     const description = '설명을 삶아주세요 !'; 
@@ -20,7 +19,6 @@ const PlusCourseGoal = ({ subwayStation, placelist, onClose }) => {
     try {
       const response = await apiCall('/api/user/course', 'POST', { title, description, subway_station: subwayStation, placelist, is_share }, token); 
 
-      console.log('Response Data:', response.data);
 
       if (response.status === 200) {
         alert('코스가 저장되었습니다!');

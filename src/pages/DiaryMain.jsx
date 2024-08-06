@@ -34,7 +34,6 @@ const DiaryMain = () => {
     try {
       const token = getToken();
       const response = await apiCall('/api/user/diary', 'get', null, token);
-      console.log(response.data);
       setData(response.data);
     } catch (error) {
       console.log('Error fetching diary data:', error);
