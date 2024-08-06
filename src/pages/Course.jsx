@@ -17,15 +17,16 @@ const StyledBottomBar = styled.div`
     width: 430px;
     height: 77px;
     background: #00ABFC;
-    z-index:200;
+    z-index: 200;
 `;
+
 const PageContainer = styled.div`
-  position: relative;
-  height: 873px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
+    position: relative;
+    height: 873px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
 `;
 
 const Course = () => {
@@ -60,8 +61,14 @@ const Course = () => {
         }
     };
 
+    const handleSelect2 = (value) => {
+        setSelected2(value);
+        setSelectedStation(""); // Reset selectedStation when changing tabs
+    };
+
     const handleCourseClick = (courseId) => {
         setSelectedCourse(courseId);
+        setSelectedStation("");
     };
 
     const handleCloseDetail = () => {
@@ -91,13 +98,13 @@ const Course = () => {
                     <Select 
                         selected={selected} 
                         selected2={selected2} 
-                        onSelect2={setSelected2} 
+                        onSelect2={handleSelect2} // Use updated handleSelect2 here
                     />
                     {selected === 1 && selected2 === 1 && <CourseContentShaedLike onCourseClick={handleCourseClick}  
-                        selectedStation={selectedStation}/>}
+                        selectedStation={selectedStation} />}
                     {/* 전체 코스 인기순 */}
                     {selected === 1 && selected2 === 2 && <CourseContentSharedFast onCourseClick={handleCourseClick}  
-                        selectedStation={selectedStation}/>}
+                        selectedStation={selectedStation} />}
                     {/* 전체 코스 최신순 */}
                     {selected === 2 && selected2 === 1 && <CourseContentLike onCourseClick={handleCourseClick} />}
                     {/* 내 코스 좋아요 누른거 */}
