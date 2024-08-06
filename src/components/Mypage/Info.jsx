@@ -3,6 +3,7 @@ import * as S from "./styled";
 import { getUserInfo } from "../../utils/auth";
 import { Link } from "react-router-dom";
 import edit from "../../assets/images/edit.png";
+import profile from "../../assets/images/normalprofile.png"
 
 const Info = () => {
     const userInfo = getUserInfo(); 
