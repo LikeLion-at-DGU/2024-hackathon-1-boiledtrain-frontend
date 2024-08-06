@@ -180,7 +180,6 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
                     place: selectedPlace.place_id,
                 }, token);
 
-                console.log('API response:', response);
                 if (response.data.true) {
                     setAddedPlaces(prevPlaces => [
                         ...prevPlaces,
@@ -226,7 +225,6 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
     };
 
     useEffect(() => {
-        console.log("Updated Added Places:", addedPlaces);
     }, [addedPlaces]);
 
     return (

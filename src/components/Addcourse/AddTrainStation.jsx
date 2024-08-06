@@ -58,7 +58,6 @@ function Header({ setSelectedStation }) {
               <S.AutoSearchData
                 key={item.station_nm} 
                 onClick={() => {
-                  console.log(`Selected Station: ${item.station_nm}`);
                   setKeyword(item.station_nm);
                   setSelectedStation(item.station_nm);
                   setKeyItems([]); 

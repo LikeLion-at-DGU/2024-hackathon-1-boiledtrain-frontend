@@ -26,7 +26,6 @@ const apiCall = async (url, method = 'get', data = null, token = null) => {
         }
 
         const response = await API(config);
-        console.log(response);
         return response;
     } catch (error) {
         console.error('API call error:', error);
