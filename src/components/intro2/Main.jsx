@@ -22,7 +22,8 @@ const Main = () => {
     };
 
     const handleLogin = () => {
-        navigate('/login', { state: { from: redirectPath } });
+        // navigate('/login', { state: { from: redirectPath } });
+        window.location.href = "http://3.36.243.22/api/accounts/kakao/login/";
     };
 
     const handleCloseWarning = () => {

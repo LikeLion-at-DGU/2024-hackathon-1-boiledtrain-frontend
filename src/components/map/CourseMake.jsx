@@ -13,7 +13,6 @@ const CourseMake = ({ onBackButtonClick, course, isEditMode }) => {
 
     useEffect(() => {
         if (course) {
-            console.log('adddddddeddddPlacessss',addedPlaces);
             setSelectedStation(course.subway_station || '');
             setAddedPlaces(course.placelist || []);
         }
