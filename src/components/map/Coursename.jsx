@@ -108,11 +108,11 @@ const Coursename = ({ addedPlaces,setAddedPlaces, selectedStation, onRegisterSuc
                 </LockButton>
             </Lockcontainer>
             <Courseguide>
-                <Bold>코스 이름<Describ>나만의 이름을 붙여주세요. (10자 이내)</Describ></Bold>
+                <Bold>코스 이름<Describ>나만의 이름을 붙여주세요. (15자 이내)</Describ></Bold>
                 <Courseinput
                     value={courseName}
                     onChange={(e) => setCourseName(e.target.value)}
-                    maxLength="10"
+                    maxLength="15"
                 />
             </Courseguide>
             <Courseguide>

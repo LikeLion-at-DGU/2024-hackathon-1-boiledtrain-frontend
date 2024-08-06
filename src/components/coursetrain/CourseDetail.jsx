@@ -8,6 +8,7 @@ import apiCall from "../../api";
 import profile from "../../assets/images/normalprofile.png"
 import Loading from "../Modal/Loading"
 import { TopContainer2 } from "./styled";
+import "../../styles/font.css"
 
 const getUserInfo = () => {
     const userInfo = localStorage.getItem('user_info');
@@ -148,15 +149,22 @@ const CourseDetail = ({ courseId, onClose, onEditCourse }) => {
             </S.infoUserContainer>
             <S.mapContainer id='map'></S.mapContainer>
             <S.ContentContainer>
-                <p style={{ fontSize: '20px' }}>{course.title}</p>
-                <p style={{ fontSize: '14px', color: '#8C8C8C' }}>{course.description}</p>
+                
+                <p style={{ fontSize: '20px', margin:'5px 0' }}>{course.title}</p>
+                <p style={{ fontSize: '14px', color: '#8C8C8C', margin:'7px 0' }}>{course.description}</p>
+                <S.BigContainer>
                 {course.placelist && course.placelist.length > 0 ? (
                     course.placelist.map((place, index) => (
-                        <p key={index}>{index + 1}. {place.name}</p>
+                        <S.white>
+                        <p key={index} style={{margin:'0 0 0 5px'}}>{index + 1}. {place.name}</p>
+                        </S.white>
                     ))
-                ) : (
+                )
+                : (
                     <p>No places available</p>
                 )}
+            </S.BigContainer>
+
             </S.ContentContainer>
             </TopContainer2>
             {menuVisible && (

@@ -129,7 +129,6 @@ export const detailContainer = styled.div`
     display:flex;
     align-items: center;
     flex-direction: column;
-    margin-left: 15px;
 `
 
 export const header = styled.div`
@@ -147,6 +146,7 @@ export const HeadButton = styled.div`
     border:0;
     width: 24px;
     height: 24px;
+    margin:0 15px;
 `
 
 export const infoUserContainer = styled.div`
@@ -200,7 +200,7 @@ export const mapContainer = styled.div`
 export const ContentContainer = styled.div`
     width: 400px;
     min-height: 139px;
-    margin-left:20px;
+    margin-left:30px;
     display: flex;
     flex-direction: column;
     justify-content:flex-start;
@@ -237,4 +237,22 @@ export const TopContainer2 = styled.div`
         background: transparent;
     }
 
+`
+export const BigContainer = styled.div`
+    width:300px;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    gap:10px;
+    margin-top:20px
+`
+
+export const white = styled.div`
+    display: flex;
+    align-items: center;
+    width: 360px;
+    height: 30px;
+    background-color: #fff;
+
+    border-radius: 10px;
 `

@@ -11,9 +11,9 @@ const KakaoCallback = () => {
         const fetchToken = async () => {
             try {
                 // 서버 배포용
-                const response = await fetch('http://3.36.243.22:8000/api/accounts/kakao/login/callback/', {
+                // const response = await fetch('http://3.36.243.22:8000/api/accounts/kakao/login/callback/', {
                 // 로컬 테스트용
-                // const response = await fetch('http://3.36.243.22:8000/api/accounts/front_kakao/login/callback/', {
+                const response = await fetch('http://3.36.243.22:8000/api/accounts/front_kakao/login/callback/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
