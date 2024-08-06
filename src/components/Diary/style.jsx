@@ -150,15 +150,16 @@ cursor: pointer;
 `;
 
 export const PlusMent = styled.div`
-width: 63px;
+width: 60px;
 height: 28.116px;
 flex-shrink: 0;
 color: #00ABFC;
 text-align: center;
 font-feature-settings: 'clig' off, 'liga' off;
 font-family: 'Pretendard';
-font-size: 24px;
+font-size: 20px;
 font-style: normal;
+padding-top:2px;
 font-weight: 700;
 line-height: normal;
 `;
