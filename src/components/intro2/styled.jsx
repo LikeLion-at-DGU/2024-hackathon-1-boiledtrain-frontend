@@ -129,50 +129,50 @@ export const line = styled.hr`
 `
 
 export const HeaderContainer = styled.header`
-  display: flex;
-  flex-direction: column;
-  height: 300px;
-  align-items: center;
-  gap:20px;
-  z-index: 8;
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    align-items: center;
+    gap:20px;
+    z-index: 8;
 `;
 
 export const LoginButton = styled.button`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 360px;
-  height: 80px;
-  flex-shrink: 0;
-  border-radius: 58px;
-  background: #00ABFC;
-  color: #FFF;
-  text-align: center;
-  font-family: "Pretendard";
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  border: 2px solid #007bff;
-  cursor: pointer;
-  border: none;
-  outline: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  &:active {
-    background: #007bff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); 
-    transform: translateY(2px);
-  }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 360px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: 58px;
+    background: #00ABFC;
+    color: #FFF;
+    text-align: center;
+    font-family: "Pretendard";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border: 2px solid #007bff;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    &:active {
+        background: #007bff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); 
+        transform: translateY(2px);
+    }
 `;
 
 export const SubText = styled.span`
-  margin-top: 8px;
-  color: #FFF;
-  text-align: center;
-  font-family: "Pretendard";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 550;
-  line-height: normal;
+    margin-top: 8px;
+    color: #FFF;
+    text-align: center;
+    font-family: "Pretendard";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 550;
+    line-height: normal;
 `;

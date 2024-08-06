@@ -32,7 +32,7 @@ const CourseContent = ({ onCourseClick }) => {
                     const photoUrl = place.photos[0].getUrl();
                     resolve(photoUrl);
                 } else {
-                    resolve(train); // 사진이 없으면 기본 이미지 사용
+                    resolve(train);
                 }
             });
         });

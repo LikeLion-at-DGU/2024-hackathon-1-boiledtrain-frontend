@@ -5,8 +5,8 @@ import * as S from './styled';
 import Header from "../Addcourse/AddTrainStation";
 import { SearchContainer } from "../Course/styled";
 
-const Search = ({ selected, onAddCourseClick, setSelectedStation }) => { // setSelectedStation 추가
-    const [selectedStation, setSelectedStationState] = useState(""); // 지하철역 선택 상태 관리
+const Search = ({ selected, onAddCourseClick, setSelectedStation }) => { 
+    const [selectedStation, setSelectedStationState] = useState(""); 
 
     return (
         <>

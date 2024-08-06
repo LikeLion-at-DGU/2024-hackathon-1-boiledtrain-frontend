@@ -132,14 +132,10 @@ height: 159px;
 flex-shrink: 0;
 border-radius: 117px;
 background: #D4F2FF;
-/* position: fixed; */
-/* bottom: 0px; */
 transform: translateX(0px);
 
 position: absolute;
 bottom: 0px;
-/* width: 430px;
-height: 77px; */
 `;
 
 export const MentBtn = styled.div`

@@ -19,7 +19,7 @@ function Search({ onCategorySelect }) {
   
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    onCategorySelect(option.value); // 선택된 카테고리 value를 부모에게 전달
+    onCategorySelect(option.value);
     setIsOpen(false);
   };
 

@@ -1,4 +1,3 @@
-// src/components/IntroBack.jsx
 import React from 'react';
 import map from "../../assets/images/map2.jpg"; 
 import * as S from "./style";

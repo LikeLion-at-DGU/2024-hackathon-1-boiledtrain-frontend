@@ -25,7 +25,7 @@ const CourseDetail = ({ courseId, onClose, onEditCourse }) => {
         try {
             const token = localStorage.getItem('access_token');
             const response = await apiCall(`/api/user/course/${courseId}`, "get", null, token);
-            setCourse(response.data);// course detail api 에 있는 정보들 모두 course에 저장.
+            setCourse(response.data);
         } catch (error) {
             console.log("error 발생: ", error);
         }

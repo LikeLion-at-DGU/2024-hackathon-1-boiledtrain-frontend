@@ -6,7 +6,6 @@ import course from "../../assets/images/course.png";
 import mypage from "../../assets/images/mypage.png"; 
 import { Link } from 'react-router-dom';
 
-//링크는 모두 임시로 넣어둠. 수정해야함
 
 
 function BottomBar() {

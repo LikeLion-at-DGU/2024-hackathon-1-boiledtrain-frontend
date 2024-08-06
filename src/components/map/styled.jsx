@@ -225,8 +225,6 @@ export const MentContainer = styled.img`
 `
 export const Ment = styled.div`
     position: absolute;
-    /* bottom:227px;
-    right: 70px; */
     transform: translate(-73px, -294px);
     color: #000;
     font-family: 'Pretendard';

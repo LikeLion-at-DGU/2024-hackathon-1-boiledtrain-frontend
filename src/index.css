@@ -1,33 +1,3 @@
-/* body{
-  background-color: aliceblue;
-}
-
-#root{
-  display:flex;
-  background-color: #FFFFFF;
-  width:430px;
-  min-height: 873px;
-  margin: 0 auto;
-  position:relative;
-} */
-
-
-
-/* body{
-  background-color: aliceblue;
-}
-
-#root{
-  display:flex;
-  background-color: #FFFFFF;
-  width:430px;
-  min-height: 873px;
-  margin: 0 auto;
-  position:relative;
-} */
-
-
-
 body {
   background-color: aliceblue;
   display: flex;
@@ -43,30 +13,30 @@ body {
 
 #root {
   display: flex;
-  width: 100%; /* 전체 너비 사용 */
-  max-width: 430px; /* 최대 너비를 430px로 설정 */
-  min-height: 873px; /* 최소 높이 설정 */
-  margin: 0 auto; /* 중앙 정렬 */
-  background-color: #FFFFFF; /* 배경색 설정 */
-  position: relative; /* 자식 요소에 absolute를 사용할 수 있게 설정 */
+  width: 100%; 
+  max-width: 430px; 
+  min-height: 873px;
+  margin: 0 auto; 
+  background-color: #FFFFFF; 
+  position: relative; 
 }
 
 .screen {
   display: flex;
   flex-direction: column;
-  width: 100%; /* 전체 너비 사용 */
-  gap: 0.625rem; /* 10px 간격 */
+  width: 100%; 
+  gap: 0.625rem; 
 }
 
 @media (max-width: 430px) {
   .screen {
-    align-items: flex-start; /* 모바일에서 왼쪽 정렬 */
+    align-items: flex-start;
   }
 }
 
 @media (min-width: 431px) {
   .screen {
-    align-items: center; /* 데스크탑에서 중앙 정렬 */
+    align-items: center; 
   }
 }
 

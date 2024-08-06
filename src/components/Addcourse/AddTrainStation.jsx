@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import subwayInfo from '../../../subwayinfo.json';
 import * as S from "./style";
-import sea from '../../assets/images/search.png';
 
 function Header({ setSelectedStation }) {
   const [keyword, setKeyword] = useState("");
@@ -51,7 +50,6 @@ function Header({ setSelectedStation }) {
           setSelectedStation("");
         }}
       />
-      {/* <S.Searchicon src={sea} alt="icon" onClick={handleIconClick} /> */}
 
       {keyItems.length > 0 && keyword && (
         <S.AutoSearchContainer>
