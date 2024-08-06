@@ -35,6 +35,7 @@ export const SearchContainer = styled.div`
     flex-direction: column;
     align-items: center;
     position: relative;
+    outline:none;
 `
 
 export const SearchText = styled.div`
@@ -60,6 +61,7 @@ export const SearchInput = styled.input`
     margin: 16px 0px 0px 0px;
     padding:0px 45px 0px 20px;
     text-indent: 5px;
+    outline:none;
 `
 
 export const SearchButton = styled.button`
