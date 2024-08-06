@@ -65,7 +65,7 @@ const Zzimtrip=()=>{
                 <S.courseContainer key={index}>
                 <S.Div>
                     <S.pointImg src={point} />
-                    <S.stationP>{course.subway_station}</S.stationP>
+                    <S.stationP2>{course.subway_station}역</S.stationP2>
                     <S.stationP>{course.title}</S.stationP>
                     <S.stationP>{formatDate(course.created_at)}</S.stationP>
                 </S.Div>
