@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from 'react-router-dom'; // 추가: useLocation 훅 사용
 import Head from "../components/Course/Head";
 import Search from "../components/Course/Search";
 import Select from "../components/Course/Select";
@@ -30,6 +31,8 @@ const PageContainer = styled.div`
 `;
 
 const Course = () => {
+    const navigate = useNavigate();
+    const location = useLocation(); // 추가: useLocation 훅 사용
     const [selected, setSelected] = useState(1);
     const [selected2, setSelected2] = useState(1);
     const [isCourseMakeVisible, setIsCourseMakeVisible] = useState(false);
@@ -38,6 +41,12 @@ const Course = () => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [coursePlaces, setCoursePlaces] = useState([]);
     const [selectedStation, setSelectedStation] = useState("");
+
+    useEffect(() => {
+        if (location.state?.courseId) { // 추가: location.state에서 courseId를 확인
+            setSelectedCourse(location.state.courseId); // 전달받은 courseId를 selectedCourse에 설정
+        }
+    }, [location.state]); // location.state 의존성 추가
 
     const handleAddCourseClick = () => {
         setIsCourseMakeVisible(true);
@@ -63,7 +72,7 @@ const Course = () => {
 
     const handleSelect2 = (value) => {
         setSelected2(value);
-        setSelectedStation(""); 
+        setSelectedStation(""); // Reset selectedStation when changing tabs
     };
 
     const handleCourseClick = (courseId) => {
@@ -98,7 +107,7 @@ const Course = () => {
                     <Select 
                         selected={selected} 
                         selected2={selected2} 
-                        onSelect2={handleSelect2} 
+                        onSelect2={handleSelect2} // Use updated handleSelect2 here
                     />
                     {selected === 1 && selected2 === 1 && <CourseContentShaedLike onCourseClick={handleCourseClick}  
                         selectedStation={selectedStation} />}
@@ -108,10 +117,11 @@ const Course = () => {
                     {/* 전체 코스 최신순 */}
                     {selected === 2 && selected2 === 1 && <CourseContentLike onCourseClick={handleCourseClick} />}
                     {/* 내 코스 좋아요 누른거 */}
+                    
                     {selected === 2 && selected2 === 2 && <CourseContent 
                         onCourseClick={handleCourseClick}
                     />}
-                    {/* 내 코스 내가 만든거  */}
+                    {/* 내 코스 내가 만든거 */}
                 </>
             )}
             {isCourseMakeVisible && (
