@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from './style';
 import Main from '../../assets/images/downbtn.png';
 import Main2 from '../../assets/images/downbtn2.png';
-import Ment from '../../assets/images/ment.png';
+import Ment from '../../assets/images/coursement.png';
 import apiCall from '../../api';
 import { useNavigate } from 'react-router-dom';
 import { getToken } from "../../utils/auth";
@@ -39,7 +39,6 @@ const PlusCourseRandom = ({ subwayStation, placelist }) => {
         <S.Push className="push">
           <S.ImageHover src={Main2} alt="저장하기 누른 후" className="main-image-hover" />
           <S.MentImage src={Ment} alt="저장하기 버튼 옆 문구" className="ment-image" />
-          <S.Ment>저장 후 <br/> 내 코스에서 볼 수 있어요.</S.Ment>
         </S.Push>
       </S.HoverContainer>
     </S.MainContainer2>

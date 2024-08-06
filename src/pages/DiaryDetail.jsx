@@ -6,7 +6,6 @@ import BottomBar from "../components/Common/BottomBar";
 import TopBarDiary from "../components/Common/TopBarDiary";
 import { getToken } from '../utils/auth';
 import Photo from '../assets/images/baseimage.png';
-import Point from '../assets/images/pointer.png';
 
 const DetailContainer = styled.div`
   width: 430px;
@@ -78,11 +77,11 @@ const DetailContent = styled.div`
 
 const DetailMood = styled.div`
   padding: 10px;
-  color: #00ABFC;
+  color: #000;
   text-align: center;
   font-family: 'Pretendard';
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
 `;
 
 const DiaryDetailLine = styled.div`
@@ -122,12 +121,6 @@ const BottomStyle = styled.div`
   background: #00ABFC;
 `;
 
-const DetailPhoto = styled.img`
-width:12px;
-padding-right:10px;
-padding-top:3px;
-`;
-
 const Detail = () => {
   const navigate = useNavigate();
   const [data, setData] = useState();
@@ -138,6 +131,7 @@ const Detail = () => {
     try {
       const token = getToken();
       const response = await apiCall(`/api/user/diary/${id}`, 'get', {}, token);
+      console.log(response.data);
       setData(response.data);
       
       if (response.data.course) {
@@ -152,6 +146,7 @@ const Detail = () => {
     try {
       const token = getToken();
       const response = await apiCall(`/api/user/course/${courseId}`, 'get', {}, token); 
+      console.log(response.data);
       setCourseData(response.data);
     } catch (error) {
       console.error("Error fetching course data:", error);
@@ -170,8 +165,10 @@ const Detail = () => {
   };
 
   const handleCourseDetailClick = () => {
-    navigate(`/course`);
-  };
+    navigate('/course', { state: { courseId: data?.course } });
+};
+
+
 
   return (
     <DetailContainer>
@@ -180,10 +177,10 @@ const Detail = () => {
       <DetailTitle>{data?.title}</DetailTitle>
       <DetailDate>{formatDate(data?.created_at)}</DetailDate>
       <DiaryDetailLine2 />
-      <DetailMood> <DetailPhoto src={Point}/>{courseData?.subway_station || ''}역 코스</DetailMood>
-      {/* <DetailURL onClick={handleCourseDetailClick} style={{ cursor: 'pointer' }}>
+      <DetailMood># {courseData?.subway_station || ''}역 코스</DetailMood>
+      <DetailURL onClick={handleCourseDetailClick} style={{ cursor: 'pointer' }}>
         코스 자세히 보기<UnderBar />
-      </DetailURL> */}
+      </DetailURL>
       <DetailThumbnail src={data?.image || Photo} alt="다이어리 이미지" />
       <DetailMood>{data?.mood}</DetailMood>
       <DetailContent>{data?.content}</DetailContent>
