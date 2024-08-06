@@ -142,6 +142,20 @@ export const Div = styled.div`
     height:140px;
     width:150px;
 `
+export const stationP2 = styled.div`
+    padding-left:8px;
+    color: #000;
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: 'Pretendard';
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    margin-bottom: 6px;
+    width: 130px; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+`
 export const stationP = styled.div`
     padding-left:8px;
     color: #000;
