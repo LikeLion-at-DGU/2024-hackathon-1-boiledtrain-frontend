@@ -112,10 +112,10 @@ const Coursename = ({ addedPlaces,setAddedPlaces, selectedStation, onRegisterSuc
             <Lockcontainer>
                 <MentContainer 
                     src={ment}
-                    style={{ display: isHovered ? 'block' : 'none' }} // Conditionally display MentContainer
+                    style={{ display: isHovered ? 'block' : 'none' }}
                 />
                 <Ment 
-                    style={{ display: isHovered ? 'block' : 'none' }} // Conditionally display Ment
+                    style={{ display: isHovered ? 'block' : 'none' }} 
                 >
                     공개 여부를 설정 할 수 있어요!
                 </Ment>

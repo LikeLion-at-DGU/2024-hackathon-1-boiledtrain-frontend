@@ -47,24 +47,29 @@ export const CourseContentContainer = styled.div`
 `
 export const Course = styled.div`
     color: #000;
-
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 13px;
     font-style: normal;
     font-weight: 700;
     line-height: 24.2px;
     white-space: nowrap;
-`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 260px;  
+`;
+
 export const Describ = styled.div`
     color: #8C8C8C;
-
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 10px;
     font-style: normal;
     font-weight: 600;
     line-height: 24.2px;
     white-space: nowrap;
-`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 270px;
+`;
 
 
 // 좋아요
@@ -80,7 +85,7 @@ export const Plus = styled.div`
 export const like_count = styled.div`
     color: #8C8C8C;
     text-align: right;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 10px;
     font-style: normal;
     font-weight: 600;
@@ -88,7 +93,7 @@ export const like_count = styled.div`
 export const P = styled.div`
     color: #000;
     text-align: right;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 10px;
     width:100px;
     font-style: normal;
@@ -98,7 +103,7 @@ export const P = styled.div`
 
 export const time = styled.div`
     color: #8C8C8C;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 10px;
     font-style: normal;
     font-weight: 500;
@@ -169,7 +174,7 @@ export const User = styled.div`
 
 export const userNickname = styled.p`
     color: #000;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 13px;
     font-style: normal;
     font-weight: 500;
@@ -178,7 +183,7 @@ export const userNickname = styled.p`
 
 export const userId = styled.p`
     color: #8C8C8C;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 10px;
     font-style: normal;
     font-weight: 500;
@@ -200,7 +205,7 @@ export const ContentContainer = styled.div`
     flex-direction: column;
     justify-content:flex-start;
     font-size: 16px;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-style: normal;
     font-weight: bold;
 `

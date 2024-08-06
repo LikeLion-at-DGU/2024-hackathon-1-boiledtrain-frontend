@@ -215,6 +215,8 @@ export const Courseinput = styled.input`
     border-radius: 6px;
     border:0;
     background: #D4F2FF;
+    border: 0;
+    outline: none;
 `
 
 export const MentContainer = styled.img`
@@ -223,8 +225,9 @@ export const MentContainer = styled.img`
 `
 export const Ment = styled.div`
     position: absolute;
-    bottom:227px;
-    right: 70px;
+    /* bottom:227px;
+    right: 70px; */
+    transform: translate(-73px, -294px);
     color: #000;
     font-family: 'Pretendard';
     text-align: left;
