@@ -23,6 +23,7 @@ function Menu({ onClose }) {
             localStorage.removeItem('access_token');
             localStorage.removeItem('user_info');
             onClose(); 
+            window.location.reload()
         } catch (error) {
             console.error("로그아웃 오류 발생: ", error);
         }

@@ -3,7 +3,8 @@ import * as S from "./style";
 import closed from "../../assets/images/closed.png"; 
 import ticket from "../../assets/images/ticket.jpg";
 import route from "../../assets/images/route.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import kakaobtn from "../../assets/images/kakakobtn.png";
+import { useNavigate } from "react-router-dom";
 import WarningChoose from '../Common/WarningChoose';
 
 function StartMenu({ onClose }) {
@@ -29,6 +30,14 @@ function StartMenu({ onClose }) {
     setShowWarning(false);
   };
 
+  const redirectToKakaoLogin = async () => {
+    // 서버 배포용
+    // const kakaoAuthUrl = 'http://3.36.243.22/api/accounts/kakao/login/';
+    // 로컬 테스트용
+    const kakaoAuthUrl = 'http://3.36.243.22/api/accounts/front_kakao/login/';
+    window.location.href = kakaoAuthUrl;
+  };
+
   return (
     <S.Board>
       <S.ClosedBox>
@@ -41,7 +50,12 @@ function StartMenu({ onClose }) {
             <S.newtext>안녕하세요!<br/>로그인하고 더 많은 기능을<br/>삶아봅시다.</S.newtext>
           </S.NewShape>
           <S.Newbox>
-            <Link to='/login' style={{ textDecoration: "none" }}><S.newmyprofile>카카오 로그인</S.newmyprofile></Link>
+            <img 
+              src={kakaobtn} 
+              alt="카카오 로그인" 
+              style={{ width: "160px",height:'100%', cursor: "pointer" }} 
+              onClick={redirectToKakaoLogin} 
+            />
           </S.Newbox>
         </S.Box1>
 
