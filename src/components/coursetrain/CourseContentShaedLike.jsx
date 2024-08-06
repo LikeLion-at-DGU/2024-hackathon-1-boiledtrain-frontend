@@ -75,7 +75,6 @@ const CourseContentSharedLike = ({ selectedStation,onCourseClick }) => {
     }, [fetchData, map]);
 
     useEffect(() => {
-        console.log("Selected Station:", selectedStation);
     }, [selectedStation]);
 
     const filteredData = selectedStation 

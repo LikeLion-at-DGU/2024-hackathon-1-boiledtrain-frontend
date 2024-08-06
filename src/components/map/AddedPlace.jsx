@@ -4,7 +4,6 @@ import stopimg from "../../assets/images/stop.svg";
 import emptyimg from "../../assets/images/loading.png";
 
 const AddedPlace = ({ placeName, placeAddress, placeCategory, onDelete, order, photoUrl }) => {
-    // Use emptyimg if photoUrl is not available
     const imageSrc = photoUrl || emptyimg;
 
     return (
