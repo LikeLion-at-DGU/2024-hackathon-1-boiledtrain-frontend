@@ -6,7 +6,7 @@ import EmptyCourse from "../Common/EmptyCourse";
 import HeartIcon from "../../assets/images/HeartIcon";
 import profile from "../../assets/images/normalprofile.png"
 
-const CourseContentSharedLike = ({ onCourseClick }) => {
+const CourseContentSharedLike = ({ selectedStation,onCourseClick }) => {
     const [data, setData] = useState([]);
     const [likedCourses, setLikedCourses] = useState({});
     const [placeImages, setPlaceImages] = useState({});
@@ -74,6 +74,18 @@ const CourseContentSharedLike = ({ onCourseClick }) => {
         }
     }, [fetchData, map]);
 
+    useEffect(() => {
+        console.log("Selected Station:", selectedStation);
+    }, [selectedStation]);
+
+    const filteredData = selectedStation 
+        ? data.filter(course => course.subway_station === selectedStation) 
+        : data;
+
+    if (filteredData.length === 0) {
+        return <EmptyCourse />;
+    }
+
 
     const formatDateTime = (dateString) => {
         const date = new Date(dateString);
@@ -110,7 +122,7 @@ const CourseContentSharedLike = ({ onCourseClick }) => {
 
     return (
         <S.TopContainer>
-            {data.slice().map((course, index) => {
+            {filteredData.slice().map((course, index) => {
                 const { is_like, like_count } = likedCourses[course.id] || { is_like: course.is_like, like_count: course.like_count };
                 const courseImages = course.placelist.slice(0, 3).map(
                     placeId => placeImages[placeId] || train
