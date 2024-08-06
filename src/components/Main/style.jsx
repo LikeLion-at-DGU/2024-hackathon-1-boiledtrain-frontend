@@ -209,7 +209,7 @@ font-family: 'Pretendard';
 font-size: 15px;
 font-style: normal;
 font-weight: 600;
-line-height: 24.2px; /* 161.333% */
+line-height: 24.2px; 
 `;
 
 export const Route = styled.img`

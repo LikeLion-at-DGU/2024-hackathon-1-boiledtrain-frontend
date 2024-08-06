@@ -63,7 +63,7 @@ const Course = () => {
 
     const handleSelect2 = (value) => {
         setSelected2(value);
-        setSelectedStation(""); // Reset selectedStation when changing tabs
+        setSelectedStation(""); 
     };
 
     const handleCourseClick = (courseId) => {
@@ -98,7 +98,7 @@ const Course = () => {
                     <Select 
                         selected={selected} 
                         selected2={selected2} 
-                        onSelect2={handleSelect2} // Use updated handleSelect2 here
+                        onSelect2={handleSelect2} 
                     />
                     {selected === 1 && selected2 === 1 && <CourseContentShaedLike onCourseClick={handleCourseClick}  
                         selectedStation={selectedStation} />}

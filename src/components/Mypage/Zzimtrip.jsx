@@ -48,15 +48,12 @@ const Zzimtrip=()=>{
             year: 'numeric',
             month: '2-digit',
             day: '2-digit',
-        }).replace(/\./g, '.'); // 한국어 형식으로 변환
+        }).replace(/\./g, '.'); 
     };
 
     return(
         <>
         <S.triptext2>최근 내가 찜한 여행</S.triptext2>
-        {/* <S.tripContainer>
-            <S.emptytext>이곳에서 내 여행 기록을/ 볼 수 있어요!</S.emptytext>
-        </S.tripContainer> */}
         <S.tripContainer2
             ref={containerRef}
             onMouseDown={handleMouseDown}
@@ -73,7 +70,7 @@ const Zzimtrip=()=>{
                     <S.stationP>{formatDate(course.created_at)}</S.stationP>
                 </S.Div>
                 {course.placelist.map((place, idx) => (
-                            <S.placeP key={idx}>{place.name}</S.placeP> // name 속성을 출력
+                            <S.placeP key={idx}>{place.name}</S.placeP> 
                         ))}
             </S.courseContainer>
             ))}

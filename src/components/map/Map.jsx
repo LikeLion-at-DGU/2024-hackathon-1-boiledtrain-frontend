@@ -113,9 +113,7 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
         const service = new google.maps.places.PlacesService(map);
         service.getDetails({ placeId }, (place, status) => {
             if (status === google.maps.places.PlacesServiceStatus.OK && place.photos) {
-                // Get the first photo URL from the place's photos
                 const photoUrl = place.photos.length > 0 ? place.photos[0].getUrl() : '';
-                console.log("photoUrllrllrllrlr", photoUrl);
                 setPlacePhotos(place.photos.map(photo => photo.getUrl()));
                 setSelectedPlace(prevPlace => ({
                     ...prevPlace,
@@ -168,7 +166,6 @@ const Map = ({ selectedStation, addedPlaces, setAddedPlaces }) => {
         }
 
         if (selectedPlace) {
-            // Check if the place is already added
             const isPlaceAdded = addedPlaces.some(place => place.id === selectedPlace.place_id);
             if (isPlaceAdded) {
                 setWarningMessage("이미 추가된 장소입니다.");

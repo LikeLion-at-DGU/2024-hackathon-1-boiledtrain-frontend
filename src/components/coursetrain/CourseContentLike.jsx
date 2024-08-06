@@ -15,10 +15,8 @@ const CourseContentLike = ({ onCourseClick }) => {
     const [map, setMap] = useState(null);
 
     useEffect(() => {
-        // Check if Google Maps API script is already added
         const existingScript = document.querySelector(`script[src*="maps.googleapis.com/maps/api/js"]`);
         if (!existingScript) {
-            // Google Maps JavaScript API 로드
             const script = document.createElement('script');
             script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
             script.async = true;
@@ -29,7 +27,6 @@ const CourseContentLike = ({ onCourseClick }) => {
             };
             document.head.appendChild(script);
         } else {
-            // Google Maps API already loaded, initialize map
             const map = new window.google.maps.Map(document.createElement('div'));
             setMap(map);
         }
@@ -48,7 +45,7 @@ const CourseContentLike = ({ onCourseClick }) => {
                     const photoUrl = place.photos[0].getUrl();
                     resolve(photoUrl);
                 } else {
-                    resolve(train); // 사진이 없으면 기본 이미지 사용
+                    resolve(train);
                 }
             });
         });
@@ -68,7 +65,7 @@ const CourseContentLike = ({ onCourseClick }) => {
                 };
             });
             setLikedCourses(initialLikedCourses);
-            // 장소 이미지 불러오기
+            
             const placeImagePromises = response.data.flatMap(course =>
                 course.placelist.slice(0, 3).map(async placeId => {
                     const imageUrl = await fetchPlaceImage(placeId);

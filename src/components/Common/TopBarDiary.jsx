@@ -5,7 +5,7 @@ import back from '../../assets/images/back.png';
 import select from '../../assets/images/select.png';
 import DiaryMenuList from '../Diary/DiaryMenuList';
 
-function TopBarDiary({ id }) {  // id를 prop으로 받음
+function TopBarDiary({ id }) { 
   const navigate = useNavigate();
   const [menuVisible, setMenuVisible] = useState(false);
 
@@ -48,7 +48,7 @@ function TopBarDiary({ id }) {  // id를 prop으로 받음
           style={{ cursor: 'pointer' }}
         />
       </S.TopHead2>
-      {menuVisible && <DiaryMenuList courseId={id} onCourseDeleted={handleCourseDeleted} onEditCourse={handleEditCourse} />} {/* 메뉴가 표시되어야 할 때만 렌더링 */}
+      {menuVisible && <DiaryMenuList courseId={id} onCourseDeleted={handleCourseDeleted} onEditCourse={handleEditCourse} />} 
     </div>
   );
 }

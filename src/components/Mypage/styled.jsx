@@ -151,10 +151,10 @@ export const stationP = styled.div`
     font-style: normal;
     font-weight: 500;
     margin-bottom: 6px;
-    width: 130px; /* 원하는 너비를 지정 */
-    white-space: nowrap; /* 줄바꿈 방지 */
-    overflow: hidden; /* 넘치는 부분 숨기기 */
-    text-overflow: ellipsis; /
+    width: 130px; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
 `
 
 export const placeP = styled.p`
@@ -288,8 +288,8 @@ export const charCount = styled.div`
     font-size: 13px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24.2px; /* 186.154% */
-    text-align: right; /* 텍스트를 오른쪽 정렬 */
+    line-height: 24.2px; 
+    text-align: right; 
     width: 82%;
     margin-top:10px;
 `;

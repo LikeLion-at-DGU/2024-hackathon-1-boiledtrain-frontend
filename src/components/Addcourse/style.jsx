@@ -9,16 +9,6 @@ export const SearchContainer = styled.div`
 `;
 
 export const Search = styled.input`
-  /* border: 0;
-  height: 40px;
-  border-radius: 10px;
-  background: #E7E7E7;
-  outline: none;
-  font-family: 'Pretendard';
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 24.2px; */
   width: 330px;
     height: 40px;
     border-radius: 10px;
@@ -45,7 +35,6 @@ export const AutoSearchContainer = styled.div`
   background-color: #D4F2FF;
   position: absolute;
   top: 55px;
-  /* border: 2px solid; */
   overflow-y: auto;
 `;
 
@@ -67,14 +56,12 @@ export const AutoSearchData = styled.li`
   color: #000;
 
   a {
-    color: #000; /* 검은색으로 설정 */
-    text-decoration: none; /* 밑줄 제거 */
+    color: #000; 
+    text-decoration: none; 
   }
   
   &:hover {
-    /* background-color: #edf5f5; */
     cursor: pointer;
-    /* color: #00ABFC; */
   }
 `;
 
