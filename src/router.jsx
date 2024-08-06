@@ -30,7 +30,6 @@ const router = createBrowserRouter([
       { path: '/login', element: <Loginpage /> },
       { path:'/kakao/login',element:<KakaoCallback/>},
       { path: '/coursedetail', element: <CourseDetail /> },
-      { path: '/testpage', element: <TestPage /> },
       { path: '/diarymain', element: <DiaryMain /> },
       { path: '/diarywrite', element: <DiaryWrite /> },
       { path: '/diarydetail/:id', element: <DiaryDetail /> },
