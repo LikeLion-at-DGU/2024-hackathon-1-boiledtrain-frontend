@@ -15,7 +15,7 @@ function DetailModal({ isOpen, onClose, placeDetails, getPhotoUrl, subwayStation
         const ids = placeDetails.map(place => place.nearby_place.place_id);
         setPlaceIds(ids);
         setShowMap(true);
-        setShowPlusCourse(true); // 코스 추가 버튼을 표시
+        setShowPlusCourse(true); 
     };
 
     const handleClose = () => {

@@ -19,10 +19,6 @@ const CourseMake = ({ onBackButtonClick, course, isEditMode }) => {
         }
     }, [course]);
 
-    useEffect(() => {
-        console.log('Added Places:', addedPlaces); // 추가된 장소의 상태를 콘솔에 출력
-    }, [addedPlaces]);
-
     const isSearchContainerHidden = selectedStation !== '';
 
     return (

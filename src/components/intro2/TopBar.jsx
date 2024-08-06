@@ -24,10 +24,8 @@ function TopBar(){
                 <S.menuButton onClick={toggleMenuButton}><img src={menuImage}></img></S.menuButton>
             </S.TopBarContainer>
             {token ? (
-                // 로그인
                 isSidebarVisible && <Menu onClose={closeSidebar} />
             ) : (
-                // 비로그인
                 isSidebarVisible && <StartMenu onClose={closeSidebar}/>
             )}
         </>

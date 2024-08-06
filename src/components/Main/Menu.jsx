@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./style";
 import closed from "../../assets/images/closed.png";
-import face from "../../assets/images/normalprofile.png"; // 기본 프로필 이미지
+import face from "../../assets/images/normalprofile.png";
 import ticket from "../../assets/images/ticket.jpg";
 import route from "../../assets/images/route.jpg";
 import { Link } from "react-router-dom";
@@ -38,7 +38,6 @@ function Menu({ onClose }) {
             <S.middle>
                 <S.Box1>
                     <S.Shape>
-                        {/* 업로드한 프로필 이미지를 보여줍니다. */}
                         <S.Face src={userInfo.profile_image || face} alt="face" />
                         <S.name>
                             <S.text>{userInfo.nickname}님,<br />반가워요!</S.text>

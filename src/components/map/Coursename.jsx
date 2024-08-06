@@ -143,7 +143,7 @@ const Coursename = ({ addedPlaces,setAddedPlaces, selectedStation, onRegisterSuc
                     maxLength="20"
                 />
             </Courseguide>
-            {showWarning && <Warning message={warningMessage} onClose={handleWarningClose}/>} {/* 경고 메시지 조건부 렌더링 */}
+            {showWarning && <Warning message={warningMessage} onClose={handleWarningClose}/>}
             <PlaceAddButton onClick={handleRegister}>{isEditMode ? '수정하기' : '등록하기'}</PlaceAddButton>
         </>
     );
